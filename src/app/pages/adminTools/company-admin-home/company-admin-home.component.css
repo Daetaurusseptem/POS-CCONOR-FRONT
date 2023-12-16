@@ -1,0 +1,22 @@
+/* admin-home.component.css */
+.container {
+    max-width: 1200px;
+  }
+  
+  .card-header {
+    font-size: 1.2rem;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    margin-bottom: .75rem;
+  }
+  
+  .btn-light {
+    color: #333;
+  }
+  .pointer{
+    cursor: pointer;
+  }
+  /* Añadir más estilos personalizados según sea necesario */
+  

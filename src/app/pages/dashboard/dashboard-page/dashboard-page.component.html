@@ -1,0 +1,22 @@
+<div class="dashboard sysadmin-dashboard">
+    <h2>Dashboard SysAdmin</h2>
+    <div class="stats-panel">
+      <div class="stat">
+        <span>Total Usuarios</span>
+        <span>{{ numberOfUsers }}</span>
+      </div>
+      <div class="stat">
+        <span>Total Empresas</span>
+        <span>{{ numberOfCompanies}}</span>
+      </div>
+      <!-- Más estadísticas -->
+    </div>
+    <div class="control-panel">
+      <button [routerLink]="['sysadmin/users']">Gestionar Usuarios</button>
+      <button  [routerLink]="['sysadmin/companies']">Gestionar Empresas</button>
+      <button [routerLink]="['sysadmin/companies']">Ver Reportes</button>
+      <!-- Más controles -->
+    </div>
+    <!-- Secciones adicionales según sea necesario -->
+  </div>
+  

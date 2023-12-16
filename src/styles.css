@@ -1,2 +1,103 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+
+body, html {
+    height: 100%;
+  }
+body { 
+    margin: 0; 
+    font-family: Roboto, 
+    "Helvetica Neue", sans-serif;
+    
+ }
+
+.main{
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 60px; /* Debe ser igual a la altura del footer */
+    margin: 0;
+  }
+
+
+  .img-avatar {
+    height: 200px;
+    width: 200px;
+  }
+  
+  .img-avatar-side
+   {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+.avatar {
+  border-radius: 100%;
+  width: 50px;
+  cursor: pointer;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.material-form {
+
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  
+}
+
+.material-full-width {
+  width: 105%;
+}
+
+.fondo-modal-imagen {
+  background-color: rgba(0, 0, 0, 0.4);
+  left: 0px;
+  height: 100%;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 9999;
+}
+
+.oculto {
+  display: none;
+}
+.navbar{
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card,
+.dashboard {
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard h2 {
+  margin-bottom: 20px;
+}
+
+.stats-panel .stat {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.card,
+.card-body,
+.control-panel button,
+.quick-actions button {
+  padding: 10px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+
+
+/* Agrega más estilos según tus necesidades */

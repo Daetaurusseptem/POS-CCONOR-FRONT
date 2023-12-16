@@ -1,0 +1,12 @@
+<ul class="nav nav-tabs mt-4" role="tablist">
+
+    <li *ngFor="let itemList of items" class="nav-item" role="presentation">
+      <a class="nav-link  pointer " [class.active]="tabSelected==itemList.name" (click)="changeTab(itemList.name)"
+        data-target="#empleados" aria-controls="photos" role="tab" target="_self" data-toggle="tab">
+        <i [class]="itemList.icon"></i>
+        {{itemList.name}}
+      </a>
+    </li>
+
+
+  </ul>

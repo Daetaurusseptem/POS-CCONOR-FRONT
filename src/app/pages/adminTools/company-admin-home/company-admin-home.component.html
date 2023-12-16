@@ -1,0 +1,312 @@
+<div *ngIf="!company" class="card">
+  <app-loading-data-spinner></app-loading-data-spinner>
+</div>
+<app-spinner *ngIf="!company"></app-spinner>
+
+
+
+<div *ngIf="company" class="container mt-4">
+  <div class="card">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img [src]="company.img!" class="img-avatar-side" alt="Imagen de la Empresa" *ngIf="company.img!">
+      </div>
+
+
+      <div class="col-md-8">
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-md-8 text-start">
+              <h5 class="card-title">{{ company.name }}</h5>
+            </div>
+            <div class="col-md-4 text-end">
+              <button class="btn btn-primary">
+                <i class="bi bi-pencil-fill"></i>
+              </button>
+            </div>
+          </div>
+          <p class="card-text">{{ company.description }}</p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong><i class="bi bi-house-door-fill"></i> Dirección:</strong> {{
+              company.address }}</li>
+            <li class="list-group-item"><strong><i class="bi bi-telephone-fill"></i> Teléfono:</strong> {{ company.tel
+              }}</li>
+            <li class="list-group-item"><strong><i class="bi bi-at"></i> Email:</strong> {{ company.email }}</li>
+            <li class="list-group-item"><strong><i class="bi bi-calendar-heart-fill"></i> Fecha de Creación:</strong> {{
+              company.createdAt | date }}</li>
+            <li class="list-group-item"><strong><i class="bi bi-person-circle"></i> Administrado: </strong> </li>
+            <li class="list-group-item"><strong>USERNAME: </strong> {{admin.username}}</li>
+            <li class="list-group-item"><strong>NOMBRE: </strong>{{admin.name}} </li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+  <tabs-menu [items]="tabsArray"   (tabSelectedOutput)="changeTab($event)"></tabs-menu>
+
+
+
+
+  <!-- USUARIOS -->
+  <div *ngIf="tabSelected=='usuarios'" class="row">
+    <div class="col-12 mx-auto text-center mb-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title text-center">
+            <h5>Búsqueda de Usuarios</h5>
+          </div>
+          <a name="" id="" class="btn btn-primary end" [routerLink]="['users',company._id, 'new']" role="button">
+            <i class="bi bi-plus-lg"></i> Crear Usuario
+          </a>
+        </div>
+        <form>
+          <div class="m-5">
+            <input type="text" class="form-control" id="busquedaEmpresa" aria-describedby="busquedaHelp"
+              #terminoEmpresa>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-12 mx-auto text-center">
+      <div class="card">
+        <div class="card-title p-4 start">
+
+          <h2>Lista de Usuarios Registrados</h2>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>img</th>
+                  <th>Nombre</th>
+                  <th>Nombre de Usuario</th>
+                  <th>Rol</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td class="text-center">
+                    <img *ngIf="user.img=='no-image'" src="../../../../../assets/img/no-img.webp"
+                      alt="Avatar de usuario" class="avatar pointer" (click)="abrirModal(company)">
+                    <img *ngIf="user.img!='no-image'" [src]="user.img" alt="Avatar de usuario" class="avatar pointer"
+                      (click)="abrirModal(company)">
+
+                  </td>
+                  <td>{{ user.name || 'No Especificado' }}</td>
+                  <td>{{ user.username }}</td>
+                  <td>{{ user.role }}</td>
+                  <td>
+                    <button class="btn btn-primary btn-sm me-2 d-inline"
+                      [routerLink]="['/dashboard/sysadmin/users/edit',user._id]">
+                      <i class="bi bi-pencil-fill"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm d-inline">
+                      <i class="bi bi-trash3-fill"></i>
+
+                    </button>
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+            <div class="card bg-primary text-light" *ngIf="!users">
+
+              <app-loading-data-spinner class="mb-2"></app-loading-data-spinner>
+              <p>Cargando Registros</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ <!-- /USUARIOS -->
+
+  <!-- ITEMS -->
+  <stock-item-list *ngIf="tabSelected=='inventario'" [items]="items"></stock-item-list>
+    <!-- /ITEMS -->
+  <!-- PRODUCTS -->
+  <div *ngIf="tabSelected=='productos'" class="row">
+    <div class="col-12 mx-auto text-center mb-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title text-center">
+            <h5>Búsqueda de Productos</h5>
+          </div>
+          <a name="" id="" class="btn btn-primary end" routerLink="product/new" role="button">
+            <i class="bi bi-bag-plus"></i> Crear Producto
+          </a>
+        </div>
+        <form>
+          <div class="m-5">
+            <input type="text" class="form-control" id="busquedaEmpresa" aria-describedby="busquedaHelp"
+              #terminoEmpresa>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-12 mx-auto text-center">
+      <div class="card">
+        <div class="card-title p-4 start">
+
+          <h2>Productos {{company.name | uppercase}}</h2>
+        </div>
+        <div class="card-body">
+          <items-list [items]="products"></items-list>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- /PRODUCTS -->
+
+     <!-- PROVEEDORES -->
+  <div *ngIf="tabSelected=='proveedores'" class="row">
+    <div class="col-12 mx-auto text-center mb-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title text-center">
+            <h5>Búsqueda de Productos</h5>
+          </div>
+          <a name="" id="" class="btn btn-primary end" routerLink="new" role="button">
+            <i class="bi bi-plus-lg"></i> Crear Usuario
+          </a>
+        </div>
+        <form>
+          <div class="m-5">
+            <input type="text" class="form-control" id="busquedaEmpresa" aria-describedby="busquedaHelp"
+              #terminoEmpresa>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-12 mx-auto text-center">
+      <div class="card">
+        <div class="card-title p-4 start">
+
+          <h2>Lista de Usuarios Registrados</h2>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>img</th>
+                  <th>Nombre</th>
+                  <th>Nombre de Usuario</th>
+                  <th>Rol</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td class="text-center">
+                    <img *ngIf="user.img=='no-image'" src="../../../../../assets/img/no-img.webp"
+                      alt="Avatar de usuario" class="avatar pointer" (click)="abrirModal(company)">
+                    <img *ngIf="user.img!='no-image'" [src]="user.img" alt="Avatar de usuario" class="avatar pointer"
+                      (click)="abrirModal(company)">
+
+                  </td>
+                  <td>{{ user.name || 'No Especificado' }}</td>
+                  <td>{{ user.username }}</td>
+                  <td>{{ user.role }}</td>
+                  <td>
+                    <button class="btn btn-primary btn-sm me-2 d-inline"
+                      [routerLink]="['/dashboard/sysadmin/users/edit',user._id]">
+                      <i class="bi bi-pencil-fill"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm d-inline">
+                      <i class="bi bi-trash3-fill"></i>
+
+                    </button>
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+            <div class="card bg-primary text-light" *ngIf="!users">
+
+              <app-loading-data-spinner class="mb-2"></app-loading-data-spinner>
+              <p>Cargando Registros</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- /PROVEEDORES -->
+     <!-- CATEGORIAS -->
+  <div *ngIf="tabSelected=='categorias'" class="row">
+    <div class="col-12 mx-auto text-center mb-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title text-center">
+            <h5>Búsqueda de Categorias</h5>
+          </div>
+          <a name="" id="" class="btn btn-primary end" routerLink="new" role="button">
+            <i class="bi bi-plus-lg"></i> Crear Categoria
+          </a>
+        </div>
+        <form>
+          <div class="m-5">
+            <input type="text" class="form-control" id="busquedaEmpresa" aria-describedby="busquedaHelp"
+              #terminoCategoria>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-12 mx-auto text-center">
+      <div class="card">
+        <div class="card-title p-4 start">
+
+          <h2>Lista de Categorias</h2>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Descripion</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let category of categories">
+                  
+                  <td>{{ category.name || 'No Especificado' }}</td>
+                  <td>{{ category.description }}</td>
+                  <td>
+                    <button class="btn btn-primary btn-sm me-2 d-inline"
+                      [routerLink]="['/dashboard/sysadmin/categories/edit',category._id]">
+                      <i class="bi bi-pencil-fill"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm d-inline">
+                      <i class="bi bi-trash3-fill"></i>
+
+                    </button>
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+            <div class="card bg-primary text-light" *ngIf="!users">
+
+              <app-loading-data-spinner class="mb-2"></app-loading-data-spinner>
+              <p>Cargando Registros</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- /CATEGORIAS -->

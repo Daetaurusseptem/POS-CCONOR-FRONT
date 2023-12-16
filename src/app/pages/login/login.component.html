@@ -1,0 +1,66 @@
+
+<div class="login-container">
+  <div class="login-section">
+    <img src="../../../assets/img/cconor-logo-no-text.png" class="avatar text-center" alt="">
+    <div class="bold">
+      <h2>Iniciar Sesion</h2>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="col">
+        <div class="row mb-4">
+
+          <mat-form-field class="material-full-width">
+            <mat-label>Nombre de Usuario</mat-label>
+            <input type="text" matInput formControlName="username" placeholder="Ej. Juan1231">
+      
+            <mat-hint>Ingresa tu nombre de usuario</mat-hint>
+            <span *ngIf="(loginForm.hasError('username') && !loginForm.hasError('required') && loginForm.touched)">
+      
+              <mat-error>Please enter a valid email address</mat-error>
+            </span>
+            <span *ngIf="(loginForm.hasError('required')&&loginForm.touched)">
+              <mat-error>Email is <strong>required</strong></mat-error>
+            </span>
+      
+      
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field class="material-full-width">
+            <mat-label>Contraseña</mat-label>
+            <input type="password" matInput formControlName="password" placeholder="ingrese su contraseña">
+      
+            <mat-hint>Ingresa tu nombre de usuario</mat-hint>
+            <span *ngIf="(loginForm.hasError('password') && !loginForm.hasError('required') && loginForm.touched)">
+      
+              <mat-error>Please enter a valid email address</mat-error>
+            </span>
+            <span *ngIf="(loginForm.hasError('required')&&loginForm.touched)">
+              <mat-error>Password is <strong>required</strong></mat-error>
+            </span>
+      
+      
+          </mat-form-field>
+        </div>
+        <div class="row d-flex justify-content-center">
+
+          <button type="submit" class="btn btn-dark mt-4 text-center"
+            [disabled]="!loginForm.valid">Acceder</button>
+        </div>
+     </div>
+
+    </form>
+
+  </div>
+
+  <div class="hero-section ">
+    <div class="logo-container">
+      <!-- Inserta aquí tu logo o imagen si es necesario -->
+    </div>
+    <h1 style="color: rgb(50, 121, 179);">Empieza ahora mismo</h1>
+    <button class="btn btn-primary">Sign in with Google+</button>
+    <button class="btn btn-secondary">Sign in with Facebook</button>
+  </div>
+
+</div>

@@ -1,0 +1,41 @@
+<div class="container mt-3 ">
+  <div class="card">
+      <div class="card-header">
+          <div class="card-title text-center">
+              <h2>Editar Usuario</h2>
+          </div>
+      </div>
+      <div class="card-body">
+           <form [formGroup]="userForm" (ngSubmit)="updateUser()">
+    <!-- Nombre Completo del Usuario -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre Completo</label>
+      <input type="text" class="form-control" id="name" formControlName="name">
+    </div>
+
+    <!-- Nombre de Usuario -->
+    <div class="mb-3">
+      <label for="username" class="form-label">Nombre de Usuario</label>
+      <input type="text" class="form-control" id="username" formControlName="username">
+    </div>
+    <!-- Nombre de Usuario -->
+    <div class="mb-3">
+      <label for="text" class="form-label">Correo Electronico</label>
+      <input type="text" class="form-control" id="email" formControlName="email">
+    </div>
+
+    
+    <div *ngIf="userForm.invalid">
+      <p *ngIf="campoNoValidoDatosUsuario('name')" class="text-danger">Nombre invalido</p>
+      <p *ngIf="campoNoValidoDatosUsuario('username')" class="text-danger">Nombre de usuario invalido</p>
+      <p *ngIf="campoNoValidoDatosUsuario('role')" class="text-danger">Role invalido</p>
+      
+
+    </div>
+
+    <!-- Botón para guardar los cambios -->
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+  </form>
+      </div>
+  </div>
+</div>

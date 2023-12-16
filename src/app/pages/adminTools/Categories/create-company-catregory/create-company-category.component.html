@@ -1,0 +1,23 @@
+
+<div class="container mt-3 card">
+    <h2>Crear Nueva Categoria</h2>
+    <form #categorForm="ngForm">
+      <!-- Nombre Categoria -->
+      <div class="mb-3">
+        <label for="fullName" class="form-label">Nombre Categoria</label>
+        <input type="text" class="form-control" id="name" [(ngModel)]="category.name" name="name" required>
+      </div>
+  
+      <!-- Nombre de Caetgoria -->
+      <div class="mb-3">
+        <label for="description" class="form-label">Descripcion Categoria</label>
+        <input type="text" class="form-control" id="description" [(ngModel)]="category.description" name="username" required>
+      </div>
+
+      <!-- Botón para crear el usuario -->
+      <button type="submit" class="btn btn-primary" (click)="createCategory(categorForm)" [disabled]="!categorForm.form.valid">Crear Categoria</button>
+      
+
+    </form>
+  </div>
+  

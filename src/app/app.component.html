@@ -1,25 +1,11 @@
-<!-- src/app/app.component.html -->
+<app-navbar></app-navbar>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Mi App</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/">Inicio</a>
-        </li>
-        <!-- ... otros elementos de navegación -->
-      </ul>
-    </div>
-  </nav>
-  
-  <div class="container-fluid mt-4">
+<mat-card class="main" style="margin-top:4rem; ">
+    <app-spinner></app-spinner>
+
     <router-outlet></router-outlet>
-  </div>
+    
   
-  <footer>
-    <!-- Cualquier contenido de pie de página -->
-  </footer>
-  
+</mat-card>
+
+<app-footer></app-footer>

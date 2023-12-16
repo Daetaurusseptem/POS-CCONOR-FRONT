@@ -1,0 +1,93 @@
+<div class="row">
+  <div class="col-12 mx-auto text-center mb-2">
+    <div class="card">
+
+      <div class="card-header">
+        <div class="card-title text-center">
+          <h5>Búsqueda de Empresas</h5>
+        </div>
+        <a name="" id="" class="btn btn-primary end" routerLink="new" role="button">
+          <i class="bi bi-plus-lg"></i> Crear company
+        </a>
+      </div>
+      <form>
+        <div class="m-5">
+          <input type="text" class="form-control" id="busquedaEmpresa" aria-describedby="busquedaHelp" #terminoEmpresa>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-12 mx-auto text-center">
+    <div class="card">
+      <div class="card-title p-4">
+        <div class="card-title start">
+          <h2>Empresas Registradas</h2>
+        </div>
+        <!-- Agrega aquí cualquier botón o enlace adicional si es necesario -->
+      </div>
+      
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+
+                <th scope="col">img</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Email</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Herramientas</th>
+              </tr>
+            </thead>
+            
+            <tbody *ngIf="empresas" class="text-left">
+                
+              <tr  *ngFor="let company of empresas; index as i">
+                <td class="text-center">
+                  <img [src]="company.img" alt="Avatar de usuario" class="avatar pointer" (click)="abrirModal(company)">
+
+                </td>
+                <td>{{company.name}}</td>
+                <td>{{company.tel}}</td>
+                <td>{{company.email}}</td>
+                <td>{{company.address}}</td>
+                <td>
+                  <ng-container *ngIf="getLatestSubscription(company) as latestSubscription">
+                    <!-- Iconos y estados similares a los de la tabla de usuarios -->
+                    {{ latestSubscription.state }}
+                  </ng-container>
+                  <ng-container *ngIf="!getLatestSubscription(company)">
+                    Sin suscripciones
+                  </ng-container>
+                </td>
+
+                <td>
+                  <button class="btn btn-success btn-sm me-2 d-inline"
+                    [routerLink]="['/dashboard/sysadmin/companies/details',company._id]">
+                    <i class="bi bi-info"></i>
+                  </button>
+                  <button class="btn btn-primary btn-sm me-2 d-inline"
+                    [routerLink]="['/dashboard/sysadmin/companies/edit',company._id]">
+                    <i class="bi bi-pencil-fill"></i>
+                  </button>
+                  <button (click)="deleteCompany(company._id!)" class="btn btn-danger btn-sm d-inline">
+                    <i class="bi bi-trash3-fill"></i>
+
+                  </button>
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+          <div class="card bg-primary text-light" *ngIf="!empresas">
+
+            <app-loading-data-spinner class="mb-2"></app-loading-data-spinner> 
+            <p>Cargando Registros</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,14 +2,18 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LandingPageComponent } from './components/landing-page/landing-page.component'; // Importa tu componente de landing page
-import { LoginComponent } from './components/login/login.component';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component'; // Importa tu componente de landing page
+import { LoginComponent } from './pages/login/login.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: '', component: LandingPageComponent }, // Ruta para la landing page
-  { path: 'login', component: LoginComponent },  // Define la ruta para el componente de login
-
-  // ... otras rutas
+  { path: '', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./pages/pages-routing.module').then(m => m.PagesRoutingModule)
+  },
+  { path: '**', component: PageNotFoundComponent }, 
 ];
 
 @NgModule({

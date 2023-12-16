@@ -1,0 +1,47 @@
+<div *ngIf="!company&&!admin" class="card">
+    <app-loading-data-spinner></app-loading-data-spinner>
+</div>
+<app-spinner *ngIf="!company&&!admin"></app-spinner>
+
+<div *ngIf="company&&admin" class="container mt-4">
+    <div class="card">
+        <img [src]="company.img!" class="card-img-top img-avatar text-center" alt="Imagen de la Empresa" *ngIf="company.img!">
+        <div class="card-body">
+            <h5 class="card-title">{{ company.name }}</h5>
+            <p class="card-text">{{ company.description }}</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong><i class="bi bi-house-door-fill"></i> Dirección:</strong> {{ company.address }}</li>
+                <li class="list-group-item"><strong><i class="bi bi-telephone-fill"></i> Teléfono:</strong> {{ company.tel }}</li>
+                <li class="list-group-item"><strong><i class="bi bi-at"></i> Email:</strong> {{ company.email }}</li>
+                <li class="list-group-item"><strong><i class="bi bi-calendar-heart-fill"></i> Fecha de Creación:</strong> {{ company.createdAt | date }}</li>
+                <li class="list-group-item"><strong><i class="bi bi-person-circle"></i> Administrado: </strong> </li>
+                <li class="list-group-item"><strong>USERNAME: </strong> {{admin.username}}</li>
+                <li class="list-group-item"><strong>NOMBRE: </strong>{{admin.name}} </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h4>Historial de Suscripciones</h4>
+        <div *ngIf="company.SuscriptionsHistory && company.SuscriptionsHistory.length; else noSubscriptions">
+            <div *ngFor="let subscription of company.SuscriptionsHistory" class="card mt-2">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">{{ subscription.month }}</h6>
+                    <p class="card-text"><strong>Estado:</strong> {{ subscription.state }}</p>
+                    <p class="card-text"><strong>Monto Pagado:</strong> {{ subscription.amountPaid | currency }}</p>
+                    <p class="card-text"><strong>Método de Pago:</strong> {{ subscription.Paymethod }}</p>
+                    <p class="card-text"><strong>Referencia de Pago:</strong> {{ subscription.payReference }}</p>
+                </div>
+            </div>
+        </div>
+        <ng-template #noSubscriptions>
+            <div class="card mt-2">
+                <div class="card-body">
+                    <p class="card-text">Sin suscripciones.</p>
+                    <a routerLink="/dashboard/sysadmin/companies/subscriptions/select" class="btn btn-primary">Agregar Plan de Suscripción</a>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>

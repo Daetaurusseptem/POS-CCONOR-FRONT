@@ -1,0 +1,56 @@
+.sidebar-container {
+  min-height: 40vh; /* Altura completa */
+  width: 200px; /* Ancho del sidebar */
+  flex-shrink: 0;
+}
+
+.sidebar-header {
+  /* Estilos para el encabezado */
+}
+
+.sidebar-nav {
+  /* Estilos para la navegación */
+}
+
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  text-decoration: none;
+  border: none;
+  background: none;
+  text-align: left;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1.5rem;
+  text-decoration: none;
+  color: #333;
+}
+
+.sidebar-link:hover, .sidebar-link:focus {
+  background: #f8f9fa;
+}
+
+.sidebar-menu {
+  padding-left: 0;
+  list-style: none;
+}
+
+.bi {
+  margin-right: 8px; /* Espacio entre el ícono y el texto */
+}
+
+/* Media query para dispositivos más pequeños */
+@media (max-width: 768px) {
+  .sidebar-container {
+    width: 100%;
+    height: auto;
+  }
+  .sidebar-toggle, .sidebar-link {
+    padding: 0.5rem 1rem; /* Menor padding en dispositivos móviles */
+  }
+}

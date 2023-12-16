@@ -3,25 +3,36 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { InicioComponent } from './inicio/inicio.component';
-import { LandingPageComponent } from './components/landing-page/landing-page.component';
-import { LoginComponent } from './components/login/login.component';
+
+
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ComponentsModule } from './components/components.module';
+
+import { MatCardModule } from '@angular/material/card';
+import { PagesModule } from './pages/pages.module';
+import { RouterLink } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    InicioComponent,
-    LandingPageComponent,
-    LoginComponent,
+    AppComponent
     
     
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ComponentsModule,
+    PagesModule,
+    MatCardModule,
+    AppRoutingModule,
+    RouterLink,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

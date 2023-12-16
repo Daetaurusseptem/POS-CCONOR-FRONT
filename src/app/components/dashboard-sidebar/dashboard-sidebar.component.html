@@ -1,0 +1,37 @@
+<!-- dashboard-sidebar.component.html -->
+<div class="sidebar-container card bg-light">
+  <!-- Logo o Título de la Aplicación -->
+  <div class="sidebar-header p-3">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+      <span class="fs-4">Cconor POS</span>
+    </a>
+  </div>
+
+  <!-- Navegación Sidebar -->
+  <nav class="sidebar-nav">
+    <a class="sidebar-toggle" data-bs-toggle="collapse" href="#{{menuItems[0].id}}" role="button" aria-expanded="false"
+      attr.aria-controls="{{menuItems[0].id}}">
+      <i class="bi bi-person-lines-fill"></i> {{menuItems[0].title||'asddas'}}
+    </a>
+    
+    
+    
+    <div class="collapse" id="{{menuItems[0].id}}">
+      <ul class="sidebar-menu list-unstyled">
+        <li *ngFor="let item of menuItems[0].submenu" routerLink="{{item.url}}">
+          <a [routerLink]="item.url" routerLinkActive="active" class="sidebar-link">  
+            <i [class]="item.icon"></i>
+            {{item.title}}</a>
+          </li>
+          
+        </ul>
+      </div>
+      
+      
+      <a class="sidebar-toggle" role="button" (click)="logOut()">
+        <i class="bi bi-power"></i>LOGOUT
+      </a>
+
+    
+  </nav>
+</div>
