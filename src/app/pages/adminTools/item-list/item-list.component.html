@@ -1,73 +1,27 @@
-<div  class="row">
-    <div class="col-12 mx-auto text-center mb-2">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title text-center">
-            <h5>Búsqueda de Usuarios</h5>
-          </div>
-          <a name="" id="" class="btn btn-primary end" routerLink="new" role="button">
-            <i class="bi bi-plus-lg"></i> Crear Usuario
-          </a>
-        </div>
-        <form>
-          <div class="m-5">
-            <input type="text" class="form-control" id="busquedaEmpresa" aria-describedby="busquedaHelp" #terminoEmpresa>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="col-12 mx-auto text-center">
-      <div class="card">
-       
-        </div>
+<!-- item-list.component.html -->
+<div class="container mt-4">
+  <h2>Lista de Items</h2>
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Buscar item..." [(ngModel)]="searchTerm">
+    <button class="btn btn-outline-secondary" type="button" (click)="onSearch()">Buscar</button>
+  </div>
+  <div class="row">
+    <div *ngFor="let item of items" class="col-md-4 mb-4">
+      <div class="card h-100">
+        <img [src]="item.product?.img" class="card-img-top" alt="{{ item.name }}">
         <div class="card-body">
-          <div class="table-responsive">
-  
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>img</th>
-                  <th>Nombre</th>
-                  <th>Stock</th>
-                  <th>Expira</th>
-                  <th>Llego</th>
-                  <th>Tools</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of items">
-                  <td class="text-center">
-                    <img *ngIf="item.img=='no-image'" src="../../../../../assets/img/no-img.webp" alt="Avatar de usuario"
-                      class="avatar pointer">
-                    <img *ngIf="item.img!='no-image'" [src]="item.img" alt="Avatar de usuario" class="avatar pointer"
-                      >
-  
-                  </td>
-                  <td>{{ item.name }}</td>
-                  <td>{{ item.stock }}</td>
-                  <td>{{ item.expirationDate | date}}</td>
-                  <td>{{ item.receivedDate | date}}</td>
-                  <td>
-                    <button class="btn btn-primary btn-sm me-2 d-inline"
-                      [routerLink]="['/dashboard/sysadmin/users/edit',item._id]">
-                      <i class="bi bi-pencil-fill"></i>
-                    </button>
-                    <button class="btn btn-danger btn-sm d-inline">
-                      <i class="bi bi-trash3-fill"></i>
-  
-                    </button>
-                  </td>
-  
-                </tr>
-              </tbody>
-            </table>
-            <div class="card bg-primary text-light" *ngIf="!items">
-  
-              <app-loading-data-spinner class="mb-2"></app-loading-data-spinner>
-              <p>Cargando Registros</p>
-            </div>
-          </div>
+          <h5 class="card-title">{{ item.product?.name }}</h5>
+          <p class="card-text">Precio: {{ item.price  }}</p>
+          <p class="card-text">Stock: {{ item.stock }}</p>
+          <p class="card-text">Fecha de Recepción: {{ item.receivedDate | date }}</p>
+          <p class="card-text">Fecha de Expiración: {{ item.expirationDate ? (item.expirationDate | date) : 'N/A' }}</p>
+          <p class="card-text">Descuento: {{ item.discount }}%</p>
+          <p class="card-text">Descuento: {{ item.discount }}%</p>
+          <p class="card-text"><a class="btn btn-block btn-primary"><i class="bi bi-pencil-fill"></i>Editar</a></p>
+          <p class="card-text" (click)="deleteItem(item._id)"><a class="btn btn-block btn-danger"><i class="bi bi-trash3-fill"></i>eliminar</a></p>
         </div>
       </div>
     </div>
-  
+  </div>
+  <pagination-controls (pageChange)="pageChanged($event)" [maxSize]="totalItems"></pagination-controls>
+</div>

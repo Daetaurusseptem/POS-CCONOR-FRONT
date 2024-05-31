@@ -17,6 +17,26 @@
     img?:string;
 
   }
+
+  export interface PaymentBreakdown {
+    cash: number;
+    credit: number;
+    debit: number;
+  }
+  
+  export interface CashRegister {
+    _id:string;
+    user: string | User; // ID del usuario que realizó el corte de caja
+    startDate: Date; // Fecha de inicio del corte
+    endDate: Date; // Fecha de fin del corte
+    initialAmount: number; // Dinero inicial en caja
+    finalAmount: number; // Dinero final en caja
+    payments: PaymentBreakdown; // Desglose de pagos por tipo
+    sales: string[]; // Referencia a las ventas incluidas en el corte
+    notes: string; // Notas para inconsistencias u otros comentarios
+    closed: boolean; // Indicador de si la caja está cerrada
+  }
+  
   
   
   export interface company {
@@ -58,6 +78,7 @@ export interface Lote {
 }
 
 export interface Supplier {
+  _id:string;
   name: string;
   description:string;
   contactInfo: {
@@ -70,9 +91,9 @@ export interface Supplier {
 
 
 export interface Product{
-  _id:string;
+  _id?:string;
   company?: string;
-  category?:Category[]
+  categories?:Category[]
   supplier:Supplier
   img?:string;
   name?: string;

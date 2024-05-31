@@ -39,6 +39,7 @@ export class CreateUserReComponent {
               
               ) {
                 this.getRole();
+                console.log(this.authService.getCompany)
               }
 
 getRole(){

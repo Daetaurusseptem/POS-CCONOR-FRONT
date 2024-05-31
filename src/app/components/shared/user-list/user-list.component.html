@@ -26,9 +26,9 @@
         <span class="text-center" *ngIf="company">
           <td class="text-center">
             <img *ngIf="company.img=='no-image'" src="../../../../../assets/img/no-img.webp" alt="Avatar de usuario"
-              class="avatar pointer" (click)="abrirModal(company)">
+              class="img-avatar pointer" (click)="abrirModal(company,'empresas')">
             <img *ngIf="company.img!='no-image'" [src]="company.img" alt="Avatar de usuario" class="img-avatar pointer"
-              (click)="abrirModal(company)">
+              (click)="abrirModal(company,'empresas')">
 
           </td>
         </span>
@@ -50,9 +50,9 @@
               <tr *ngFor="let user of users">
                 <td class="text-center">
                   <img *ngIf="user.img=='no-image'" src="../../../../../assets/img/no-img.webp" alt="Avatar de usuario"
-                    class="avatar pointer" (click)="abrirModal(company)">
+                    class="avatar pointer" (click)="abrirModal(user,'usuarios')">
                   <img *ngIf="user.img!='no-image'" [src]="user.img" alt="Avatar de usuario" class="avatar pointer"
-                    (click)="abrirModal(company)">
+                    (click)="abrirModal(user,'usuarios')">
 
                 </td>
                 <td>{{ user.name || 'No Especificado' }}</td>

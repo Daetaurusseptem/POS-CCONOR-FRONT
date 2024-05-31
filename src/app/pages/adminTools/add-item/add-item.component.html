@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <h2>Nuevo Item</h2>
+  <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre:</label>
+      <input type="text" formControlName="name" class="form-control" id="name">
+    </div>
+    <div class="mb-3">
+      <label for="product" class="form-label">Producto:</label>
+      <input type="text" class="form-control" id="product" (input)="onSearchProduct($event)" [value]="selectedProduct?.name || ''">
+      <ul class="list-group" *ngIf="filteredProducts.length > 0">
+        <li class="list-group-item" *ngFor="let product of filteredProducts" (click)="onSelectProduct(product)">
+          {{ product.name }}
+        </li>
+      </ul>
+    </div>
+    <div class="mb-3">
+      <label for="stock" class="form-label">Stock:</label>
+      <input type="number" formControlName="stock" class="form-control" id="stock">
+    </div>
+    <div class="mb-3">
+      <label for="price" class="form-label">Precio:</label>
+      <input type="number" formControlName="price" class="form-control" id="price">
+    </div>
+    <div class="mb-3">
+      <label for="expirationDate" class="form-label">Fecha de Expiración:</label>
+      <input type="date" formControlName="expirationDate" class="form-control" id="expirationDate">
+    </div>
+    <div class="mb-3">
+      <label for="discount" class="form-label">Descuento (%):</label>
+      <input type="number" formControlName="discount" class="form-control" id="discount">
+    </div>
+    <div class="mb-3">
+      <label for="receivedDate" class="form-label">Fecha de Recepción:</label>
+      <input type="date" formControlName="receivedDate" class="form-control" id="receivedDate">
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!itemForm.valid">Crear Item</button>
+  </form>
+</div>

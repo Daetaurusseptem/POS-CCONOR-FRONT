@@ -21,7 +21,22 @@ export class ProductService {
     this.authService.headers 
     );
   };
- 
+  getProduct(id:string) {
+    return this.http.get<itemResponse>(`${urlProducts}/${id}`,
+    this.authService.headers 
+    );
+  };
+  
+  searchProductCompany(search: string = '', page: number = 1, limit: number = 5, companyId: string) {
+    const params = {
+      search,
+      page: page.toString(),
+      limit: limit.toString(),
+      companyId
+    };
+    return this.http.get<itemResponse>(`${urlProducts}/search/${companyId}`, { params });
+  }
+
   getCompanyProducts(id:string) {
     return this.http.get<itemResponse>(`${urlProducts}/company/${id}`, this.authService.headers);
   };
@@ -32,7 +47,8 @@ export class ProductService {
     return this.http.put<itemResponse>(`${urlProducts}/${id}`, formData, this.authService.headers );
   };
 
-  createProduct(product:Product){
-    return this.http.post<itemResponse>(`${urlProducts}`, product, this.authService.headers);
+  createProduct(empresaId:string,product:Product){
+
+    return this.http.post<itemResponse>(`${urlProducts}/${empresaId}`, product, this.authService.headers);
   };
 }

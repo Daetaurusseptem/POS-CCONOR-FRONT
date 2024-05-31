@@ -8,6 +8,16 @@ import { CreateCompanyCategoryComponent } from './Categories/create-company-catr
 import { CategoriesListComponent } from './Categories/categories-list/categories-list.component';
 import {  ItemStockListComponent } from './item-list/item-list.component';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { CreateProductComponent } from './products/create-product/create-product.component';
+import { CreateSupplierComponent } from './Suppliers/create-supplier/create-supplier.component';
+import { UpdateProductComponent } from './products/update-product/update-product.component';
+import { ProductsListComponent } from './products/products-list/products-list.component';
+import { UpdateSuppliersComponent } from './Suppliers/update-suppliers/update-suppliers.component';
+import { ItemsComponent } from './items/items.component';
+import { AddItemComponent } from './add-item/add-item.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+
+
 
 
 
@@ -17,7 +27,14 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CompanyUsersComponent,
     CreateCompanyCategoryComponent,
     CategoriesListComponent,
-    ItemStockListComponent
+    ItemStockListComponent,
+    CreateProductComponent,
+    CreateSupplierComponent,
+    UpdateProductComponent,
+    ProductsListComponent,
+    UpdateSuppliersComponent,
+    ItemsComponent,
+    AddItemComponent,
   ],
   exports:[
     ItemStockListComponent
@@ -28,7 +45,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     RouterLink,
     ReactiveFormsModule,
     FormsModule,
-    ComponentsModule
+    ComponentsModule,
+    NgxPaginationModule
+
   ]
   
 })

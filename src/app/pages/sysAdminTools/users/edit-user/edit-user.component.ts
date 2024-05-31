@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { User } from 'src/app/interfaces/models.interface';
+import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 import Swal from 'sweetalert2';
 
@@ -33,6 +34,7 @@ export class UserEditComponent {
   constructor(
     private userService: UsersService,
     private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
     private fb: FormBuilder,
     private router: Router
   ) {
@@ -43,6 +45,28 @@ export class UserEditComponent {
   }
 
   getUser(id: string) {
+    console.log(this.authService.usuario);
+    if(this.authService.usuario.role == 'admin'){
+      return this.userService.getUserByIdAdminCompany(id)
+        .pipe(
+          map(item => {
+            console.log(item);
+            return item.user
+          })
+        )
+        .subscribe(user => {
+          console.log(user);
+          
+          this.user = user!;
+          this.userForm.setValue({
+            name: this.user.name,
+            username: this.user.username,
+            email: this.user.email
+  
+          })
+        })
+
+    }
     return this.userService.getUserById(id)
       .pipe(
         map(item => {
@@ -67,7 +91,7 @@ export class UserEditComponent {
 
   updateUser() {
     if (this.userForm.valid) {
-      console.log('Empresa actualizada:', this.userForm.value);
+      console.log('Usuario actualizada:', this.userForm.value);
       // Aquí iría el código para enviar los datos actualizados a un servicio o backend
 
 

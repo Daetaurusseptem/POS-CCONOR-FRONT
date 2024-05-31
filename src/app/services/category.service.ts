@@ -24,7 +24,12 @@ export class CategoryService {
     this.authService.headers 
     );
   };
-  getCompanyCategories(id:string, page:number) {
+  getCompanyCategories(id:string) {
+    
+    return this.http.get<itemResponse>(`${urlCategories}/company/${id}`, this.authService.headers);
+  }
+
+  getCompanyCategoriesPaginated(id:string, page:number) {
     return this.http.get<itemResponse>(`${urlCategories}/company/${id}?page=${page}`, this.authService.headers);
   };
   deleteCategory(id:string){
@@ -36,8 +41,8 @@ export class CategoryService {
     return this.http.put<itemResponse>(`${urlCategories}/${id}`, formData, this.authService.headers );
   };
 
-  createCategory(category:Category){
+  createCategory(category:Category, empresaId:string){
     
-    return this.http.post<itemResponse>(`${urlCategories}`, category, this.authService.headers);
+    return this.http.post<itemResponse>(`${urlCategories}/${empresaId}`, category, this.authService.headers);
   };
 }

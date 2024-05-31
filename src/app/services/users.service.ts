@@ -30,6 +30,9 @@ export class UsersService {
   getUserById(id:string) {
     return this.http.get<itemResponse>(`${urlApiUsers}/${id}`, this.authService.headers);
   }
+  getUserByIdAdminCompany(id:string) {
+    return this.http.get<itemResponse>(`${urlApiUsers}/company/solo/${id}`, this.authService.headers);
+  }
   getCompanyAdmin(id:string) {
     return this.http.get<itemResponse>(`${urlApiUsers}/company/admin/${id}`, this.authService.headers);
   }

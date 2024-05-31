@@ -73,9 +73,10 @@ export class UserListComponent {
   ngOnInit(): void {
     
   }
-  abrirModal( company: company ) {
-    console.log(company);
-    const {_id} = company
-    this.modalService.abrirModal(company.img,'empresas',_id!);
+ 
+  abrirModal( element: company|User,tipo:"empresas" | "usuarios" | "productos" ) {
+    console.log(element);
+    const {_id} = element
+    this.modalService.abrirModal(element.img,tipo,_id!);
   }
 }

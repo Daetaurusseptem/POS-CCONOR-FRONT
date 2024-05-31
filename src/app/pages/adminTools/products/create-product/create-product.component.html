@@ -1,0 +1,38 @@
+<div class="container mt-4">
+    <div class="card">
+      <div class="card-header">
+        Crear Producto
+      </div>
+      <div class="card-body">
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+  
+          <div class="mb-3">
+            <label for="name" class="form-label">Nombre:</label>
+            <input type="text" formControlName="name" class="form-control" id="name" placeholder="Nombre del producto">
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Descripción:</label>
+            <textarea formControlName="description" class="form-control" id="description" rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="marca" class="form-label">Marca:</label>
+            <input type="text" formControlName="marca" class="form-control" id="marca" placeholder="Marca del producto">
+          </div>
+          <div class="mb-3"> 
+            <label for="categories" class="form-label">Categorías:</label>
+            <select formControlName="categories" class="form-select" id="categories" multiple>
+              <option *ngFor="let category of Categories" [value]="category._id">{{ category.name }}</option>
+            </select>
+          </div>
+          <div class="mb-3"> 
+            <label for="supplier" class="form-label">Proveedor:</label>
+            <select formControlName="supplier" class="form-select" id="categories">
+              <option *ngFor="let supplier of suppliers" [value]="supplier._id">{{ supplier.name }}</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid">Crear Producto</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

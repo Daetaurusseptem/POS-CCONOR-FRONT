@@ -61,7 +61,8 @@
           <div class="card-title text-center">
             <h5>Búsqueda de Usuarios</h5>
           </div>
-          <a name="" id="" class="btn btn-primary end" [routerLink]="['users',company._id, 'new']" role="button">
+          
+          <a name="" id="" class="btn btn-primary end" routerLink="users/new" role="button">
             <i class="bi bi-plus-lg"></i> Crear Usuario
           </a>
         </div>
@@ -96,9 +97,9 @@
                 <tr *ngFor="let user of users">
                   <td class="text-center">
                     <img *ngIf="user.img=='no-image'" src="../../../../../assets/img/no-img.webp"
-                      alt="Avatar de usuario" class="avatar pointer" (click)="abrirModal(company)">
+                      alt="Avatar de usuario" class="avatar pointer" (click)="abrirModal(user,'usuarios')">
                     <img *ngIf="user.img!='no-image'" [src]="user.img" alt="Avatar de usuario" class="avatar pointer"
-                      (click)="abrirModal(company)">
+                    (click)="abrirModal(user,'usuarios')">
 
                   </td>
                   <td>{{ user.name || 'No Especificado' }}</td>
@@ -106,7 +107,7 @@
                   <td>{{ user.role }}</td>
                   <td>
                     <button class="btn btn-primary btn-sm me-2 d-inline"
-                      [routerLink]="['/dashboard/sysadmin/users/edit',user._id]">
+                      [routerLink]="['users/edit',user._id]">
                       <i class="bi bi-pencil-fill"></i>
                     </button>
                     <button class="btn btn-danger btn-sm d-inline">
@@ -131,7 +132,7 @@
  <!-- /USUARIOS -->
 
   <!-- ITEMS -->
-  <stock-item-list *ngIf="tabSelected=='inventario'" [items]="items"></stock-item-list>
+  <stock-item-list *ngIf="tabSelected=='inventario'" ></stock-item-list>
     <!-- /ITEMS -->
   <!-- PRODUCTS -->
   <div *ngIf="tabSelected=='productos'" class="row">
@@ -139,10 +140,10 @@
       <div class="card">
         <div class="card-header">
           <div class="card-title text-center">
-            <h5>Búsqueda de Productos</h5>
+            <h5>Búsqueda de Items</h5>
           </div>
           <a name="" id="" class="btn btn-primary end" routerLink="product/new" role="button">
-            <i class="bi bi-bag-plus"></i> Crear Producto
+            <i class="bi bi-bag-plus"></i> Crear Stock
           </a>
         </div>
         <form>
@@ -160,7 +161,7 @@
           <h2>Productos {{company.name | uppercase}}</h2>
         </div>
         <div class="card-body">
-          <items-list [items]="products"></items-list>
+          <items-list [items]="products" [routerLink]=""></items-list>
         </div>
       </div>
     </div>
@@ -173,10 +174,10 @@
       <div class="card">
         <div class="card-header">
           <div class="card-title text-center">
-            <h5>Búsqueda de Productos</h5>
+            <h5>Búsqueda de proveedores</h5>
           </div>
-          <a name="" id="" class="btn btn-primary end" routerLink="new" role="button">
-            <i class="bi bi-plus-lg"></i> Crear Usuario
+          <a name="" id="" class="btn btn-primary end" routerLink="suppliers/new/{{company._id}}" role="button">
+            <i class="bi bi-plus-lg"></i> Crear proveedor
           </a>
         </div>
         <form>
@@ -191,7 +192,7 @@
       <div class="card">
         <div class="card-title p-4 start">
 
-          <h2>Lista de Usuarios Registrados</h2>
+          <h2>Lista de Proveedores Registrados</h2>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -199,28 +200,23 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>img</th>
+            
                   <th>Nombre</th>
-                  <th>Nombre de Usuario</th>
-                  <th>Rol</th>
+                  <th>descripcion</th>
+                  <th>numero</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let user of users">
-                  <td class="text-center">
-                    <img *ngIf="user.img=='no-image'" src="../../../../../assets/img/no-img.webp"
-                      alt="Avatar de usuario" class="avatar pointer" (click)="abrirModal(company)">
-                    <img *ngIf="user.img!='no-image'" [src]="user.img" alt="Avatar de usuario" class="avatar pointer"
-                      (click)="abrirModal(company)">
-
-                  </td>
-                  <td>{{ user.name || 'No Especificado' }}</td>
-                  <td>{{ user.username }}</td>
-                  <td>{{ user.role }}</td>
+                <tr *ngFor="let supplier of suppliers">
+                 
+                  <td>{{ supplier.name || 'No Especificado' }}</td>
+                  <td>{{ supplier.description || 'No Especificado' |slice:0:49 }}</td>
+                  <td>{{ supplier.contactInfo.phone }}</td>
+                  
                   <td>
                     <button class="btn btn-primary btn-sm me-2 d-inline"
-                      [routerLink]="['/dashboard/sysadmin/users/edit',user._id]">
+                      [routerLink]="['/dashboard/admin/suppliers/edit',supplier._id]">
                       <i class="bi bi-pencil-fill"></i>
                     </button>
                     <button class="btn btn-danger btn-sm d-inline">
@@ -251,7 +247,7 @@
           <div class="card-title text-center">
             <h5>Búsqueda de Categorias</h5>
           </div>
-          <a name="" id="" class="btn btn-primary end" routerLink="new" role="button">
+          <a name="" id="" class="btn btn-primary end" routerLink="categories/new/{{company._id}}" role="button">
             <i class="bi bi-plus-lg"></i> Crear Categoria
           </a>
         </div>

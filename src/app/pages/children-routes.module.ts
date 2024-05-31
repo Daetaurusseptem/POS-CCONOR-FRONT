@@ -17,13 +17,19 @@ import { PagesComponent } from './pages.component';
 import { UserEditComponent } from './sysAdminTools/users/edit-user/edit-user.component';
 
 import { DashboardPageComponent } from './dashboard/dashboard-page/dashboard-page.component';
-import { CompanyUsersComponent } from './adminTools/users/company-users/company-users.component';
+
 import { CompanyDetailsComponent } from './sysAdminTools/companies/company-details/company-details.component';
 import { AddSubscriptionComponent } from './sysAdminTools/companies/add-suscription/add-suscription.component';
 import { SelectSubscriptionsComponent } from './sysAdminTools/subscriptions/select-subscriptions/select-subscriptions.component';
 import { CreateUserReComponent } from '../components/shared/create-user/create-user.component';
 import { UserListComponent } from '../components/shared/user-list/user-list.component';
 import { RoleGuard } from '../guards/role.guard';
+import { CreateProductComponent } from './adminTools/products/create-product/create-product.component';
+import { CreateSupplierComponent } from './adminTools/Suppliers/create-supplier/create-supplier.component';
+import { UpdateProductComponent } from './adminTools/products/update-product/update-product.component';
+import { UpdateSuppliersComponent } from './adminTools/Suppliers/update-suppliers/update-suppliers.component';
+import { CreateCompanyCategoryComponent } from './adminTools/Categories/create-company-catregory/create-company-category.component';
+import { AddItemComponent } from './adminTools/add-item/add-item.component';
 // ... otros componentes del dashboard
 
 const routes: Routes = [
@@ -48,8 +54,21 @@ const routes: Routes = [
       
       //ADMIN
       { path: 'admin',canActivate:[AdminGuard], component:  CompanyAdminHomeComponent},
+      //users
       { path: 'admin/users',canActivate:[AdminGuard], component:  UserListComponent},
       { path: 'admin/users/new',canActivate:[AdminGuard], component:  CreateUserReComponent},
+      { path: 'admin/users/edit/:id',canActivate:[AdminGuard], component:  UserEditComponent},
+      //productos
+      { path: 'admin/product/new',canActivate:[AdminGuard], component:  CreateProductComponent},
+      { path: 'admin/product/edit/:id',canActivate:[AdminGuard], component:  UpdateProductComponent},
+      //suppliers
+      { path: 'admin/suppliers/new/:id',canActivate:[AdminGuard], component:  CreateSupplierComponent},
+      { path: 'admin/suppliers/edit/:id',canActivate:[AdminGuard], component:  UpdateSuppliersComponent},
+      //categorias
+      { path: 'admin/categories/new/:id',canActivate:[AdminGuard], component:  CreateCompanyCategoryComponent},
+      //items
+      { path: 'admin/items/new',canActivate:[AdminGuard], component:  AddItemComponent}
+
       // ... otras rutas hijas del dashboard
     ]
   }

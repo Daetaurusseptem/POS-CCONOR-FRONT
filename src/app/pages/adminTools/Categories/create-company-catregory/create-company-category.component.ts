@@ -50,7 +50,7 @@ export class CreateCompanyCategoryComponent {
     
     if (form.valid) {
       console.log(form.value);
-      this.categoryService.createCategory(this.category).subscribe({
+      this.categoryService.createCategory(this.category,this.authService.company._id!).subscribe({
         next: (createdCompany) => {
           Swal.fire({
             text:'Categoria creado correctamente',
@@ -58,7 +58,7 @@ export class CreateCompanyCategoryComponent {
           })
           .then(()=>{
             if(this.userRole=='admin'){
-              this.router.navigateByUrl('/dashboard/admin/categories')
+              this.router.navigateByUrl('/dashboard/admin')
             }else if(this.userRole=='sysadmin'){
               this.router.navigateByUrl('/dashboard/sysadmin/categories')
             }

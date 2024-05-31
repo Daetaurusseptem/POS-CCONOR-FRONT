@@ -26,9 +26,12 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { PagesComponent } from './pages.component';
 
 import { SysAdmintoolsModule } from './sysAdminTools/sys-admintools.module';
-import { NewsaleComponent } from './userTools/newsale/newsale.component';
+
 import { DashboardPageComponent } from './dashboard/dashboard-page/dashboard-page.component';
 import { AdminToolsModule } from './adminTools/admin-tools.module';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { UserToolsModule } from './userTools/user-tools.module';
+
 
 
 
@@ -44,8 +47,8 @@ import { AdminToolsModule } from './adminTools/admin-tools.module';
     ProductsComponent,
     PageNotFoundComponent,
     PagesComponent,
-    NewsaleComponent,
-    DashboardPageComponent
+    DashboardPageComponent,
+
     
   ],
   imports: [
@@ -59,6 +62,8 @@ import { AdminToolsModule } from './adminTools/admin-tools.module';
     MatInputModule,
     SysAdmintoolsModule,
     AdminToolsModule,
+    NgxPaginationModule,
+    UserToolsModule
 
   ]
 })

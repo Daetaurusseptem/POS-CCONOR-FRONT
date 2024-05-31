@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category, Item, Product, User, company } from 'src/app/interfaces/models.interface';
+import { Category, Item, Product, Supplier, User, company } from 'src/app/interfaces/models.interface';
 import { CompanyService } from 'src/app/services/company.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -10,6 +10,8 @@ import { UsuarioModel } from 'src/app/models/usuario.model';
 import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
 import { ItemService } from 'src/app/services/item.service';
+import { ModalService } from 'src/app/services/modal.service';
+import { SupplierService } from 'src/app/services/provider.service';
 
 @Component({
   selector: 'app-company-admin-home',
@@ -19,6 +21,7 @@ import { ItemService } from 'src/app/services/item.service';
 export class CompanyAdminHomeComponent {
 items!:Item[]  
 categories!: Category[];
+suppliers!: Supplier[];
 products!: Product[];
 users!: User[];
 tabSelected:'usuarios'|'productos'|'suscripciones'|'proveedores'|'categorias'|'items'|'inventario' ='usuarios'
@@ -51,17 +54,14 @@ tabsArray=[
 eliminarUsuario(arg0: any) {
 throw new Error('Method not implemented.');
 }
-abrirModal(_t76: any) {
-throw new Error('Method not implemented.');
-}
+
   company!: company;
   admin!: UsuarioModel
   id: string = '';
 
 ngOnInit(): void {
   this.admin = this.authService.usuario
-  console.log(this.admin);
-
+  this.getUsers()
   this.getAdminCompany(this.admin.id)
   
 }
@@ -73,15 +73,16 @@ ngOnInit(): void {
     private userService: UsersService,
     private itemService: ItemService,
     private categoryService: CategoryService,
+    private suppliersService: SupplierService,
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
+    private modalService: ModalService,
 
-  ) {
-    
+
+  ) { 
   }
-  
   getAdminCompany(id: string) {
     return this.userService.getCompanyAdmin(id)
     .pipe(
@@ -95,17 +96,13 @@ ngOnInit(): void {
         
         this.company = company!;
         this.admin = this.authService.usuario
-        this.getUsers(this.admin.id)
-        this.getCategories(company!._id!);
-        this.getProducts(company!._id!);
-        this.getItemsCompany(company!._id!);
+
         
       })
 
   }
-  
   getCategories(idEmpresa:string){
-    this.categoryService.getCompanyCategories(idEmpresa,1)
+    this.categoryService.getCompanyCategories(idEmpresa)
     .pipe(
       map(i=>i.categories)
     )
@@ -113,14 +110,27 @@ ngOnInit(): void {
       this.categories =categories!;
     })
   }
+  getSuppliers(idEmpresa:string){
+    this.suppliersService.getCompanySuppliers(idEmpresa)
+    .pipe(
+      map(i=>{
+        console.log('sups',i);
+        return i.suppliers
+      })
+    )
+    .subscribe(suppliers=>{
+      this.suppliers =suppliers!;
+    })
+  }
+  getUsers(){
 
-
-  getUsers(idEmpresa:string){
-
-    this.userService.getAllNonAdminUsersOfCompany(idEmpresa)
-    .pipe(map(item=>item.users))
+    this.userService.getAllNonAdminUsersOfCompany(this.authService.usuario.id)
+    .pipe(map(item=>{
+      console.log(item);
+      return item.users
+    }))
     .subscribe(users=>{this.users=users!})
-    console.log(idEmpresa);
+    
   }
   getProducts(idEmpresa:string){
     this.productService.getCompanyProducts(idEmpresa)
@@ -152,9 +162,39 @@ ngOnInit(): void {
 
 
   changeTab(tab:'usuarios'|'productos'|'items'|'suscripciones'|'proveedores'|'categorias'|'inventario'){
+    
+    switch (tab) {
+      case 'usuarios':
+          this.getUsers()
+        break;
+      case 'productos':
+          this.getProducts(this.authService.company._id!)
+        break;
+      case 'items':
+        this.getProducts(this.authService.company._id!)
+        break;
+        
+        case 'proveedores':          
+          this.getSuppliers(this.authService.company._id!)
+          break;
+          case 'categorias':
+            this.getCategories(this.authService.company._id!)
+            
+        break;
+    
+      default:
+        break;
+    }
+
     this.tabSelected = tab
     console.log(this.tabSelected);
   
+  }
+
+  abrirModal( element: company|User,tipo:"empresas" | "usuarios" | "productos" ) {
+    console.log(element);
+    const {_id} = element
+    this.modalService.abrirModal(element.img,tipo,_id!);
   }
 
 }
