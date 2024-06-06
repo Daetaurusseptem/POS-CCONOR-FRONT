@@ -30,6 +30,11 @@ import { UpdateProductComponent } from './adminTools/products/update-product/upd
 import { UpdateSuppliersComponent } from './adminTools/Suppliers/update-suppliers/update-suppliers.component';
 import { CreateCompanyCategoryComponent } from './adminTools/Categories/create-company-catregory/create-company-category.component';
 import { AddItemComponent } from './adminTools/add-item/add-item.component';
+import { OpenCashRegisterComponent } from './userTools/open-cash-register/open-cash-register.component';
+import { CashRegisterGuard } from '../guards/cash-register.guard';
+import { UserHomeComponent } from './userTools/user-home/user-home.component';
+import { userGuard } from '../guards/user.guard';
+import { NewsaleComponent } from './userTools/newsale/newsale.component';
 // ... otros componentes del dashboard
 
 const routes: Routes = [
@@ -67,9 +72,13 @@ const routes: Routes = [
       //categorias
       { path: 'admin/categories/new/:id',canActivate:[AdminGuard], component:  CreateCompanyCategoryComponent},
       //items
-      { path: 'admin/items/new',canActivate:[AdminGuard], component:  AddItemComponent}
+      { path: 'admin/items/new',canActivate:[AdminGuard], component:  AddItemComponent},
+      //USER
+      { path: 'user', canActivate:[userGuard], component:  UserHomeComponent},
+      { path: 'user/new-sale', component: NewsaleComponent, canActivate: [AuthGuardGuard, userGuard]},
 
-      // ... otras rutas hijas del dashboard
+
+      
     ]
   }
 ];

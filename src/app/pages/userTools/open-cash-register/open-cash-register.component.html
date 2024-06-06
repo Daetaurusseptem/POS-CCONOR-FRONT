@@ -1,1 +1,21 @@
-<p>open-cash-register works!</p>
+<div class="container mt-4">
+    <h2>Bienvenido</h2>
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary" (click)="toggleForm()">
+        {{ showForm ? 'Cancelar' : 'Abrir Caja' }}
+      </button>
+      <button class="btn btn-secondary" (click)="logout()">Logout</button>
+    </div>
+  
+    <div *ngIf="showForm" class="mt-4">
+      <h3>Registrar Monto Inicial</h3>
+      <form (ngSubmit)="openCashRegister()">
+        <div class="mb-3">
+          <label for="initialAmount" class="form-label">Monto Inicial</label>
+          <input type="number" id="initialAmount" class="form-control" [(ngModel)]="initialAmount" name="initialAmount" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Abrir Caja</button>
+      </form>
+    </div>
+  </div>
+  

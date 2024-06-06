@@ -19,7 +19,7 @@ state: RouterStateSnapshot):  boolean  {
 if(this.authService.role=='admin'){
 return true;
 }else if(this.authService.role=='user'){
-  this.router.navigateByUrl('/dashboard/user')
+  
   return false
 }else if(this.authService.role=='sysadmin'){
   this.router.navigateByUrl('/dashboard/sysadmin')

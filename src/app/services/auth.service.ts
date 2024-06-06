@@ -7,6 +7,7 @@ import {  tap, Observable,of} from "rxjs";
 import {map,catchError} from "rxjs/operators";
 import { environment } from 'src/environments/environment';
 import { company } from '../interfaces/models.interface';
+import { Router } from '@angular/router';
 
 const url = environment.apiUrl;
 const urlAuth = `${url}/auth`;
@@ -22,6 +23,7 @@ export class AuthService {
 
   constructor(
                 private http:HttpClient,
+                private router:Router
                 
                 ) { }
   login(formData:{usuario?:string,password?:string}){
@@ -84,5 +86,10 @@ export class AuthService {
   borrarLocalStorage(){
     localStorage.removeItem('token');
     localStorage.removeItem('menu');
+}
+
+logout(){
+  this.borrarLocalStorage();
+  this.router.navigate(['']);
 }
 }
