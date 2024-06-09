@@ -13,10 +13,10 @@
           <h5 class="card-title">{{ item.product?.name }}</h5>
           <p class="card-text">Precio: {{ item.price  }}</p>
           <p class="card-text">Stock: {{ item.stock }}</p>
-          <p class="card-text">Fecha de Recepción: {{ item.receivedDate | date }}</p>
+          <p class="card-text">Fecha de Recepción: {{ item.receivedDate| date }}</p>
           <p class="card-text">Fecha de Expiración: {{ item.expirationDate ? (item.expirationDate | date) : 'N/A' }}</p>
           <p class="card-text">Descuento: {{ item.discount }}%</p>
-          <p class="card-text">Descuento: {{ item.discount }}%</p>
+          
           <p class="card-text"><a class="btn btn-block btn-primary"><i class="bi bi-pencil-fill"></i>Editar</a></p>
           <p class="card-text" (click)="deleteItem(item._id)"><a class="btn btn-block btn-danger"><i class="bi bi-trash3-fill"></i>eliminar</a></p>
         </div>
