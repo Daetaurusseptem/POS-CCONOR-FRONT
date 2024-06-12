@@ -21,7 +21,20 @@ export class ProductService {
     this.authService.headers 
     );
   };
+
+
+  getItemsByCategory(category: string, search: string = '', page: number = 1, limit: number = 10){
+    return this.http.get<any>(`${urlProducts}/by-category`, {
+      params: {
+        category,
+        search,
+        page: page.toString(),
+        limit: limit.toString()
+      }
+    });
+  }
   getProduct(id:string) {
+    
     return this.http.get<itemResponse>(`${urlProducts}/${id}`,
     this.authService.headers 
     );

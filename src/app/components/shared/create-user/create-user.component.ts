@@ -29,7 +29,7 @@ export class CreateUserReComponent {
     role: 'user',
     companyId:''
   };
-
+  
   constructor(
               private userService: UsersService,
               private companiesService: CompanyService,

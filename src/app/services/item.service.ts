@@ -22,12 +22,15 @@ export class ItemService {
       params.name = search;
     }
     return this.http.get<itemResponse>(`${urlBase}/${this.authService.getCompany._id}`, { params, headers: { 'x-token': this.authService.token } });
-  }
+  };
+
+  
   getNumberOfCompanyItems() {
     return this.http.get<itemResponse>(`${urlBase}/number`,
       this.authService.headers
     );
   };
+
   getCompanyItems(id: string) {
     return this.http.get<itemResponse>(`${urlBase}/company/${id}`, this.authService.headers);
   };
@@ -44,5 +47,16 @@ export class ItemService {
 
     return this.http.post<itemResponse>(`${urlBase}/${empresaId}`, item, this.authService.headers);
   };
+
+  getItemsByCategory(category: string, search: string = '', page: number = 1, limit: number = 10) {
+    return this.http.get<itemResponse>(`${urlBase}/by-category`, {
+      params: {
+        category,
+        search,
+        page: page.toString(),
+        limit: limit.toString()
+      }
+    });
+  }
 }
 

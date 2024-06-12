@@ -1,1 +1,65 @@
-<p>newsale works!</p>
+<div class="container mt-4">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Search" formControlName="search" (input)="searchItems()">
+        </div>
+        <div class="btn-group mb-3" role="group">
+          <button *ngFor="let category of categories" type="button" class="btn btn-outline-secondary" 
+                  [class.active]="category === selectedCategory" (click)="selectCategory(category)">
+            {{ category }}
+          </button>
+        </div>
+        <div class="row">
+          <div class="col-md-4 mb-3" *ngFor="let item of items">
+            <div class="card">
+              <img src="{{ item.product.img }}" class="card-img-top" alt="{{ item.product.name }}">
+              <div class="card-body">
+                <h5 class="card-title">{{ item.product.name }}</h5>
+                <p class="card-text">{{ item.price | currency }}</p>
+                <button class="btn btn-dark w-100" (click)="addToCart(item)">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <nav>
+          <ul class="pagination justify-content-center">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <a class="page-link" (click)="goToPage(currentPage - 1)">Anterior</a>
+            </li>
+            <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" [class.active]="currentPage === (i + 1)">
+              <a class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</a>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <a class="page-link" (click)="goToPage(currentPage + 1)">Siguiente</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-md-4">
+        <h3>Venta Carrito</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cart">
+              <td>{{ item.item.product.name }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.total | currency }}</td>
+            </tr>
+            <tr>
+              <td colspan="2" class="text-end"><strong>Total:</strong></td>
+              <td>{{ total | currency }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn btn-primary w-100" (click)="checkout()">Pago</button>
+      </div>
+    </div>
+  </div>
+  

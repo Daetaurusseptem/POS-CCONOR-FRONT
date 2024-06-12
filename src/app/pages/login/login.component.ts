@@ -28,10 +28,15 @@ export class LoginComponent implements OnInit {
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
+
+    this.loginForm = this.formBuilder
+      .group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+
+
+
   }
 
   onSubmit() {

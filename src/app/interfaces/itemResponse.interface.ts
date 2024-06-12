@@ -2,6 +2,7 @@
 import { Category, Item, Product, Sale, Supplier, User, company, CashRegister } from './models.interface';
 import { StripeResponse } from './stripeProduct.interface';
 export interface itemResponse {
+
   ok?:boolean,
   msg?:string,
   company?:company,
@@ -17,8 +18,10 @@ export interface itemResponse {
   categories?:Category[],  
   category?:Category,  
   suppliers?:Supplier[],  
-  supplier?:Supplier,  
+  supplier?:Supplier,
+
   totalPages?:number,
+  
   page?:number
   limit?:number,
   img:string;
