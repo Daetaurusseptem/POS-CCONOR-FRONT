@@ -11,7 +11,6 @@ import { CompanyListComponent } from './sysAdminTools/companies/company-list/com
 import { CreateCompanyComponent } from './sysAdminTools/companies/create-company/create-company.component';
 import { EditCompanyComponent } from './sysAdminTools/companies/edit-company/edit-company.component';
 
-
 import { PagesComponent } from './pages.component';
 
 import { UserEditComponent } from './sysAdminTools/users/edit-user/edit-user.component';
@@ -35,50 +34,54 @@ import { CashRegisterGuard } from '../guards/cash-register.guard';
 import { UserHomeComponent } from './userTools/user-home/user-home.component';
 import { userGuard } from '../guards/user.guard';
 import { NewsaleComponent } from './userTools/newsale/newsale.component';
-// ... otros componentes del dashboard
+import { ProductsListComponent } from './adminTools/products/products-list/products-list.component';
+import { SuppliersListComponent } from './adminTools/Suppliers/suppliers-list/suppliers-list.component';
+import { CategoriesListComponent } from './adminTools/Categories/categories-list/categories-list.component';
+import { ItemStockListComponent } from './adminTools/item-list/item-list.component';
 
 const routes: Routes = [
   {
     path: '',
-    component:PagesComponent,
-    canActivate:[AuthGuardGuard],
+    component: PagesComponent,
+    canActivate: [AuthGuardGuard],
     children: [
-      { path: '', component: DashboardPageComponent, canActivate:[RoleGuard] },
+      { path: '', component: DashboardPageComponent, canActivate: [RoleGuard] },
       { path: 'overview', component: OverviewComponent },
       { path: 'reports', component: ReportsComponent },
       //SYSADMIN
-      { path: 'sysadmin/users',canActivate:[SysAdminGuard], component:  UserListComponent},
-      { path: 'sysadmin/users/edit/:id',canActivate:[SysAdminGuard], component:  UserEditComponent},
-      { path: 'sysadmin/users/new',canActivate:[SysAdminGuard], component:  CreateUserReComponent},
-      { path: 'sysadmin/companies',canActivate:[SysAdminGuard], component:  CompanyListComponent},
-      { path: 'sysadmin/companies/new',canActivate:[SysAdminGuard], component:  CreateCompanyComponent},
-      { path: 'sysadmin/companies/edit/:id',canActivate:[SysAdminGuard], component:  EditCompanyComponent},
-      { path: 'sysadmin/companies/details/:id',canActivate:[SysAdminGuard], component:  CompanyDetailsComponent},
-      { path: 'sysadmin/companies/subscriptions/select',canActivate:[SysAdminGuard], component:  SelectSubscriptionsComponent},
-      { path: 'sysadmin/companies/subscription/:id',canActivate:[SysAdminGuard], component:  AddSubscriptionComponent},
-      
+      { path: 'sysadmin/users', canActivate: [SysAdminGuard], component: UserListComponent },
+      { path: 'sysadmin/users/edit/:id', canActivate: [SysAdminGuard], component: UserEditComponent },
+      { path: 'sysadmin/users/new', canActivate: [SysAdminGuard], component: CreateUserReComponent },
+      { path: 'sysadmin/companies', canActivate: [SysAdminGuard], component: CompanyListComponent },
+      { path: 'sysadmin/companies/new', canActivate: [SysAdminGuard], component: CreateCompanyComponent },
+      { path: 'sysadmin/companies/edit/:id', canActivate: [SysAdminGuard], component: EditCompanyComponent },
+      { path: 'sysadmin/companies/details/:id', canActivate: [SysAdminGuard], component: CompanyDetailsComponent },
+      { path: 'sysadmin/companies/subscriptions/select', canActivate: [SysAdminGuard], component: SelectSubscriptionsComponent },
+      { path: 'sysadmin/companies/subscription/:id', canActivate: [SysAdminGuard], component: AddSubscriptionComponent },
+
       //ADMIN
-      { path: 'admin',canActivate:[AdminGuard], component:  CompanyAdminHomeComponent},
+      { path: 'admin', canActivate: [AdminGuard], component: CompanyAdminHomeComponent },
       //users
-      { path: 'admin/users',canActivate:[AdminGuard], component:  UserListComponent},
-      { path: 'admin/users/new',canActivate:[AdminGuard], component:  CreateUserReComponent},
-      { path: 'admin/users/edit/:id',canActivate:[AdminGuard], component:  UserEditComponent},
+      { path: 'admin/users', canActivate: [AdminGuard], component: UserListComponent },
+      { path: 'admin/users/new', canActivate: [AdminGuard], component: CreateUserReComponent },
+      { path: 'admin/users/edit/:id', canActivate: [AdminGuard], component: UserEditComponent },
       //productos
-      { path: 'admin/product/new',canActivate:[AdminGuard], component:  CreateProductComponent},
-      { path: 'admin/product/edit/:id',canActivate:[AdminGuard], component:  UpdateProductComponent},
+      { path: 'admin/products', canActivate: [AdminGuard], component: ProductsListComponent },
+      { path: 'admin/product/new', canActivate: [AdminGuard], component: CreateProductComponent },
+      { path: 'admin/product/edit/:id', canActivate: [AdminGuard], component: UpdateProductComponent },
       //suppliers
-      { path: 'admin/suppliers/new/:id',canActivate:[AdminGuard], component:  CreateSupplierComponent},
-      { path: 'admin/suppliers/edit/:id',canActivate:[AdminGuard], component:  UpdateSuppliersComponent},
+      { path: 'admin/suppliers', canActivate: [AdminGuard], component: SuppliersListComponent },
+      { path: 'admin/suppliers/new/:id', canActivate: [AdminGuard], component: CreateSupplierComponent },
+      { path: 'admin/suppliers/edit/:id', canActivate: [AdminGuard], component: UpdateSuppliersComponent },
       //categorias
-      { path: 'admin/categories/new/:id',canActivate:[AdminGuard], component:  CreateCompanyCategoryComponent},
-      //items
-      { path: 'admin/items/new',canActivate:[AdminGuard], component:  AddItemComponent},
+      { path: 'admin/categories', canActivate: [AdminGuard], component: CategoriesListComponent },
+      { path: 'admin/categories/new/:id', canActivate: [AdminGuard], component: CreateCompanyCategoryComponent },
+      //inventario
+      { path: 'admin/items', canActivate: [AdminGuard], component: ItemStockListComponent },
+      { path: 'admin/items/new', canActivate: [AdminGuard], component: AddItemComponent },
       //USER
-      { path: 'user', canActivate:[userGuard], component:  UserHomeComponent},
-      { path: 'user/new-sale', component: NewsaleComponent, canActivate: [AuthGuardGuard, userGuard]},
-
-
-      
+      { path: 'user', canActivate: [userGuard], component: UserHomeComponent },
+      { path: 'user/new-sale', component: NewsaleComponent, canActivate: [AuthGuardGuard, userGuard] },
     ]
   }
 ];
