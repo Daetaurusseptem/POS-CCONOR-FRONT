@@ -1,47 +1,46 @@
-<div class="row">
-  <div class="col-12 mx-auto text-center mb-2">
-    <div class="card">
+<div class="container">
+  <div class="content">
+    <div class="card-container">
       <div class="card-header">
-        <div class="card-title text-center">
-          <h5>Búsqueda de Usuarios</h5>
-        </div>
-        <a name="" id="" class="btn btn-primary end" routerLink="new" role="button">
+        <h5 class="card-title mb-0">Busqueda de usuarios</h5>
+        <a class="btn btn-create-user" routerLink="new" role="button">
           <i class="bi bi-plus-lg"></i> Crear Usuario
         </a>
       </div>
-      <form>
-        <div class="m-5">
-          <input type="text" class="form-control" id="busquedaEmpresa" aria-describedby="busquedaHelp" #terminoEmpresa>
+      <!-- Search Form -->
+      <form class="search-form">
+        <div class="search-input">
+          <input type="text" class="form-control" id="busquedaEmpresa" aria-describedby="busquedaHelp" #terminoEmpresa placeholder="Buscar...">
         </div>
       </form>
     </div>
   </div>
-  <div class="col-12 mx-auto text-center">
-    <div class="card">
-      <div class="card-title p-4 start">
 
-        <h2>Lista de <span *ngIf="userRole=='admin'"> Usuarios </span> <span *ngIf="userRole=='sysadmin'">
-            Administradores </span>Registrados <p *ngIf="company">{{company.name}}</p>
+  <div class="list-container">
+    <div class="card-list">
+      <div class="card-title-list">
+        <h2>Lista de 
+          <span *ngIf="userRole=='admin'">Usuarios</span> 
+          <span *ngIf="userRole=='sysadmin'">Administradores</span>
+          Registrados
+          <p *ngIf="company">{{company.name}}</p>
         </h2>
-        <span class="text-center" *ngIf="company">
-          <td class="text-center">
-            <img *ngIf="company.img=='no-image'" src="../../../../../assets/img/no-img.webp" alt="Avatar de usuario"
-              class="img-avatar pointer" (click)="abrirModal(company,'empresas')">
-            <img *ngIf="company.img!='no-image'" [src]="company.img" alt="Avatar de usuario" class="img-avatar pointer"
-              (click)="abrirModal(company,'empresas')">
-
-          </td>
-        </span>
+        <!-- Show company image if present -->
+        <div *ngIf="company" class="company-image">
+          <img *ngIf="company.img=='no-image'" src="../../../../../assets/img/no-img.webp" alt="User Avatar" class="avatar-pointer" (click)="abrirModal(company, 'empresas')">
+          <img *ngIf="company.img!='no-image'" [src]="company.img" alt="User Avatar" class="avatar-pointer" (click)="abrirModal(company, 'empresas')">
+        </div>
       </div>
+
       <div class="card-body">
         <div class="table-responsive">
-
+          <!-- User Table -->
           <table class="table table-striped">
-            <thead>
+            <thead class="table-options">
               <tr>
-                <th>img</th>
+                <th>Imagen</th>
                 <th>Nombre</th>
-                <th>Nombre de Usuario</th>
+                <th>Nombre de usuario</th>
                 <th>Rol</th>
                 <th>Acciones</th>
               </tr>
@@ -49,33 +48,26 @@
             <tbody>
               <tr *ngFor="let user of users">
                 <td class="text-center">
-                  <img *ngIf="user.img=='no-image'" src="../../../../../assets/img/no-img.webp" alt="Avatar de usuario"
-                    class="avatar pointer" (click)="abrirModal(user,'usuarios')">
-                  <img *ngIf="user.img!='no-image'" [src]="user.img" alt="Avatar de usuario" class="avatar pointer"
-                    (click)="abrirModal(user,'usuarios')">
-
+                  <img *ngIf="user.img=='no-image'" src="../../../../../assets/img/no-img.webp" alt="User Avatar" class="avatar-pointer" (click)="abrirModal(user, 'usuarios')">
+                  <img *ngIf="user.img!='no-image'" [src]="user.img" alt="User Avatar" class="avatar-pointer" (click)="abrirModal(user, 'usuarios')">
                 </td>
-                <td>{{ user.name || 'No Especificado' }}</td>
+                <td>{{ user.name || 'Not Specified' }}</td>
                 <td>{{ user.username }}</td>
                 <td>{{ user.role }}</td>
                 <td>
-                  <button class="btn btn-primary btn-sm me-2 d-inline"
-                    [routerLink]="['/dashboard/sysadmin/users/edit',user._id]">
-                    <i class="bi bi-pencil-fill"></i>
+                  <button class="btn-edit" [routerLink]="['edit', user._id]">
+                    <i class="bi bi-pencil-fill"></i> Editar
                   </button>
-                  <button class="btn btn-danger btn-sm d-inline">
-                    <i class="bi bi-trash3-fill"></i>
-
+                  <button class="btn-delete">
+                    <i class="bi bi-trash3-fill"></i> Eliminar
                   </button>
                 </td>
-
               </tr>
             </tbody>
           </table>
-          <div class="card bg-primary text-light" *ngIf="!users">
-
-            <app-loading-data-spinner class="mb-2"></app-loading-data-spinner>
-            <p>Cargando Registros</p>
+          <div class="loading-spinner" *ngIf="!users">
+            <app-loading-data-spinner></app-loading-data-spinner>
+            <p>Loading Records</p>
           </div>
         </div>
       </div>

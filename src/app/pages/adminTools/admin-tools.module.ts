@@ -16,6 +16,7 @@ import { UpdateSuppliersComponent } from './Suppliers/update-suppliers/update-su
 import { ItemsComponent } from './items/items.component';
 import { AddItemComponent } from './add-item/add-item.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SuppliersListComponent } from './Suppliers/suppliers-list/suppliers-list.component';
 
 
 
@@ -35,9 +36,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
     UpdateSuppliersComponent,
     ItemsComponent,
     AddItemComponent,
+    SuppliersListComponent,
   ],
   exports:[
-    ItemStockListComponent
+    ItemStockListComponent,
   ],
 
   imports: [
