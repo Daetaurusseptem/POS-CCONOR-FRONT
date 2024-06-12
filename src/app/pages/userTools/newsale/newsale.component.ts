@@ -26,15 +26,10 @@ export class NewsaleComponent {
     this.searchForm = this.fb.group({
       search: ['']
     });
-    this.loadProducts();
+  
   }
 
-  loadProducts(): void {
-    // Load products based on selected category
-    this.productService.getProductsByCategory(this.selectedCategory).subscribe((data: any[]) => {
-      this.products = data;
-    });
-  }
+  
 
   addToCart(product: any): void {
     const existingProduct = this.cart.find(p => p.product._id === product._id);
@@ -81,6 +76,6 @@ export class NewsaleComponent {
 
   selectCategory(category: string): void {
     this.selectedCategory = category;
-    this.loadProducts();
+    
   }
 }

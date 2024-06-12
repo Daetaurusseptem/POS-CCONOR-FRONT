@@ -9,29 +9,23 @@
 
   <!-- Navegación Sidebar -->
   <nav class="sidebar-nav">
-    <a class="sidebar-toggle" data-bs-toggle="collapse" href="#{{menuItems[0].id}}" role="button" aria-expanded="false"
-      attr.aria-controls="{{menuItems[0].id}}">
-      <i class="bi bi-person-lines-fill"></i> {{menuItems[0].title||'asddas'}}
+    <a class="sidebar-toggle" data-bs-toggle="collapse" href="#{{ menuItems[0].id }}" role="button" aria-expanded="false" attr.aria-controls="{{ menuItems[0].id }}">
+      <i class="bi bi-person-lines-fill"></i> {{ menuItems[0].title||'¿Por que esto funciona?' }}
     </a>
-    
-    
-    
-    <div class="collapse" id="{{menuItems[0].id}}">
-      <ul class="sidebar-menu list-unstyled">
-        <li *ngFor="let item of menuItems[0].submenu" routerLink="{{item.url}}">
-          <a [routerLink]="item.url" routerLinkActive="active" class="sidebar-link">  
-            <i [class]="item.icon"></i>
-            {{item.title}}</a>
-          </li>
-          
-        </ul>
-      </div>
-      
-      
-      <a class="sidebar-toggle" role="button" (click)="logOut()">
-        <i class="bi bi-power"></i>LOGOUT
-      </a>
 
-    
+    <div class="collapse" id="{{ menuItems[0].id }}">
+      <ul class="sidebar-menu list-unstyled">
+        <li *ngFor="let item of menuItems[0].submenu" routerLink="{{ item.url }}">
+          <a [routerLink]="item.url" routerLinkActive="active" class="sidebar-link">
+            <i [class]="item.icon"></i>
+            {{ item.title }}
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <a class="sidebar-toggle" role="button" (click)="logOut()">
+      <i class="bi bi-power"></i>LOGOUT
+    </a>
   </nav>
 </div>
