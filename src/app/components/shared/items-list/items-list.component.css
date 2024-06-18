@@ -1,5 +1,79 @@
-.product-card:hover {
-    cursor: pointer;
-    transform: scale(1.05);
-    transition: transform 0.3s ease-in-out;
-}
+.main-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -15px;
+  }
+  
+  .col {
+    flex: 0 0 auto;
+    width: 100%;
+    padding: 15px;
+  }
+  
+  @media (min-width: 768px) {
+    .col {
+      width: 33.33333%;
+    }
+  }
+  
+  /* Tarjeta de producto */
+  .card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .card-body {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .card-text {
+    margin-bottom: 10px;
+  }
+  
+  .btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    font-weight: 500;
+    margin-top: auto;
+    text-align: center;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  

@@ -31,9 +31,9 @@ export class NewsaleComponent {
 
   loadProducts(): void {
     // Load products based on selected category
-    this.productService.getProductsByCategory(this.selectedCategory).subscribe((data: any[]) => {
+    /*this.productService.getProductsByCategory(this.selectedCategory).subscribe((data: any[]) => {
       this.products = data;
-    });
+    });*/
   }
 
   addToCart(product: any): void {

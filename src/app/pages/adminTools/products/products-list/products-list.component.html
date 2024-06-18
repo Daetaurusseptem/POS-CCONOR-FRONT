@@ -1,1 +1,29 @@
 <p>products-list works!</p>
+<div class="main-container">
+    <div class="search-container">
+      <div class="search-header">
+        <div class="search-title">
+          <h5>Búsqueda de Items</h5>
+        </div>
+        <a class="create-product-link" routerLink="/dashboard/admin/product/new">
+          <i class="bi bi-plus-lg"></i> Crear Producto
+        </a>
+      </div>
+      <form>
+        <div class="search-input">
+          <input type="text" id="busquedaEmpresa" #terminoEmpresa placeholder="Buscar...">
+        </div>
+      </form>
+    </div>
+    <div class="products-container">
+      <div class="products-header">
+        <div class="products-title">
+          <h2>Productos - {{ companyName | uppercase }}</h2>
+        </div>
+      </div>
+      <div class="items-list-container">
+        <items-list [items]="products" [routerLink]=""></items-list>
+      </div>
+    </div>
+  </div>
+  
