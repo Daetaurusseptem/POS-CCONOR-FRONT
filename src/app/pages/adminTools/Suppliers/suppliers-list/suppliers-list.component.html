@@ -1,56 +1,55 @@
-<p>suppliers-list works!</p>
 <div class="main-container">
-    <div class="search-container">
+  <div class="search-container">
       <div class="search-header">
-        <div class="search-title">
-          <h5>Búsqueda de Proveedores</h5>
-        </div>
-        <a class="create-supplier-link" [routerLink]="'new/' + company._id" role="button">
-          <i class="bi bi-plus-lg"></i> Crear Proveedor
-        </a>
+          <div class="search-title">
+              <h5>Búsqueda de Proveedores</h5>
+          </div>
+          <a class="create-supplier-link" [routerLink]="'new/' + company._id" role="button">
+              <i class="bi bi-plus-lg"></i> Crear Proveedor
+          </a>
       </div>
       <form class="search-form">
-        <div class="search-input">
-          <input type="text" id="busquedaEmpresa" aria-describedby="busquedaHelp" #terminoEmpresa placeholder="Buscar...">
-        </div>
+          <div class="search-input">
+              <input type="text" id="busquedaEmpresa" aria-describedby="busquedaHelp" #terminoEmpresa placeholder="Buscar...">
+          </div>
       </form>
-    </div>
-    <div class="suppliers-container">
+  </div>
+  <div class="suppliers-container">
       <div class="suppliers-header">
-        <div class="suppliers-title">
-          <h2>Lista de Proveedores Registrados</h2>
-        </div>
+          <div class="suppliers-title">
+              <h2>Lista de Proveedores Registrados</h2>
+          </div>
       </div>
       <div class="suppliers-list">
-        <table class="suppliers-table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Descripción</th>
-              <th>Número</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let supplier of suppliers">
-              <td>{{ supplier.name || 'No Especificado' }}</td>
-              <td>{{ supplier.description || 'No Especificado' | slice:0:49 }}</td>
-              <td>{{ supplier.contactInfo.phone }}</td>
-              <td>
-                <button class="btn-edit" [routerLink]="['/dashboard/admin/suppliers/edit', supplier._id]">
-                  <i class="bi bi-pencil-fill"></i> Editar
-                </button>
-                <button class="btn-delete">
-                  <i class="bi bi-trash3-fill"></i> Eliminar
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="loading-spinner" *ngIf="!suppliers">
-          <app-loading-data-spinner></app-loading-data-spinner>
-          <p>Cargando Registros</p>
-        </div>
+          <table class="suppliers-table">
+              <thead>
+                  <tr>
+                      <th>Nombre</th>
+                      <th>Descripción</th>
+                      <th>Número</th>
+                      <th>Acciones</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let supplier of suppliers">
+                      <td>{{ supplier.name || 'No Especificado' }}</td>
+                      <td>{{ supplier.description || 'No Especificado' | slice:0:49 }}</td>
+                      <td>{{ supplier.contactInfo.phone }}</td>
+                      <td>
+                        <button class="btn-edit" [routerLink]="['/dashboard/admin/suppliers/edit', supplier._id]">
+                              <i class="bi bi-pencil-fill"></i> Editar
+                          </button>
+                          <button class="btn-delete">
+                              <i class="bi bi-trash3-fill"></i> Eliminar
+                          </button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+          <div class="loading-spinner" *ngIf="!suppliers">
+              <app-loading-data-spinner></app-loading-data-spinner>
+              <p>Cargando Registros de Proveedores</p>
+          </div>
       </div>
-    </div>
   </div>
+</div>

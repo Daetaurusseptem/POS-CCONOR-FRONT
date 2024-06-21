@@ -1,44 +1,46 @@
+<div class="main-container">
+  <div class="form-container">
+      <div class="form-header">
+          <div class="form-title">
+              <h2>Crear Nuevo Usuario</h2>
+          </div>
+      </div>
+      <form #userForm="ngForm" class="form">
+          <!-- Nombre Completo -->
+          <div class="form-group">
+              <label for="fullName" class="form-label">Nombre Completo</label>
+              <input type="text" id="fullName" [(ngModel)]="user.name" name="name" required class="form-input">
+          </div>
 
-<div class="container mt-3 card">
-    <h2>Crear Nuevo Usuario</h2>
-    <form #userForm="ngForm">
-      <!-- Nombre Completo -->
-      <div class="mb-3">
-        <label for="fullName" class="form-label">Nombre Completo</label>
-        <input type="text" class="form-control" id="fullName" [(ngModel)]="user.name" name="name" required>
-      </div>
-  
-      <!-- Nombre de Usuario -->
-      <div class="mb-3">
-        <label for="username" class="form-label">Nombre de Usuario</label>
-        <input type="text" class="form-control" id="username" [(ngModel)]="user.username" name="username" required>
-      </div>
-  
-      <!-- Email -->
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" [(ngModel)]="user.email" name="email" required>
-      </div>
-  
-      <!-- Contraseña -->
-      <div class="mb-3">
-        <label for="password" class="form-label">Contraseña</label>
-        <input type="password" class="form-control" id="password" [(ngModel)]="user.password" name="password" required>
-      </div>
-  
-      <!-- Rol -->
-      <div *ngIf="this.userRole=='sysadmin'" class="mb-3">
-        <label for="role" class="form-label">Rol</label>
-        <select class="form-select" id="role" [(ngModel)]="user.role" name="role" required>
-          <option value="admin">Admin</option>
-          <option value="user">Usuario</option>
-        </select>
-      </div>
-  
-      <!-- Botón para crear el usuario -->
-      <button type="submit" class="btn btn-primary" (click)="createUser(userForm)" [disabled]="!userForm.form.valid">Crear Usuario</button>
-      
+          <!-- Nombre de Usuario -->
+          <div class="form-group">
+              <label for="username" class="form-label">Nombre de Usuario</label>
+              <input type="text" id="username" [(ngModel)]="user.username" name="username" required class="form-input">
+          </div>
 
-    </form>
+          <!-- Email -->
+          <div class="form-group">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" [(ngModel)]="user.email" name="email" required class="form-input">
+          </div>
+
+          <!-- Contraseña -->
+          <div class="form-group">
+              <label for="password" class="form-label">Contraseña</label>
+              <input type="password" id="password" [(ngModel)]="user.password" name="password" required class="form-input">
+          </div>
+
+          <!-- Rol -->
+          <div class="form-group" *ngIf="this.userRole=='sysadmin'">
+              <label for="role" class="form-label">Rol</label>
+              <select id="role" [(ngModel)]="user.role" name="role" required class="form-select">
+                  <option value="admin">Admin</option>
+                  <option value="user">Usuario</option>
+              </select>
+          </div>
+
+          <!-- Botón para crear el usuario -->
+          <button type="submit" (click)="createUser(userForm)" [disabled]="!userForm.form.valid" class="form-button">Crear Usuario</button>
+      </form>
   </div>
-  
+</div>

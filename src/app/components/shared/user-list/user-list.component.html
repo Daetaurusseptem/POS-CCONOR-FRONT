@@ -23,7 +23,7 @@
           <span *ngIf="userRole=='admin'">Usuarios</span> 
           <span *ngIf="userRole=='sysadmin'">Administradores</span>
           Registrados
-          <p *ngIf="company">{{company.name}}</p>
+          <p class="company" *ngIf="company">{{company.name}}</p>
         </h2>
         <!-- Show company image if present -->
         <div *ngIf="company" class="company-image">

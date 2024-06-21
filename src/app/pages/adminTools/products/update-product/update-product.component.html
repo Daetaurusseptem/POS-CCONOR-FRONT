@@ -1,59 +1,40 @@
-<div class="container mt-3 ">
-    <div class="card">
-        <div class="card-header">
-            <div class="card-title text-center">
-                <h2>Editar Empresa</h2>
-            </div>
-        </div>
-        <div class="card-body">
-
-            <img *ngIf="product.img==''" src="../../../../../assets/img/no-img.webp" alt="Avatar de usuario"
-                class="img-avatar-side pointer" (click)="abrirModal(product,'productos')">
-            <img *ngIf="product.img!=''" [src]="product.img" alt="Avatar de usuario" class="img-avatar-side pointer"
-                (click)="abrirModal(product,'productos')">
-
-            <form [formGroup]="productForm" (ngSubmit)="updateCompany()">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Nombre del producto</label>
-                    <input type="text" class="form-control" id="name" formControlName="name">
-                </div>
-
-
-
-                <div class="mb-3">
-                    <label for="description" class="form-label">Descripción</label>
-                    <textarea class="form-control" id="description" formControlName="description"></textarea>
-                </div>
-
-                <div class="mb-3">
-                    <label for="marca" class="form-label">Marca</label>
-                    <input type="text" class="form-control" id="marca" formControlName="marca">
-                </div>
-
-
-
-                <div class="mb-3">
-                    <label for="category" class="form-label">Proveedor:</label>
-                    <select formControlName="category" class="form-select" id="category" multiple>
-                        <option *ngFor="let categoria of Categories" [value]="categoria._id">{{ categoria.name }}
-                        </option>
-                    </select>
-                </div>
-                <div *ngIf="productForm.invalid" class="card-body alert alert-danger">
-                    <p *ngIf="campoNoValidoDatosUsuario('name')" class="text-danger">Nombre invalido</p>
-                    <p *ngIf="campoNoValidoDatosUsuario('description')" class="text-danger">Descripción invalida</p>
-                    <p *ngIf="campoNoValidoDatosUsuario('marca')" class="text-danger">Dirección invalida</p>
-                    <p *ngIf="campoNoValidoDatosUsuario('tel')" class="text-danger">Telefono invalido</p>
-                    <p *ngIf="campoNoValidoDatosUsuario('email')" class="text-danger">Correo electronico invalido</p>
-
-                </div>
-
-                <div class="row text-center">
-
-                    <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid">Guardar
-                        Cambios</button>
-                </div>
-            </form>
-        </div>
-    </div>
+<div class="main-container">
+  <div class="form-container">
+      <div class="form-header">
+          <div class="form-title">
+              <h2>Editar Producto</h2>
+          </div>
+      </div>
+      <div class="image-container">
+          <img *ngIf="product.img==''" src="../../../../../assets/img/no-img.webp" alt="Avatar de usuario" (click)="abrirModal(product,'productos')" class="product-image">
+          <img *ngIf="product.img!=''" [src]="product.img" alt="Avatar de usuario" (click)="abrirModal(product,'productos')" class="product-image">
+      </div>
+      <form [formGroup]="productForm" (ngSubmit)="updateCompany()" class="form">
+          <div class="form-group">
+              <label for="name" class="form-label">Nombre del producto</label>
+              <input type="text" id="name" formControlName="name" class="form-input">
+          </div>
+          <div class="form-group">
+              <label for="description" class="form-label">Descripción</label>
+              <textarea id="description" formControlName="description" class="form-input"></textarea>
+          </div>
+          <div class="form-group">
+              <label for="marca" class="form-label">Marca</label>
+              <input type="text" id="marca" formControlName="marca" class="form-input">
+          </div>
+          <div class="form-group">
+              <label for="category" class="form-label">Categoría:</label>
+              <ng-select [items]="Categories" bindLabel="name" bindValue="_id" formControlName="category" [multiple]="true" class="form-select">
+              </ng-select>
+          </div>
+          <div class="form-group" *ngIf="productForm.invalid">
+              <p *ngIf="campoNoValidoDatosUsuario('name')">Nombre inválido</p>
+              <p *ngIf="campoNoValidoDatosUsuario('description')">Descripción inválida</p>
+              <p *ngIf="campoNoValidoDatosUsuario('marca')">Dirección inválida</p>
+              <p *ngIf="campoNoValidoDatosUsuario('tel')">Teléfono inválido</p>
+              <p *ngIf="campoNoValidoDatosUsuario('email')">Correo electrónico inválido</p>
+          </div>
+          <button type="submit" [disabled]="!productForm.valid" class="form-button">Guardar Cambios</button>
+      </form>
+  </div>
 </div>

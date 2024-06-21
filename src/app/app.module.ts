@@ -32,7 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatCardModule,
     AppRoutingModule,
     RouterLink,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

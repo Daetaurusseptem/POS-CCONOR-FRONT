@@ -4,23 +4,34 @@
 <app-spinner *ngIf="!company&&!admin"></app-spinner>
 
 <div *ngIf="company&&admin" class="container mt-4">
-    <div class="card">
-        <img [src]="company.img!" class="card-img-top img-avatar text-center" alt="Imagen de la Empresa" *ngIf="company.img!">
-        <div class="card-body">
-            <h5 class="card-title">{{ company.name }}</h5>
-            <p class="card-text">{{ company.description }}</p>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong><i class="bi bi-house-door-fill"></i> Dirección:</strong> {{ company.address }}</li>
-                <li class="list-group-item"><strong><i class="bi bi-telephone-fill"></i> Teléfono:</strong> {{ company.tel }}</li>
-                <li class="list-group-item"><strong><i class="bi bi-at"></i> Email:</strong> {{ company.email }}</li>
-                <li class="list-group-item"><strong><i class="bi bi-calendar-heart-fill"></i> Fecha de Creación:</strong> {{ company.createdAt | date }}</li>
-                <li class="list-group-item"><strong><i class="bi bi-person-circle"></i> Administrado: </strong> </li>
-                <li class="list-group-item"><strong>USERNAME: </strong> {{admin.username}}</li>
-                <li class="list-group-item"><strong>NOMBRE: </strong>{{admin.name}} </li>
-                
-            </ul>
-        </div>
+
+
+  <!-- Card de presentacion -->
+  <div class="company-card">
+    <div class="company-image">
+      <img [src]="company.img!" alt="Imagen de la Empresa" *ngIf="company.img!">
+      <!--<img src="https://w.wallhaven.cc/full/qz/wallhaven-qzpm25.jpg" alt="Test de Imagen de la Empresa">-->
     </div>
+    <div class="company-details">
+      <div class="company-header">
+        <h2 class="company-name">{{ company.name }}</h2>
+        <button class="edit-button">
+          <i class="bi bi-pencil-fill"></i>
+        </button>
+      </div>
+      <p class="company-description">{{ company.description }}</p>
+      <div class="company-info-group">
+        <h4 class="info-group-title">Información de contacto</h4>
+        <ul class="company-info">
+          <li><strong><i class="bi bi-house-door-fill"></i> Dirección:</strong> {{ company.address }}</li>
+          <li><strong><i class="bi bi-telephone-fill"></i> Teléfono:</strong> {{ company.tel }}</li>
+          <li><strong><i class="bi bi-at"></i> Email:</strong> {{ company.email }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
 
     <div class="mt-4">
         <h4>Historial de Suscripciones</h4>

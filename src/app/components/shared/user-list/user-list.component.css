@@ -76,6 +76,10 @@
   align-items: center;
 }
 
+.company {
+  text-transform: uppercase;
+}
+
 .card-title-list h2 {
   font-size: 22px;
   font-weight: 600;

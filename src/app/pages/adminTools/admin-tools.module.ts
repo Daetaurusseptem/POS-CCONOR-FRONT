@@ -17,7 +17,7 @@ import { ItemsComponent } from './items/items.component';
 import { AddItemComponent } from './add-item/add-item.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SuppliersListComponent } from './Suppliers/suppliers-list/suppliers-list.component';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 
@@ -48,8 +48,8 @@ import { SuppliersListComponent } from './Suppliers/suppliers-list/suppliers-lis
     ReactiveFormsModule,
     FormsModule,
     ComponentsModule,
-    NgxPaginationModule
-
+    NgxPaginationModule,
+    NgSelectModule
   ]
   
 })

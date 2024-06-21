@@ -1,53 +1,53 @@
 <div class="main-container">
-    <div class="search-container">
+  <div class="search-container">
       <div class="search-header">
-        <div class="search-title">
-          <h5>Búsqueda de Categorias</h5>
-        </div>
-        <a class="create-category-link" routerLink="new/{{ company._id }}" role="button">
-          <i class="bi bi-plus-lg"></i> Crear Categoria
-        </a>
+          <div class="search-title">
+              <h5>Búsqueda de Categorías</h5>
+          </div>
+          <a class="create-category-link" routerLink="new/{{ company._id }}" role="button">
+              <i class="bi bi-plus-lg"></i> Crear Categoría
+          </a>
       </div>
       <form class="search-form">
-        <div class="search-input">
-          <input type="text" id="busquedaEmpresa" aria-describedby="busquedaHelp" #terminoCategoria placeholder="Buscar...">
-        </div>
+          <div class="search-input">
+              <input type="text" id="busquedaEmpresa" aria-describedby="busquedaHelp" #terminoCategoria placeholder="Buscar...">
+          </div>
       </form>
-    </div>
-    <div class="categories-container">
+  </div>
+  <div class="categories-container">
       <div class="categories-header">
-        <div class="categories-title">
-          <h2>Lista de Categorias</h2>
-        </div>
+          <div class="categories-title">
+              <h2>Lista de Categorías</h2>
+          </div>
       </div>
       <div class="categories-list">
-        <table class="categories-table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Descripción</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let category of categories">
-              <td>{{ category.name || 'No Especificado' }}</td>
-              <td>{{ category.description }}</td>
-              <td>
-                <button class="btn-edit" [routerLink]="['/dashboard/sysadmin/categories/edit', category._id]">
-                  <i class="bi bi-pencil-fill"></i> Editar
-                </button>
-                <button class="btn-delete">
-                  <i class="bi bi-trash3-fill"></i> Eliminar
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="loading-spinner" *ngIf="true">
-          <app-loading-data-spinner></app-loading-data-spinner>
-          <p>Cargando Registros</p>
-        </div>
+          <table class="categories-table">
+              <thead>
+                  <tr>
+                      <th>Nombre</th>
+                      <th>Descripción</th>
+                      <th>Acciones</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let category of categories">
+                      <td>{{ category.name || 'No Especificado' }}</td>
+                      <td>{{ category.description }}</td>
+                      <td>
+                          <button class="btn-edit" [routerLink]="['/dashboard/sysadmin/categories/edit', category._id]">
+                              <i class="bi bi-pencil-fill"></i> Editar
+                          </button>
+                          <button class="btn-delete">
+                              <i class="bi bi-trash3-fill"></i> Eliminar
+                          </button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+          <div class="loading-spinner" *ngIf="true">
+              <app-loading-data-spinner></app-loading-data-spinner>
+              <p>Cargando Registros</p>
+          </div>
       </div>
-    </div>
   </div>
+</div>

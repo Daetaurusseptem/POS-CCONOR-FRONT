@@ -1,4 +1,4 @@
-<div class="container mt-3 ">
+<div class="container mt-3">
     <div class="card">
         <div class="card-header">
             <div class="card-title text-center">
@@ -13,42 +13,34 @@
                     <input type="text" class="form-control" id="name" formControlName="name">
                 </div>
 
-
-
                 <div class="mb-3">
                     <label for="description" class="form-label">Descripción</label>
                     <textarea class="form-control" id="description" formControlName="description"></textarea>
                 </div>
 
                 <div class="mb-3">
-                    <label for="phone" class="form-label">Telefono</label>
+                    <label for="phone" class="form-label">Teléfono</label>
                     <input type="tel" class="form-control" id="phone" formControlName="phone">
                 </div>
                 <div class="mb-3">
-                    <label for="address" class="form-label">Direccion</label>
+                    <label for="address" class="form-label">Dirección</label>
                     <input type="text" class="form-control" id="address" formControlName="address">
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">email</label>
+                    <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" formControlName="email">
                 </div>
 
-
-
-                
                 <div *ngIf="supplierForm.invalid" class="card-body alert alert-danger">
-                    <p *ngIf="campoNoValidoDatosUsuario('name')" class="text-danger">Nombre invalido</p>
-                    <p *ngIf="campoNoValidoDatosUsuario('description')" class="text-danger">Descripción invalida</p>
-                    <p *ngIf="campoNoValidoDatosUsuario('marca')" class="text-danger">Dirección invalida</p>
-                    <p *ngIf="campoNoValidoDatosUsuario('tel')" class="text-danger">Telefono invalido</p>
-                    <p *ngIf="campoNoValidoDatosUsuario('email')" class="text-danger">Correo electronico invalido</p>
-
+                    <p *ngIf="campoNoValidoDatosUsuario('name')" class="text-danger">Nombre inválido</p>
+                    <p *ngIf="campoNoValidoDatosUsuario('description')" class="text-danger">Descripción inválida</p>
+                    <p *ngIf="campoNoValidoDatosUsuario('marca')" class="text-danger">Dirección inválida</p>
+                    <p *ngIf="campoNoValidoDatosUsuario('tel')" class="text-danger">Teléfono inválido</p>
+                    <p *ngIf="campoNoValidoDatosUsuario('email')" class="text-danger">Correo electrónico inválido</p>
                 </div>
 
                 <div class="row text-center">
-
-                    <button type="submit" class="btn btn-primary" [disabled]="!supplierForm.valid">Guardar
-                        Cambios</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!supplierForm.valid">Guardar Cambios</button>
                 </div>
             </form>
         </div>
