@@ -20,6 +20,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { SuppliersListComponent } from './Suppliers/suppliers-list/suppliers-list.component';
 
 
 
@@ -39,7 +40,7 @@ import { MatSelectModule } from '@angular/material/select';
     UpdateSuppliersComponent,
     ItemsComponent,
     AddItemComponent,
-    SuppliersListComponent,
+    SuppliersListComponent
   ],
   exports:[
     ItemStockListComponent,

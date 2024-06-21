@@ -38,6 +38,10 @@ import { ProductsListComponent } from './adminTools/products/products-list/produ
 import { SuppliersListComponent } from './adminTools/Suppliers/suppliers-list/suppliers-list.component';
 import { CategoriesListComponent } from './adminTools/Categories/categories-list/categories-list.component';
 import { ItemStockListComponent } from './adminTools/item-list/item-list.component';
+import { CashRegisterComponent } from './userTools/cash-register/cash-register.component';
+import { ConfirmSaleComponent } from './userTools/confirm-sale/confirm-sale.component';
+import { SuccessSaleComponent } from './userTools/success-sale/success-sale.component';
+import { CloseCashRegisterComponent } from './userTools/close-cash-register/close-cash-register.component';
 
 const routes: Routes = [
   {
