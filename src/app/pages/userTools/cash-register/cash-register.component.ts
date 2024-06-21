@@ -54,7 +54,7 @@ export class CashRegisterComponent {
     this.cashRegisterService.openCashRegister(cashRegisterData).subscribe({
       next: (data) => {
         console.log('Cash register opened successfully', data);
-        this.router.navigate(['/home']);
+        this.router.navigate(['dashboard/user']);
       },
       error: (error) => {
         console.error('Error opening cash register', error);

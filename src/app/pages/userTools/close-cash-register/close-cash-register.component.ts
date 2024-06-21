@@ -56,7 +56,7 @@ export class CloseCashRegisterComponent {
 
     this.cashRegisterService.closeCashRegister(this.cashId, cashRegisterData).subscribe(response => {
       console.log('Cash register closed successfully', response);
-      this.router.navigate(['/user-home']);
+      this.router.navigate(['dashboard/user']);
     }, error => {
       console.error('Error closing cash register', error);
     });

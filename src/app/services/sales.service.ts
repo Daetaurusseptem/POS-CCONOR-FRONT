@@ -8,8 +8,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class SalesService {
-  private baseUrl = environment.apiUrl;
-
+  private baseUrl = `${environment.apiUrl}/sales`;
   constructor(
               private http: HttpClient,
               private authService: AuthService,
@@ -17,6 +16,7 @@ export class SalesService {
             ) { }
 
   createSale(saleData: any) {
+    console.log(saleData);
     return this.http.post<itemResponse>(this.baseUrl, saleData, this.authService.headers);
   }
 }
