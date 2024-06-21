@@ -1,40 +1,13 @@
-<div class="container mt-4">
-    <h2>Bienvenido, Usuario</h2>
-    <div class="row mt-4">
-      <div class="col-md-6 mb-3">
-        <button [disabled]="isOpenCashRegister" class="btn btn-primary w-100" (click)="openCashRegister()">
-          Abrir Caja <span class="badge bg-secondary">A</span>
-        </button>
-      </div>
-      <div class="col-md-6 mb-3">
-        <button class="btn btn-success w-100" (click)="performSale()">
-          Realizar Venta <span class="badge bg-secondary">S</span>
-        </button>
-      </div>
-      <div class="col-md-6 mb-3">
-        <button class="btn btn-success w-100" (click)="closeCashRegister()">
-          Cerrar Caja <span class="badge bg-secondary">G</span>
-        </button>
-      </div>
-      <div class="col-md-6 mb-3">
-        <button class="btn btn-info w-100" (click)="viewDailySales()">
-          Ver Ventas Diarias <span class="badge bg-secondary">D</span>
-        </button>
-      </div>
-      <div class="col-md-6 mb-3">
-        <button class="btn btn-warning w-100" (click)="viewItems()">
-          Items Disponibles <span class="badge bg-secondary">I</span>
-        </button>
-      </div>
-      <div class="col-12 mt-4">
-        <button class="btn btn-danger w-100" (click)="logout()">
-          Cerrar Sesión
-        </button>
-      </div>
-    </div>
-  
-    <div *ngIf="isOpenCashRegister" class="alert alert-info mt-4">
+<body>
+  <div class="container">
+    <button class="abrir"> Abrir caja <span class="badge bg-secondary">A</span></button>
+    <button class="realizar"> Realizar Venta <span class="badge bg-secondary">S</span></button>
+    <button class ="ventas"> Ver ventas diarias <span class="badge bg-secondary">D</span></button>
+    <button class ="items"> Items disponibles <span class="badge bg-secondary">I</span></button>
+    <button class="cerrar">Cerrar caja</button>
+    
+    <div *ngIf="isOpenCashRegister" class="caja">
       Caja ya está abierta.
     </div>
   </div>
-  
+</body>

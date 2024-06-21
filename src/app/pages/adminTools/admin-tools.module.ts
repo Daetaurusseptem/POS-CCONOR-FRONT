@@ -39,9 +39,10 @@ import { MatSelectModule } from '@angular/material/select';
     UpdateSuppliersComponent,
     ItemsComponent,
     AddItemComponent,
+    SuppliersListComponent,
   ],
   exports:[
-    ItemStockListComponent
+    ItemStockListComponent,
   ],
 
   imports: [

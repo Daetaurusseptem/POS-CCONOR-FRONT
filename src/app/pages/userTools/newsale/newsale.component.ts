@@ -55,6 +55,12 @@ export class NewsaleComponent {
     this.searchForm = this.fb.group({
       search: ['']
     });
+<<<<<<< HEAD
+  
+  }
+
+  
+=======
     this.loadCategories();
   }
 
@@ -73,6 +79,7 @@ export class NewsaleComponent {
       }
     });
   }
+>>>>>>> origin/secondary-branch
 
   loadItems(): void {
     
@@ -129,6 +136,9 @@ export class NewsaleComponent {
 
   selectCategory(category: string): void {
     this.selectedCategory = category;
+<<<<<<< HEAD
+    
+=======
     this.currentPage = 1;
     this.loadItems();
   }
@@ -143,5 +153,6 @@ export class NewsaleComponent {
   goToPage(page: number): void {
     this.currentPage = page;
     this.loadItems();
+>>>>>>> origin/secondary-branch
   }
 }
