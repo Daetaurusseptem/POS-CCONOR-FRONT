@@ -37,6 +37,9 @@ export class UserHomeComponent {
   performSale() {
     this.router.navigate(['dashboard/user/new-sale']);
   }
+  closeCashRegister() {
+    this.router.navigate(['dashboard/user/sales-success/close-cash-register']);
+  }
 
   viewDailySales() {
     this.router.navigate(['dashboard/user/daily-sales']);
@@ -61,6 +64,8 @@ export class UserHomeComponent {
       this.viewDailySales();
     } else if (event.key === 'i') {
       this.viewItems();
+    } else if (event.key === 'g') {
+      this.closeCashRegister();
     }
   }
 }

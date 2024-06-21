@@ -6,6 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { OpenCashRegisterComponent } from './open-cash-register/open-cash-register.component';
 import { UserHomeComponent } from './user-home/user-home.component';
+import { ConfirmSaleComponent } from './confirm-sale/confirm-sale.component';
+import { SuccessSaleComponent } from './success-sale/success-sale.component';
+import { CloseCashRegisterComponent } from './close-cash-register/close-cash-register.component';
 
 
 
@@ -14,7 +17,10 @@ import { UserHomeComponent } from './user-home/user-home.component';
     NewsaleComponent,
     CashRegisterComponent,
     OpenCashRegisterComponent,
-    UserHomeComponent
+    UserHomeComponent,
+    ConfirmSaleComponent,
+    SuccessSaleComponent,
+    CloseCashRegisterComponent
   ],
   exports: [
     NewsaleComponent,

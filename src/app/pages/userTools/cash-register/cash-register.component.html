@@ -1,31 +1,23 @@
 <div class="container mt-4">
-    <h2>Cortes de Caja</h2>
-  
-    <div *ngIf="!currentCashRegisterId">
-      <h3>Abrir Caja</h3>
-      <form (ngSubmit)="openCashRegister()">
+  <h2>Bienvenido, Usuario</h2>
+  <div *ngIf="isOpenCashRegister" class="alert alert-danger mt-4">
+    No puede abrir una nueva caja, ya tiene una abierta.
+  </div>
+  <div *ngIf="!isOpenCashRegister">
+    <button class="btn btn-primary" (click)="toggleForm()">
+      Abrir Caja
+    </button>
+    <div *ngIf="showForm" class="mt-4">
+      <form [formGroup]="openCashRegisterForm" (ngSubmit)="openCashRegister()">
         <div class="mb-3">
           <label for="initialAmount" class="form-label">Monto Inicial</label>
-          <input type="number" id="initialAmount" class="form-control" [(ngModel)]="initialAmount" name="initialAmount" required>
+          <input type="number" id="initialAmount" formControlName="initialAmount" class="form-control" min="0" required>
         </div>
-        <button type="submit" class="btn btn-primary">Abrir Caja</button>
+        <button type="submit" class="btn btn-success">Confirmar</button>
       </form>
     </div>
-  
-    <div *ngIf="currentCashRegisterId">
-      <h3>Cerrar Caja</h3>
-      <form (ngSubmit)="closeCashRegister()">
-        <div class="mb-3">
-          <label for="finalAmount" class="form-label">Monto Final</label>
-          <input type="number" id="finalAmount" class="form-control" [(ngModel)]="finalAmount" name="finalAmount" required>
-        </div>
-        <div class="mb-3">
-          <label for="notes" class="form-label">Notas</label>
-          <textarea id="notes" class="form-control" [(ngModel)]="notes" name="notes"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Cerrar Caja</button>
-      </form>
-    </div>
-  
   </div>
-  
+  <button class="btn btn-danger mt-4" (click)="logout()">
+    Cerrar Sesión
+  </button>
+</div>

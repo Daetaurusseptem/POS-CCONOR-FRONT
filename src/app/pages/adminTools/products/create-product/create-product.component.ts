@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import { Category, Product, Supplier } from 'src/app/interfaces/models.interface';
 import { AuthService } from 'src/app/services/auth.service';
@@ -33,6 +34,7 @@ export class CreateProductComponent {
                 private supplierService: SupplierService,
                 private productService: ProductService,
                 private modal: ModalService,
+                private router: Router,
               ) { }
 
   ngOnInit(): void {
@@ -85,6 +87,7 @@ export class CreateProductComponent {
           .subscribe(r=>{
             if(r.ok){
               Swal.fire('Registro Guardado','','success')
+              this.router.navigateByUrl('/dashboard/admin')
             }else if(!r.ok){
               Swal.fire('Registro No Guardado','','error')
             }

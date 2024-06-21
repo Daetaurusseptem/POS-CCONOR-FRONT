@@ -35,6 +35,10 @@ import { CashRegisterGuard } from '../guards/cash-register.guard';
 import { UserHomeComponent } from './userTools/user-home/user-home.component';
 import { userGuard } from '../guards/user.guard';
 import { NewsaleComponent } from './userTools/newsale/newsale.component';
+import { CashRegisterComponent } from './userTools/cash-register/cash-register.component';
+import { ConfirmSaleComponent } from './userTools/confirm-sale/confirm-sale.component';
+import { SuccessSaleComponent } from './userTools/success-sale/success-sale.component';
+import { CloseCashRegisterComponent } from './userTools/close-cash-register/close-cash-register.component';
 // ... otros componentes del dashboard
 
 const routes: Routes = [
@@ -76,7 +80,11 @@ const routes: Routes = [
       //USER
       { path: 'user', canActivate:[userGuard], component:  UserHomeComponent},
       { path: 'user/new-sale', component: NewsaleComponent, canActivate: [AuthGuardGuard, userGuard]},
-
+      { path: 'user/open-cash-register', component: CashRegisterComponent, canActivate: [AuthGuardGuard, userGuard]},
+      
+      { path: 'user/new-sale/confirm-sale', component: ConfirmSaleComponent },
+      { path: 'user/sales-success', component: SuccessSaleComponent},
+      { path: 'user/sales-success/close-cash-register', component: CloseCashRegisterComponent},
 
       
     ]

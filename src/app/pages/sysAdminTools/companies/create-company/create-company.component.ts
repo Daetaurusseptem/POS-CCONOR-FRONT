@@ -5,6 +5,7 @@ import { User, company } from 'src/app/interfaces/models.interface';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-create-company',
@@ -39,9 +40,11 @@ ngOnInit(): void {
 
   
 
-  this.userService.availableAdmins().subscribe(availableAdmins => {
+  this.userService.availableAdmins()
+  .pipe(map(r=>r.users))
+  .subscribe(availableAdmins => {
     console.log(availableAdmins);
-    this.adminUsers = availableAdmins
+    this.adminUsers = availableAdmins!
   });
 
 }                

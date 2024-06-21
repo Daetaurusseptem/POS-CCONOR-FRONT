@@ -12,7 +12,7 @@
             <img *ngIf="product.img!=''" [src]="product.img" alt="Avatar de usuario" class="img-avatar-side pointer"
                 (click)="abrirModal(product,'productos')">
 
-            <form [formGroup]="productForm" (ngSubmit)="updateCompany()">
+            <form [formGroup]="productForm" (ngSubmit)="updateProduct()">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nombre del producto</label>
                     <input type="text" class="form-control" id="name" formControlName="name">
@@ -33,8 +33,8 @@
 
 
                 <div class="mb-3">
-                    <label for="category" class="form-label">Proveedor:</label>
-                    <select formControlName="category" class="form-select" id="category" multiple>
+                    <label for="categories" class="form-label">Proveedor:</label>
+                    <select formControlName="categories" class="form-select" id="categories" multiple>
                         <option *ngFor="let categoria of Categories" [value]="categoria._id">{{ categoria.name }}
                         </option>
                     </select>

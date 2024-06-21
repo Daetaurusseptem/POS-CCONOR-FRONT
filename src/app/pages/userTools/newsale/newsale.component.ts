@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { map } from 'rxjs';
-import { Category, company } from 'src/app/interfaces/models.interface';
+import { itemResponse } from 'src/app/interfaces/itemResponse.interface';
+import { Category, Item, company } from 'src/app/interfaces/models.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { CategoryService } from 'src/app/services/category.service';
+import { ItemService } from 'src/app/services/item.service';
 import { ProductService } from 'src/app/services/product.service';
 import { SalesService } from 'src/app/services/sales.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-newsale',
@@ -13,25 +17,38 @@ import { SalesService } from 'src/app/services/sales.service';
   styleUrls: ['./newsale.component.css']
 })
 export class NewsaleComponent {
-  searchForm!: FormGroup;
-  items: any[] = [];
-  categories: any[] = [];
-  selectedCategory: string = '';
-  cart: any[] = [];
-  total: number = 0;
-  currentPage: number = 1;
-  totalPages: number = 1;
-  search: string = '';
-  companyId: string;
+  searchForm !: FormGroup;
+  items : any[] = [];
+  categories : any[] = [];
+  selectedCategory : string = '';
+  cart : any[] = [];
+  total : number = 0;
+  currentPage : number = 1;
+  totalPages : number = 1;
+  search : string = '';
+  companyId? : string;
 
   constructor(
+    
     private fb: FormBuilder,
-    private productService: ProductService,
+    private itemsService: ItemService,
     private categoryService: CategoryService,
     private saleService: SalesService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router,
+
+
   ) {
-    this.companyId = this.authService.company._id!; // Suponiendo que tienes un método para obtener el ID de la empresa
+    console.log(this.authService.usuario);
+    
+    if(this.authService.role == 'user'){
+
+      this.companyId = authService.companyId!
+      }else{  
+        this.companyId = authService.company?._id!
+    }
+
+    console.log(this.companyId);
   }
 
   ngOnInit(): void {
@@ -42,11 +59,13 @@ export class NewsaleComponent {
   }
 
   loadCategories(): void {
-    this.categoryService.getCompanyCategories(this.companyId)
+    this.categoryService.getCompanyCategories(this.companyId!)
     .pipe(
       map(r=>r.categories!)
     )
     .subscribe((data: Category[]) => {
+
+      console.log(data);
       this.categories = data;
       if (this.categories.length > 0) {
         this.selectedCategory = this.categories[0]._id;
@@ -56,10 +75,14 @@ export class NewsaleComponent {
   }
 
   loadItems(): void {
-    // Load items based on selected category
-    this.productService.getItemsByCategory(this.selectedCategory, this.search, this.currentPage).subscribe((data: any) => {
-      this.items = data.items;
-      this.totalPages = data.totalPages;
+    
+    this.itemsService.getItemsByCategory(this.selectedCategory, this.search, this.currentPage)
+    
+    .subscribe(data => {
+      console.log(data);
+      this.items =[];
+      this.items = data.items!;
+      this.totalPages = data.totalPages!;
     });
   }
 
@@ -78,14 +101,19 @@ export class NewsaleComponent {
     this.calculateTotal();
   }
 
+
+  
   calculateTotal(): void {
     this.total = this.cart.reduce((sum, item) => sum + item.total, 0);
   }
 
   checkout(): void {
-    // Handle the checkout process
+    if (this.cart.length <= 0) {
+      return;
+    }
+
     const saleData = {
-      user: 'user_id_placeholder', // Replace with actual user ID
+      user: this.authService.usuario.id,
       total: this.total,
       discount: 0,
       productsSold: this.cart.map(item => ({
@@ -93,17 +121,10 @@ export class NewsaleComponent {
         quantity: item.quantity,
         unitPrice: item.item.price,
         subtotal: item.total
-      })),
-      paymentMethod: 'cash' // Replace with actual payment method
+      }))
     };
 
-    this.saleService.createSale(saleData).subscribe((response: any) => {
-      console.log('Sale created successfully', response);
-      this.cart = [];
-      this.total = 0;
-    }, (error: any) => {
-      console.error('Error creating sale', error);
-    });
+    this.router.navigate(['dashboard/user/new-sale/confirm-sale'], { state: { sale: saleData } });
   }
 
   selectCategory(category: string): void {
@@ -115,6 +136,7 @@ export class NewsaleComponent {
   searchItems(): void {
     this.currentPage = 1;
     this.search = this.searchForm.get('search')?.value;
+    console.log(this.search);
     this.loadItems();
   }
 

@@ -32,7 +32,8 @@ import { AdminToolsModule } from './adminTools/admin-tools.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UserToolsModule } from './userTools/user-tools.module';
 
-
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 
 
@@ -63,7 +64,9 @@ import { UserToolsModule } from './userTools/user-tools.module';
     SysAdmintoolsModule,
     AdminToolsModule,
     NgxPaginationModule,
-    UserToolsModule
+    UserToolsModule,
+    MatPaginatorModule ,
+    MatTableModule
 
   ]
 })

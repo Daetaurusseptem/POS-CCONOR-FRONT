@@ -42,7 +42,7 @@ export class CompanyService {
   };
 
   createCompany(company:company){
-    
+    console.log(company);
     return this.http.post<itemResponse>(`${urlApiCompanies}`, company, this.authService.headers);
   };
 }

@@ -49,7 +49,7 @@ getRole(){
   }else if(this.userRole=='admin'){
     console.log('admin');
     this.companies = [];
-    this.companyId=this.authService.getCompany._id!
+    this.companyId=this.authService.company._id!
     this.user.companyId=this.companyId
     console.log(this.companyId,this.user);
     this.user.role =='user'
@@ -78,7 +78,7 @@ getRole(){
     }
     
     if (form.valid) {
-      console.log(form.value);
+      
       this.userService.createUser(this.user).subscribe({
         next: (createdCompany) => {
           Swal.fire({
@@ -94,8 +94,9 @@ getRole(){
           })
         },
         error: (error) => {
+          console.log(error);
           Swal.fire({
-            text:'Usuario no pudo ser creado',
+            text:error.msg,
             icon:'error'
           })
           

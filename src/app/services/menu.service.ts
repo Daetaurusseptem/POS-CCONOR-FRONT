@@ -12,6 +12,6 @@ export class MenuService {
 
   cargarMenu(){
     this.menu = JSON.parse(localStorage.getItem('menu')!)
-   console.log(this.menu);
+    console.log(this.menu);
   }
 }

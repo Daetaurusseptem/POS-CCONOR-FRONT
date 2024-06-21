@@ -29,12 +29,16 @@ export class CashRegisterService {
     return this.http.post<itemResponse>(`${this.url}/open`, cashRegisterData, this.authService.headers);
   }
 
-  closeCashRegister(id: string, cashRegisterData: any){
-    return this.http.post<itemResponse>(`${this.url}/close/${id}`, cashRegisterData, this.authService.headers);
+  closeCashRegister(id: string, cashRegisterData: any) {
+    return this.http.post<any>(`${this.url}/close/${id}`, cashRegisterData, this.authService.headers  );
   }
 
   getCashRegisters() {
     return this.http.get<itemResponse>(`${this.url}`);
+  }
+
+  getOpenCashRegister(userId: string) {
+    return this.http.get<any>(`${this.url}/open/${userId}`);
   }
 }
  

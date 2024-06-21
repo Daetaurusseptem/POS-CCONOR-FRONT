@@ -23,7 +23,7 @@ export class UpdateProductComponent {
 
 
   productForm: FormGroup = this.fb.group({
-    category: [[], Validators.required],
+    categories: [[], Validators.required],
     name: ['', Validators.required],
     description: ['', Validators.required],
     marca: ['', Validators.required],
@@ -32,7 +32,7 @@ export class UpdateProductComponent {
 
 
   loadCategories() {
-    this.categoryService.getCompanyCategories(this.authService.company._id!)
+    this.categoryService.getCompanyCategories(this.authService.company!._id!)
       .pipe(
         map(item => {
           console.log(item);
@@ -77,7 +77,7 @@ export class UpdateProductComponent {
 
         this.productForm.setValue({
 
-          category:this.product.categories!,
+          categories:this.product.categories!,
           name:this.product.name,
           description:this.product.description,
           marca:this.product.marca
@@ -89,7 +89,7 @@ export class UpdateProductComponent {
   }
 
 
-  updateCompany() {
+  updateProduct() {
     if (this.productForm.valid) {
       console.log('Producto actualizada:', this.productForm.value);
       // Aquí iría el código para enviar los datos actualizados a un servicio o backend

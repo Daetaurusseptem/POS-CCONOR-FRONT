@@ -2,12 +2,15 @@
     <div class="row">
       <div class="col-md-8">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Search" formControlName="search" (input)="searchItems()">
+          <form [formGroup]="searchForm" (keyup)="searchItems()">
+
+            <input type="text" class="form-control block" placeholder="search" formControlName="search" (keyup)="searchItems()">
+          </form>
         </div>
         <div class="btn-group mb-3" role="group">
           <button *ngFor="let category of categories" type="button" class="btn btn-outline-secondary" 
-                  [class.active]="category === selectedCategory" (click)="selectCategory(category)">
-            {{ category }}
+                  [class.active]="category === selectedCategory" (click)="selectCategory(category._id)">
+            {{ category.name }}
           </button>
         </div>
         <div class="row">

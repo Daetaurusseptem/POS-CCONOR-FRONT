@@ -16,6 +16,10 @@ import { UpdateSuppliersComponent } from './Suppliers/update-suppliers/update-su
 import { ItemsComponent } from './items/items.component';
 import { AddItemComponent } from './add-item/add-item.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 
 
@@ -46,7 +50,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     FormsModule,
     ComponentsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MatPaginatorModule ,
+    MatTableModule,
+    MatFormFieldModule,
+    MatSelectModule
 
   ]
   

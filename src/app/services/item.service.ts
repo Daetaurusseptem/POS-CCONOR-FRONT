@@ -49,13 +49,19 @@ export class ItemService {
   };
 
   getItemsByCategory(category: string, search: string = '', page: number = 1, limit: number = 10) {
-    return this.http.get<itemResponse>(`${urlBase}/by-category`, {
+    console.log(`${urlBase}/by-category/${this.authService.companyId}`);
+
+    console.log(category,
+      search);
+    return this.http.get<itemResponse>(`${urlBase}/by-category/${this.authService.companyId}`, {
       params: {
         category,
         search,
         page: page.toString(),
         limit: limit.toString()
-      }
+        
+      },
+      headers: {'x-token':this.authService.token}
     });
   }
 }

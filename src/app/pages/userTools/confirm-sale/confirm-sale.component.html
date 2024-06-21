@@ -1,0 +1,44 @@
+<div class="container mt-4">
+  <h2>Confirmar Venta</h2>
+  <h4>Productos en la venta:</h4>
+  <ul class="list-group mb-3">
+    <li class="list-group-item" *ngFor="let product of sale.productsSold">
+      <div class="row">
+        <div class="col-md-6">
+          <strong>{{ product.productName }}</strong>
+        </div>
+        <div class="col-md-3">
+          Cantidad: {{ product.quantity }}
+        </div>
+        <div class="col-md-3">
+          Precio: {{ product.unitPrice | currency }}
+        </div>
+      </div>
+    </li>
+  </ul>
+  <div class="alert alert-info">
+    <h5>Total: {{ totalAmount | currency }}</h5>
+  </div>
+  <form [formGroup]="confirmSaleForm" (ngSubmit)="confirmSale()">
+    <div class="mb-3">
+      <label for="paymentMethod" class="form-label">Método de Pago</label>
+      <select id="paymentMethod" formControlName="paymentMethod" class="form-select">
+        <option value="cash">Efectivo</option>
+        <option value="card">Tarjeta</option>
+      </select>
+    </div>
+    <div class="mb-3" *ngIf="confirmSaleForm.get('paymentMethod')!.value === 'card'">
+      <label for="paymentReference" class="form-label">Referencia de Pago</label>
+      <input type="text" id="paymentReference" formControlName="paymentReference" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="receivedAmount" class="form-label">Cantidad Recibida</label>
+      <input type="number" id="receivedAmount" formControlName="receivedAmount" class="form-control" min="0">
+    </div>
+    <div class="mb-3">
+      <label for="change" class="form-label">Cambio</label>
+      <input type="number" id="change" formControlName="change" class="form-control" [value]="change" readonly>
+    </div>
+    <button type="submit" class="btn btn-success">Confirmar Venta</button>
+  </form>
+</div>
