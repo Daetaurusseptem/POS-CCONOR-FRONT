@@ -19,13 +19,15 @@ export class AuthService {
   public idUsuario!: string
   usuario!: UsuarioModel;
   company!: company;
+  companyId!: string;
 
 
   constructor(
     private http: HttpClient,
     private router: Router
 
-  ) { }
+  ){}
+
   login(formData: { usuario?: string, password?: string }) {
     this.borrarLocalStorage()
 
@@ -44,12 +46,17 @@ export class AuthService {
       .pipe(
         map((resp: any) => {
           this.idUsuario = resp.uid
-
-          const company = resp.company
           const { name, username, img = '', role, email, _id } = resp.usuario;
-          console.log(name, username, img, role, company);
+          if (role == 'user') {
+            const company = resp.usuario.companyId;
+            this.companyId = company
+          }
+          else {
+            const company = resp.company
+            this.company = company
+          }
+
           this.usuario = new UsuarioModel(_id, username, name, role, email, img);
-          this.company = company
 
           this.guardarLocalStorage(resp.token, resp.menu)
           return true;
@@ -66,7 +73,7 @@ export class AuthService {
     };
   }
   get getCompany(): company {
-    return this.company;
+    return this.company!;
   }
   get token(): string {
     return localStorage.getItem('token') || '';
@@ -83,6 +90,7 @@ export class AuthService {
     localStorage.setItem('token', token);
     localStorage.setItem('menu', a);
   }
+
   borrarLocalStorage() {
     localStorage.removeItem('token');
     localStorage.removeItem('menu');
@@ -92,4 +100,7 @@ export class AuthService {
     this.borrarLocalStorage();
     this.router.navigate(['']);
   }
+
+
+
 }

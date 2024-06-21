@@ -83,7 +83,12 @@ export class AddItemComponent {
           this.itemService.createItem(this.authservice.getCompany._id!,obj)
         
           .subscribe(resp=>{
-            console.log(resp);
+            if(resp.ok){
+              Swal.fire('Registro Guardado','','success')
+              this.router.navigateByUrl('/dashboard/admin')
+            }else if(!resp.ok){
+              Swal.fire('Registro No Guardado','','error')
+            }
           })
         }
       })

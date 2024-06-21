@@ -1,0 +1,64 @@
+.test {
+    cursor: pointer;
+}
+
+.product-card {
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  .card-img-wrapper {
+    position: relative;
+    padding-top: 100%; /* Aspect ratio 1:1 */
+    overflow: hidden;
+  }
+  
+  .card-img-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .product-card:hover .card-img-wrapper img {
+    transform: scale(1.05);
+  }
+  
+  .card-img-overlay {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
+  }
+  
+  .product-card:hover .card-img-overlay {
+    opacity: 1;
+  }
+  
+  .add-to-cart-btn {
+    transition: all 0.3s ease;
+  }
+  
+  .add-to-cart-btn:hover {
+    transform: scale(1.1);
+  }
+  
+  .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  
+  .card-text.text-muted {
+    font-size: 0.875rem;
+  }
+  
+  .card-text.fw-bold {
+    font-size: 1.125rem;
+  }

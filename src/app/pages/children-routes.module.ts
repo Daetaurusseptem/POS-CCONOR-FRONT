@@ -38,6 +38,10 @@ import { ProductsListComponent } from './adminTools/products/products-list/produ
 import { SuppliersListComponent } from './adminTools/Suppliers/suppliers-list/suppliers-list.component';
 import { CategoriesListComponent } from './adminTools/Categories/categories-list/categories-list.component';
 import { ItemStockListComponent } from './adminTools/item-list/item-list.component';
+import { CashRegisterComponent } from './userTools/cash-register/cash-register.component';
+import { ConfirmSaleComponent } from './userTools/confirm-sale/confirm-sale.component';
+import { SuccessSaleComponent } from './userTools/success-sale/success-sale.component';
+import { CloseCashRegisterComponent } from './userTools/close-cash-register/close-cash-register.component';
 
 const routes: Routes = [
   {
@@ -70,8 +74,7 @@ const routes: Routes = [
       { path: 'admin/product/new', canActivate: [AdminGuard], component: CreateProductComponent },
       { path: 'admin/product/edit/:id', canActivate: [AdminGuard], component: UpdateProductComponent },
       //suppliers
-      
-       { path: 'admin/suppliers', canActivate: [AdminGuard], component: SuppliersListComponent },
+      { path: 'admin/suppliers', canActivate: [AdminGuard], component: SuppliersListComponent },
       { path: 'admin/suppliers/new/:id', canActivate: [AdminGuard], component: CreateSupplierComponent },
       { path: 'admin/suppliers/edit/:id', canActivate: [AdminGuard], component: UpdateSuppliersComponent },
       //categorias
@@ -81,6 +84,15 @@ const routes: Routes = [
       { path: 'admin/items', canActivate: [AdminGuard], component: ItemStockListComponent },
       { path: 'admin/items/new', canActivate: [AdminGuard], component: AddItemComponent },
       //USER
+      { path: 'user', canActivate:[userGuard], component:  UserHomeComponent},
+      { path: 'user/new-sale', component: NewsaleComponent, canActivate: [AuthGuardGuard, userGuard]},
+      { path: 'user/open-cash-register', component: CashRegisterComponent, canActivate: [AuthGuardGuard, userGuard]},
+      
+      { path: 'user/new-sale/confirm-sale', component: ConfirmSaleComponent },
+      { path: 'user/sales-success', component: SuccessSaleComponent},
+      { path: 'user/sales-success/close-cash-register', component: CloseCashRegisterComponent},
+
+      
       { path: 'user', canActivate: [userGuard], component: UserHomeComponent },
       { path: 'user/new-sale', component: NewsaleComponent, canActivate: [AuthGuardGuard, userGuard] },
     ]

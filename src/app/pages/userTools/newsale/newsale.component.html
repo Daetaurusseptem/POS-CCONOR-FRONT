@@ -1,1 +1,128 @@
-<p>newsale works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Barra de navegación con búsqueda y categorías -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-brand">Tu Tienda</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Categorías
+              </a>
+              <ul class="dropdown-menu test" aria-labelledby="navbarDropdown">
+                <li *ngFor="let category of categories">
+                  <a class="dropdown-item" (click)="selectCategory(category._id)">{{ category.name }}</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <form class="d-flex" [formGroup]="searchForm" (keyup)="searchItems()">
+            <input class="form-control me-2" type="search" placeholder="Buscar" formControlName="search">
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Pestañas de categorías para pantallas grandes -->
+    <div class="d-none d-lg-block mt-3 test">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" *ngFor="let category of categories">
+          <a class="nav-link" [class.active]="category === selectedCategory" (click)="selectCategory(category._id)">{{ category.name }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Grid de productos -->
+    <div class="col-12 col-lg-9 mt-3">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
+        <div *ngFor="let item of items" class="col">
+          <div class="card h-100 product-card shadow-sm">
+            <div class="card-img-wrapper">
+              <img [src]="item.product.img" class="card-img-top" alt="{{ item.product.name }}">
+              <div class="card-img-overlay d-flex align-items-end justify-content-end">
+                <button (click)="addToCart(item)" class="btn btn-primary btn-sm add-to-cart-btn">
+                  <i class="bi bi-cart-plus"></i> Añadir
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title text-truncate">{{ item.product.name }}</h5>
+              <p class="card-text text-muted mb-0">{{ item.product.category }}</p>
+              <p class="card-text fw-bold text-primary mt-2">{{ item.price | currency }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paginación -->
+      <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" href="#" (click)="goToPage(currentPage - 1)">Anterior</a>
+          </li>
+          <li *ngFor="let page of [].constructor(totalPages); let i = index" class="page-item" [class.active]="currentPage === (i + 1)">
+            <a class="page-link" href="#" (click)="goToPage(i + 1)">{{ i + 1 }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" href="#" (click)="goToPage(currentPage + 1)">Siguiente</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Carrito -->
+    <div class="col-lg-3 d-none d-lg-block">
+      <div class="position-sticky" style="top: 2rem;">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Carrito de Compras</h5>
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of cart">
+                  <td>{{ item.item.product.name }}</td>
+                  <td>{{ item.quantity }}</td>
+                  <td>{{ item.total | currency }}</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2" class="text-end"><strong>Total:</strong></td>
+                  <td><strong>{{ total | currency }}</strong></td>
+                </tr>
+              </tfoot>
+            </table>
+            <button (click)="checkout()" class="btn btn-success w-100">Pago</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Botón flotante del carrito para móviles -->
+<button class="btn btn-primary rounded-circle position-fixed bottom-0 end-0 m-3 d-lg-none" style="width: 60px; height: 60px;" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
+  <i class="bi bi-cart"></i>
+</button>
+
+<!-- Offcanvas del carrito para móviles -->
+<div class="offcanvas offcanvas-end d-lg-none" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="cartOffcanvasLabel">Carrito de Compras</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <!-- Contenido del carrito (igual que en la versión de escritorio) -->
+  </div>
+</div>

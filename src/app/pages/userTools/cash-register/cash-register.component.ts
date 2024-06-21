@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CashRegister } from 'src/app/interfaces/models.interface';
+import { AuthService } from 'src/app/services/auth.service';
 import { CashRegisterService } from 'src/app/services/cash-register.service';
 
 @Component({
@@ -8,40 +11,50 @@ import { CashRegisterService } from 'src/app/services/cash-register.service';
   styleUrls: ['./cash-register.component.css']
 })
 export class CashRegisterComponent {
-  cashRegisters: CashRegister[] = [];
-  initialAmount: number = 0;
-  finalAmount: number = 0;
-  payments = { cash: 0, credit: 0, debit: 0 };
-  notes: string = '';
-  currentCashRegisterId: string = '';
+  openCashRegisterForm!: FormGroup;
+  showForm: boolean = false;
+  isOpenCashRegister: boolean = false;
 
-  constructor(private cashRegisterService: CashRegisterService) { }
+  constructor(
+    private fb: FormBuilder,
+    private cashRegisterService: CashRegisterService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {
-    this.loadCashRegisters();
+  ngOnInit() {
+    this.openCashRegisterForm = this.fb.group({
+      initialAmount: [0, [Validators.required, Validators.min(0)]]
+    });
+    this.checkOpenCashRegister();
   }
 
-  loadCashRegisters(): void {
-    this.cashRegisterService.getCashRegisters().subscribe({
-      next: (data) => {
-        this.cashRegisters = data.registrosCaja;
-      },
-      error: (error) => {
-        console.error('Error fetching cash registers', error);
-      }
+  checkOpenCashRegister() {
+    const userId = this.authService.usuario.id;
+    this.cashRegisterService.hasOpenCashRegister(userId).subscribe((hasOpen) => {
+      this.isOpenCashRegister = hasOpen;
     });
   }
 
-  openCashRegister(): void {
+  toggleForm() {
+    this.showForm = !this.showForm;
+  }
+
+  openCashRegister() {
+    if (this.isOpenCashRegister) return;
+
+    const userId = this.authService.usuario.id;
+    const initialAmount = this.openCashRegisterForm.get('initialAmount')!.value;
+
     const cashRegisterData = {
-      user: 'user_id_placeholder', // Reemplaza con el ID del usuario actual
-      initialAmount: this.initialAmount
+      user: userId,
+      initialAmount: initialAmount
     };
 
     this.cashRegisterService.openCashRegister(cashRegisterData).subscribe({
       next: (data) => {
-        this.currentCashRegisterId = data.registroCaja._id;
-        this.loadCashRegisters();
+        console.log('Cash register opened successfully', data);
+        this.router.navigate(['/home']);
       },
       error: (error) => {
         console.error('Error opening cash register', error);
@@ -49,20 +62,8 @@ export class CashRegisterComponent {
     });
   }
 
-  closeCashRegister(): void {
-    const cashRegisterData = {
-      finalAmount: this.finalAmount,
-      notes: this.notes
-    };
-
-    this.cashRegisterService.closeCashRegister(this.currentCashRegisterId, cashRegisterData).subscribe({
-      next: (data) => {
-        this.currentCashRegisterId = '';
-        this.loadCashRegisters();
-      },
-      error: (error) => {
-        console.error('Error closing cash register', error);
-      }
-    });
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

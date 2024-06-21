@@ -45,6 +45,10 @@ export class UsersService {
     
     return this.http.get<itemResponse>(`${urlApiUsers}/company/admins/all`, this.authService.headers);
   }
+  getUnassignedAdmins() {
+    
+    return this.http.get<itemResponse>(`${urlApiUsers}/company/admins/unassigned`, this.authService.headers);
+  }
   isAdmin(empresaId:string, adminId:string) {
     return this.http.get<itemResponse>(`${urlApiUsers}/admins/${empresaId}/${adminId}`, this.authService.headers);
 
@@ -63,7 +67,7 @@ export class UsersService {
     
   }
     availableAdmins(){
-    return this.http.get<User[]>(`${urlApiUsers}/company/admins`, this.authService.headers);
+    return this.http.get<itemResponse>(`${urlApiUsers}/company/admins/unassigned`, this.authService.headers);
   }
   createUser(user:User){
     
