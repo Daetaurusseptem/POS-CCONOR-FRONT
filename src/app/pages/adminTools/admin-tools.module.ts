@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateCompanyCategoryComponent } from './Categories/create-company-catregory/create-company-category.component';
 import { CategoriesListComponent } from './Categories/categories-list/categories-list.component';
-import {  ItemStockListComponent } from './item-list/item-list.component';
+import { ItemStockListComponent } from './item-list/item-list.component'; // Asegúrate de importar correctamente
 import { ComponentsModule } from 'src/app/components/components.module';
 import { CreateProductComponent } from './products/create-product/create-product.component';
 import { CreateSupplierComponent } from './Suppliers/create-supplier/create-supplier.component';
@@ -41,15 +41,8 @@ import { RecipeListComponent } from './Recipes/recipe-list/recipe-list.component
     RecipeListComponent,
   ],
   exports:[
-    ItemStockListComponent,
-    CreateProductComponent,
-    CreateSupplierComponent,
-    UpdateProductComponent,
-    ProductsListComponent,
-    UpdateSuppliersComponent,
-    RecipeListComponent,
+    ItemStockListComponent
   ],
-
   imports: [
     CommonModule,
     RouterLink,
@@ -59,6 +52,5 @@ import { RecipeListComponent } from './Recipes/recipe-list/recipe-list.component
     NgxPaginationModule,
     NgSelectModule
   ]
-  
 })
 export class AdminToolsModule { }

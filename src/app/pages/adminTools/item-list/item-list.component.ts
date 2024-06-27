@@ -28,6 +28,7 @@ export class ItemStockListComponent {
     this.loadItems();
   }
 
+  
   loadItems(): void {
     console.log(this.searchTerm);
     this.itemService.getItems(this.currentPage, this.itemsPerPage, this.searchTerm).subscribe({

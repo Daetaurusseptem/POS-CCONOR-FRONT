@@ -45,6 +45,7 @@ export class AuthService {
     return this.http.get(`${urlAuth}/renew`, this.headers)
       .pipe(
         map((resp: any) => {
+          console.log(resp);
           this.idUsuario = resp.uid
           const { name, username, img = '', role, email, _id } = resp.usuario;
           if (role == 'user') {

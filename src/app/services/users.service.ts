@@ -41,6 +41,10 @@ export class UsersService {
     
     return this.http.get<itemResponse>(`${urlApiUsers}/company/${userId}`, this.authService.headers);
   }
+  getAllUsersOfCompany(userId:string) {
+    
+    return this.http.get<itemResponse>(`${urlApiUsers}/company/sysadmin/${userId}`, this.authService.headers);
+  }
   getAllAdmins() {
     
     return this.http.get<itemResponse>(`${urlApiUsers}/company/admins/all`, this.authService.headers);
