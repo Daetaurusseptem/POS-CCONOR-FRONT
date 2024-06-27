@@ -13,20 +13,20 @@ const urlProducts = `${environment.apiUrl}/products`
 })
 export class ProductService {
   constructor(
-                private http:HttpClient,
-                private authService:AuthService,
-                ){}
+    private http: HttpClient,
+    private authService: AuthService,
+  ) { }
   getProducts() {
     return this.http.get<itemResponse>(`${urlProducts}`,
-    this.authService.headers 
+      this.authService.headers
     );
   };
-  getProduct(id:string) {
+  getProduct(id: string) {
     return this.http.get<itemResponse>(`${urlProducts}/${id}`,
-    this.authService.headers 
+      this.authService.headers
     );
   };
-  
+
   searchProductCompany(search: string = '', page: number = 1, limit: number = 5, companyId: string) {
     const params = {
       search,
@@ -37,17 +37,24 @@ export class ProductService {
     return this.http.get<itemResponse>(`${urlProducts}/search/${companyId}`, { params });
   }
 
-  getCompanyProducts(id:string) {
+  getCompanyProducts(id: string) {
     return this.http.get<itemResponse>(`${urlProducts}/company/${id}`, this.authService.headers);
   };
-  deleteProduct(id:string){
+  getCompanyProductsSysadmin(id: string) {
+    if (!id) {
+        throw new Error("Company ID is required");
+    }
+    return this.http.get<itemResponse>(`${urlProducts}/company/sysadmin/${id}`, this.authService.headers);
+}
+
+  deleteProduct(id: string) {
     return this.http.delete<itemResponse>(`${urlProducts}/${id}`, this.authService.headers);
   }
-  updateProduct(id:string, formData:FormData) {
-    return this.http.put<itemResponse>(`${urlProducts}/${id}`, formData, this.authService.headers );
+  updateProduct(id: string, formData: FormData) {
+    return this.http.put<itemResponse>(`${urlProducts}/${id}`, formData, this.authService.headers);
   };
 
-  createProduct(empresaId:string,product:Product){
+  createProduct(empresaId: string, product: Product) {
 
     return this.http.post<itemResponse>(`${urlProducts}/${empresaId}`, product, this.authService.headers);
   };

@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateCompanyCategoryComponent } from './Categories/create-company-catregory/create-company-category.component';
 import { CategoriesListComponent } from './Categories/categories-list/categories-list.component';
-import {  ItemStockListComponent } from './item-list/item-list.component';
+import { ItemStockListComponent } from './item-list/item-list.component'; // Asegúrate de importar correctamente
 import { ComponentsModule } from 'src/app/components/components.module';
 import { CreateProductComponent } from './products/create-product/create-product.component';
 import { CreateSupplierComponent } from './Suppliers/create-supplier/create-supplier.component';
@@ -18,9 +18,6 @@ import { AddItemComponent } from './add-item/add-item.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SuppliersListComponent } from './Suppliers/suppliers-list/suppliers-list.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-
-
-
 
 @NgModule({
   declarations: [
@@ -38,10 +35,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     AddItemComponent,
     SuppliersListComponent,
   ],
-  exports:[
+  exports: [
     ItemStockListComponent
   ],
-
   imports: [
     CommonModule,
     RouterLink,
@@ -51,6 +47,5 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NgxPaginationModule,
     NgSelectModule
   ]
-  
 })
 export class AdminToolsModule { }

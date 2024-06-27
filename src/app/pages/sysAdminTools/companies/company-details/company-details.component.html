@@ -1,28 +1,25 @@
-<div *ngIf="!company&&!admin" class="card">
-    <app-loading-data-spinner></app-loading-data-spinner>
+<div *ngIf="!company && !admin" class="card">
+  <app-loading-data-spinner></app-loading-data-spinner>
 </div>
-<app-spinner *ngIf="!company&&!admin"></app-spinner>
+<app-spinner *ngIf="!company && !admin"></app-spinner>
 
-<div *ngIf="company&&admin" class="container mt-4">
-
-
+<div *ngIf="company && admin" class="container mt-4">
   <!-- Card de presentacion -->
-  <div class="company-card">
+  <div class="company-card mb-4">
     <div class="company-image">
       <img [src]="company.img!" alt="Imagen de la Empresa" *ngIf="company.img!">
-      <!--<img src="https://w.wallhaven.cc/full/qz/wallhaven-qzpm25.jpg" alt="Test de Imagen de la Empresa">-->
     </div>
     <div class="company-details">
-      <div class="company-header">
+      <div class="company-header d-flex justify-content-between align-items-center">
         <h2 class="company-name">{{ company.name }}</h2>
-        <button class="edit-button">
+        <button class="btn btn-outline-secondary edit-button">
           <i class="bi bi-pencil-fill"></i>
         </button>
       </div>
       <p class="company-description">{{ company.description }}</p>
       <div class="company-info-group">
         <h4 class="info-group-title">Información de contacto</h4>
-        <ul class="company-info">
+        <ul class="company-info list-unstyled">
           <li><strong><i class="bi bi-house-door-fill"></i> Dirección:</strong> {{ company.address }}</li>
           <li><strong><i class="bi bi-telephone-fill"></i> Teléfono:</strong> {{ company.tel }}</li>
           <li><strong><i class="bi bi-at"></i> Email:</strong> {{ company.email }}</li>
@@ -31,28 +28,282 @@
     </div>
   </div>
 
+  <tabs-menu [items]="tabsArray" (tabSelectedOutput)="changeTab($event)"></tabs-menu>
 
-
-    <div class="mt-4">
-        <h4>Historial de Suscripciones</h4>
-        <div *ngIf="company.SuscriptionsHistory && company.SuscriptionsHistory.length; else noSubscriptions">
-            <div *ngFor="let subscription of company.SuscriptionsHistory" class="card mt-2">
-                <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">{{ subscription.month }}</h6>
-                    <p class="card-text"><strong>Estado:</strong> {{ subscription.state }}</p>
-                    <p class="card-text"><strong>Monto Pagado:</strong> {{ subscription.amountPaid | currency }}</p>
-                    <p class="card-text"><strong>Método de Pago:</strong> {{ subscription.Paymethod }}</p>
-                    <p class="card-text"><strong>Referencia de Pago:</strong> {{ subscription.payReference }}</p>
-                </div>
-            </div>
+  <!-- USUARIOS -->
+  <div *ngIf="tabSelected == 'usuarios'" class="row">
+    <div class="col-12 mb-2">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="card-title mb-0">Búsqueda de Usuarios</h5>
+          <a class="btn btn-primary" routerLink="users/new" role="button">
+            <i class="bi bi-plus-lg"></i> Crear Usuario
+          </a>
         </div>
-        <ng-template #noSubscriptions>
-            <div class="card mt-2">
-                <div class="card-body">
-                    <p class="card-text">Sin suscripciones.</p>
-                    <a routerLink="/dashboard/sysadmin/companies/subscriptions/select" class="btn btn-primary">Agregar Plan de Suscripción</a>
-                </div>
+        <div class="card-body">
+          <form>
+            <div class="mb-3">
+              <input type="text" class="form-control" id="busquedaEmpresa" aria-describedby="busquedaHelp" #terminoEmpresa placeholder="Buscar usuario">
             </div>
-        </ng-template>
+          </form>
+        </div>
+      </div>
     </div>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Lista de Usuarios Registrados</h2>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>img</th>
+                  <th>Nombre</th>
+                  <th>Nombre de Usuario</th>
+                  <th>Rol</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td class="text-center">
+                    <img *ngIf="user.img == 'no-image'" src="../../../../../assets/img/no-img.webp" alt="Avatar de usuario" class="avatar pointer" (click)="abrirModal(user, 'usuarios')">
+                    <img *ngIf="user.img != 'no-image'" [src]="user.img" alt="Avatar de usuario" class="avatar pointer" (click)="abrirModal(user, 'usuarios')">
+                  </td>
+                  <td>{{ user.name || 'No Especificado' }}</td>
+                  <td>{{ user.username }}</td>
+                  <td>{{ user.role }}</td>
+                  <td>
+                    <button class="btn btn-primary btn-sm me-2" [routerLink]="['users/edit', user._id]">
+                      <i class="bi bi-pencil-fill"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm">
+                      <i class="bi bi-trash3-fill"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="card bg-primary text-light" *ngIf="!users">
+              <app-loading-data-spinner class="mb-2"></app-loading-data-spinner>
+              <p>Cargando Registros</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div *ngIf="tabSelected == 'productos'" class="row">
+    <div class="col-12 mb-2">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="card-title mb-0">Búsqueda de Items</h5>
+          <a class="btn btn-primary" routerLink="product/new" role="button">
+            <i class="bi bi-bag-plus"></i> Crear Stock
+          </a>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="mb-3">
+              <input type="text" class="form-control" id="busquedaEmpresa" aria-describedby="busquedaHelp" #terminoEmpresa placeholder="Buscar item">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Productos {{ company.name | uppercase }}</h2>
+        </div>
+        <div class="card-body">
+          <items-list [items]="products" [routerLink]=""></items-list>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ITEMS -->
+
+  <!-- item-list.component.html -->
+<div class="container mt-4">
+  <h2>Lista de Items</h2>
+ 
+  <div class="row">
+    <div *ngFor="let item of items" class="col-md-4 mb-4">
+      <div class="card h-100">
+        <img [src]="item.product?.img" class="card-img-top" alt="{{ item.name }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.product?.name }}</h5>
+          <p class="card-text">Precio: {{ item.price  }}</p>
+          <p class="card-text">Stock: {{ item.stock }}</p>
+          <p class="card-text">Fecha de Recepción: {{ item.receivedDate | date }}</p>
+          <p class="card-text">Fecha de Expiración: {{ item.expirationDate ? (item.expirationDate | date) : 'N/A' }}</p>
+          <p class="card-text">Descuento: {{ item.discount }}%</p>
+          <p class="card-text">Descuento: {{ item.discount }}%</p>
+          <p class="card-text"><a class="btn btn-block btn-primary"><i class="bi bi-pencil-fill"></i>Editar</a></p>
+          <p class="card-text" (click)="deleteItem(item._id)"><a class="btn btn-block btn-danger"><i class="bi bi-trash3-fill"></i>eliminar</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <pagination-controls (pageChange)="pageChanged($event)" [maxSize]="totalItems"></pagination-controls>
+</div>
+
+
+  <!-- CATEGORIAS -->
+  <div *ngIf="tabSelected == 'categorias'" class="row">
+    <div class="col-12 mb-2">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="card-title mb-0">Búsqueda de Categorías</h5>
+          <a class="btn btn-primary" routerLink="categories/new/{{ company._id }}" role="button">
+            <i class="bi bi-plus-lg"></i> Crear Categoría
+          </a>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="mb-3">
+              <input type="text" class="form-control" id="busquedaEmpresa" aria-describedby="busquedaHelp" #terminoCategoria placeholder="Buscar categoría">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Lista de Categorías</h2>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Descripción</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let category of categories">
+                  <td>{{ category.name || 'No Especificado' }}</td>
+                  <td>{{ category.description }}</td>
+                  <td>
+                    <button class="btn btn-primary btn-sm me-2" [routerLink]="['/dashboard/sysadmin/categories/edit', category._id]">
+                      <i class="bi bi-pencil-fill"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm">
+                      <i class="bi bi-trash3-fill"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="card bg-primary text-light" *ngIf="!categories">
+              <app-loading-data-spinner class="mb-2"></app-loading-data-spinner>
+              <p>Cargando Registros</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROVEEDORES -->
+  <div *ngIf="tabSelected == 'proveedores'" class="row">
+    <div class="col-12 mb-2">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="card-title mb-0">Búsqueda de Proveedores</h5>
+          <a class="btn btn-primary" routerLink="suppliers/new/{{ company._id }}" role="button">
+            <i class="bi bi-plus-lg"></i> Crear Proveedor
+          </a>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="mb-3">
+              <input type="text" class="form-control" id="busquedaEmpresa" aria-describedby="busquedaHelp" #terminoEmpresa placeholder="Buscar proveedor">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Lista de Proveedores Registrados</h2>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Descripción</th>
+                  <th>Número</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let supplier of suppliers">
+                  <td>{{ supplier.name || 'No Especificado' }}</td>
+                  <td>{{ supplier.description || 'No Especificado' | slice:0:49 }}</td>
+                  <td>{{ supplier.contactInfo.phone }}</td>
+                  <td>
+                    <button class="btn btn-primary btn-sm me-2" [routerLink]="['/dashboard/admin/suppliers/edit', supplier._id]">
+                      <i class="bi bi-pencil-fill"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm">
+                      <i class="bi bi-trash3-fill"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="card bg-primary text-light" *ngIf="!suppliers">
+              <app-loading-data-spinner class="mb-2"></app-loading-data-spinner>
+              <p>Cargando Registros</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUSCRIPCIONES -->
+  <div *ngIf="tabSelected == 'suscripciones'" class="row">
+    <div class="col-12 mb-2">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Historial de Suscripciones</h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="company.SuscriptionsHistory && company.SuscriptionsHistory.length; else noSubscriptions">
+            <div *ngFor="let subscription of company.SuscriptionsHistory" class="card mt-2">
+              <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">{{ subscription.month }}</h6>
+                <p class="card-text"><strong>Estado:</strong> {{ subscription.state }}</p>
+                <p class="card-text"><strong>Monto Pagado:</strong> {{ subscription.amountPaid | currency }}</p>
+                <p class="card-text"><strong>Método de Pago:</strong> {{ subscription.Paymethod }}</p>
+                <p class="card-text"><strong>Referencia de Pago:</strong> {{ subscription.payReference }}</p>
+              </div>
+            </div>
+          </div>
+          <ng-template #noSubscriptions>
+            <div class="card mt-2">
+              <div class="card-body">
+                <p class="card-text">Sin suscripciones.</p>
+                <a routerLink="/dashboard/sysadmin/companies/subscriptions/select" class="btn btn-primary">Agregar Plan de Suscripción</a>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

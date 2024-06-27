@@ -11,13 +11,7 @@ import { OverviewComponent } from './dashboard/overview/overview.component';
 import { ReportsComponent } from './dashboard/reports/reports.component';
 import { RouterLink } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
-import {MatInputModule} from '@angular/material/input';
-
-
-
-
-
-
+import { MatInputModule } from '@angular/material/input';
 
 import { CompanyAdminHomeComponent } from './adminTools/company-admin-home/company-admin-home.component';
 import { ProductsComponent } from './adminTools/products/products.component';
@@ -26,17 +20,13 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { PagesComponent } from './pages.component';
 
 import { SysAdmintoolsModule } from './sysAdminTools/sys-admintools.module';
-
-import { DashboardPageComponent } from './dashboard/dashboard-page/dashboard-page.component';
 import { AdminToolsModule } from './adminTools/admin-tools.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UserToolsModule } from './userTools/user-tools.module';
 
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-
-
-
+import { DashboardPageComponent } from './dashboard/dashboard-page/dashboard-page.component';
 
 @NgModule({
   declarations: [
@@ -49,8 +39,6 @@ import { MatTableModule } from '@angular/material/table';
     PageNotFoundComponent,
     PagesComponent,
     DashboardPageComponent,
-
-    
   ],
   imports: [
     CommonModule,
@@ -65,9 +53,8 @@ import { MatTableModule } from '@angular/material/table';
     AdminToolsModule,
     NgxPaginationModule,
     UserToolsModule,
-    MatPaginatorModule ,
+    MatPaginatorModule,
     MatTableModule
-
   ]
 })
 export class PagesModule { }

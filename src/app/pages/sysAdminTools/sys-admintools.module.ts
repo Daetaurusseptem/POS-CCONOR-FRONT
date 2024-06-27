@@ -17,7 +17,8 @@ import { CompanyDetailsComponent } from './companies/company-details/company-det
 import { AddSubscriptionComponent } from './companies/add-suscription/add-suscription.component';
 import { SelectSubscriptionsComponent } from './subscriptions/select-subscriptions/select-subscriptions.component';
 import { ComponentsModule } from 'src/app/components/components.module';
-
+import { AdminToolsModule } from '../adminTools/admin-tools.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -41,7 +42,10 @@ import { ComponentsModule } from 'src/app/components/components.module';
     ReactiveFormsModule,
     RouterLink,
     NgSelectModule,
-    ComponentsModule
+    ComponentsModule,
+    AdminToolsModule,
+    NgxPaginationModule,
+    NgSelectModule
   ]
 })
 export class SysAdmintoolsModule { }

@@ -21,7 +21,8 @@ export class ItemService {
     if (search) {
       params.name = search;
     }
-    return this.http.get<itemResponse>(`${urlBase}/${this.authService.getCompany._id}`, { params, headers: { 'x-token': this.authService.token } });
+    //console.log(this.authService.company);
+    return this.http.get<itemResponse>(`${urlBase}/${this.authService.company._id}`, { params, headers: { 'x-token': this.authService.token } });
   };
 
   
@@ -33,6 +34,10 @@ export class ItemService {
 
   getCompanyItems(id: string) {
     return this.http.get<itemResponse>(`${urlBase}/company/${id}`, this.authService.headers);
+  };
+
+  getCompanyItemsSysadmin(id: string) {
+    return this.http.get<itemResponse>(`${urlBase}/company/sysadmin/${id}`, this.authService.headers);
   };
   deleteItem(id: string) {
     return this.http.delete<itemResponse>(`${urlBase}/${id}`, this.authService.headers);
@@ -48,20 +53,29 @@ export class ItemService {
     return this.http.post<itemResponse>(`${urlBase}/${empresaId}`, item, this.authService.headers);
   };
 
-  getItemsByCategory(category: string, search: string = '', page: number = 1, limit: number = 10) {
-    console.log(`${urlBase}/by-category/${this.authService.companyId}`);
-
-    console.log(category,
-      search);
-    return this.http.get<itemResponse>(`${urlBase}/by-category/${this.authService.companyId}`, {
-      params: {
-        category,
-        search,
-        page: page.toString(),
-        limit: limit.toString()
-        
-      },
-      headers: {'x-token':this.authService.token}
-    });
+  getItemsByCategory(category: string, search: string = '', page: number = 1, limit: number = 10, idEmpresa?: string) {
+     if(idEmpresa) {
+       return this.http.get<itemResponse>(`${urlBase}/by-category/${idEmpresa}`, {
+         params: {
+           category,
+           search,
+           page: page.toString(),
+           limit: limit.toString()
+           
+         },
+         headers: {'x-token':this.authService.token}
+       });
+     } else {
+       return this.http.get<itemResponse>(`${urlBase}/by-category/${this.authService.companyId}`, {
+         params: {
+           category,
+           search,
+           page: page.toString(),
+           limit: limit.toString()
+           
+         },
+         headers: {'x-token':this.authService.token}
+       });
+     }
   }
 }

@@ -15,12 +15,10 @@ import Swal from 'sweetalert2';
   styleUrls: ['./create-user.component.css']
 })
 export class CreateUserReComponent {
-
   userRole!: 'admin' | 'sysadmin' | 'user';
   companies!: company[];
   companyId!: string;
-
-
+  
   user: User = {
     name: '',
     email: '',
@@ -29,77 +27,61 @@ export class CreateUserReComponent {
     role: 'user',
     companyId: ''
   };
-
+  
   constructor(
     private userService: UsersService,
     private companiesService: CompanyService,
     private authService: AuthService,
     private router: Router,
-
-
   ) {
     this.getRole();
-    console.log(this.authService.getCompany)
-  }
-
-  getRole() {
-    this.userRole = this.authService.role;
-    if (this.userRole == 'user') {
-      return 'user'
-    } else if (this.userRole == 'admin') {
-      console.log('admin');
-      this.companies = [];
-      this.companyId = this.authService.getCompany._id!
-      this.user.companyId = this.companyId
-      console.log(this.companyId, this.user);
-      this.user.role == 'user'
-
-    } else if (this.userRole == 'sysadmin') {
-      console.log('sys');
-      this.getCompanies()
-      this.companyId = ''
-      this.user.role == 'admin'
-
-    }
-    return
   }
   
-  getCompanies() {
-    this.companiesService.getCompanies()
-      .pipe(
-        map(item => item.companies)
-      )
-      .subscribe(companies => { this.companies = companies! })
-
-  }
-
-  createUser(form: NgForm) {
-    if (this.userRole == 'user') {
-      return
+  getRole() {
+    this.userRole = this.authService.role;
+    if (this.userRole === 'admin') {
+      this.user.role = 'user';
+      this.companyId = this.authService.company._id!;
+    } else if (this.userRole === 'sysadmin') {
+      this.user.role = 'admin';
+      this.companyId = ''; // Sysadmin no asigna companyId por defecto
+    } else {
+      this.user.role = 'user';
+      this.companyId = this.authService.company._id!;
     }
-
+  }
+  
+  createUser(form: NgForm) {
+    if (this.userRole === 'user') {
+      return; // Un usuario con rol 'user' no puede crear otros usuarios
+    }
+  
     if (form.valid) {
-      console.log(form.value);
+      if (this.userRole === 'admin') {
+        this.user.companyId = this.authService.company._id!;
+      } else if (this.userRole === 'sysadmin') {
+        delete this.user.companyId; // Eliminar companyId para sysadmin
+      }
+  
       this.userService.createUser(this.user).subscribe({
-        next: (createdCompany) => {
+        next: (createdUser) => {
           Swal.fire({
             text: 'Usuario creado correctamente',
             icon: 'success'
-          })
-            .then(() => {
-              if (this.userRole == 'admin') {
-                this.router.navigateByUrl('/dashboard/admin/users')
-              } else if (this.userRole == 'sysadmin') {
-                this.router.navigateByUrl('/dashboard/sysadmin/users')
-              }
-            })
+          }).then(() => {
+            if (this.userRole === 'admin') {
+              this.router.navigateByUrl('/dashboard/admin/users');
+            } else if (this.userRole === 'sysadmin') {
+              this.router.navigateByUrl('/dashboard/sysadmin/users');
+            }
+          });
         },
         error: (error) => {
+          console.log(error);
           Swal.fire({
-            text: 'Usuario no pudo ser creado',
+            text: error.msg,
             icon: 'error'
-          })
-
+          });
         }
       });
     }
