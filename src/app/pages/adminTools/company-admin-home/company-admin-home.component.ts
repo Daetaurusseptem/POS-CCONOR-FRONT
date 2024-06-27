@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category, Item, Product, Supplier, User, company } from 'src/app/interfaces/models.interface';
+import { Category, Item, Product, Supplier, User, company, Recipes } from 'src/app/interfaces/models.interface';
 import { CompanyService } from 'src/app/services/company.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -12,6 +12,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { ItemService } from 'src/app/services/item.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { SupplierService } from 'src/app/services/provider.service';
+import { RecipesService } from 'src/app/services/recipes.service';
 
 @Component({
   selector: 'app-company-admin-home',
@@ -24,7 +25,8 @@ categories!: Category[];
 suppliers!: Supplier[];
 products!: Product[];
 users!: User[];
-tabSelected:'usuarios'|'productos'|'suscripciones'|'proveedores'|'categorias'|'items'|'inventario' ='usuarios'
+recipes!: Recipes[];
+tabSelected:'usuarios'|'productos'|'suscripciones'|'proveedores'|'categorias'|'items'|'inventario'|'recetas' ='usuarios'
 tabsArray=[
   {
     name:'usuarios',
@@ -50,6 +52,10 @@ tabsArray=[
     name:'suscripcion',
     icon:'bi bi-card-checklist'
   },
+  {
+    name:'recetas',
+    icon:'bi bi-card-checklist'
+  },
 ]
 eliminarUsuario(arg0: any) {
 throw new Error('Method not implemented.');
@@ -63,6 +69,7 @@ ngOnInit(): void {
   this.admin = this.authService.usuario
   this.getUsers()
   this.getAdminCompany(this.admin.id)
+  this.getRecipes()
   
 }
 
@@ -79,6 +86,8 @@ ngOnInit(): void {
     private router: Router,
     private authService: AuthService,
     private modalService: ModalService,
+    private recipesService: RecipesService,
+
 
 
   ) { 
@@ -132,6 +141,16 @@ ngOnInit(): void {
     .subscribe(users=>{this.users=users!})
     
   }
+  getRecipes(){
+
+    this.recipesService.getCompanyRecipes()
+    .pipe(map(item=>{
+      console.log(item);
+      return item.recipes;
+    }))
+    .subscribe(recipes=>{this.recipes=recipes!})
+    
+  }
   getProducts(idEmpresa:string){
     this.productService.getCompanyProducts(idEmpresa)
     .pipe(map(item=>{
@@ -161,7 +180,7 @@ ngOnInit(): void {
   }
 
 
-  changeTab(tab:'usuarios'|'productos'|'items'|'suscripciones'|'proveedores'|'categorias'|'inventario'){
+  changeTab(tab:'usuarios'|'productos'|'items'|'suscripciones'|'proveedores'|'categorias'|'inventario'|'recetas'){
     
     switch (tab) {
       case 'usuarios':

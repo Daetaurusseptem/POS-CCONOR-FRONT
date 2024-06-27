@@ -18,6 +18,7 @@ import { AddItemComponent } from './add-item/add-item.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SuppliersListComponent } from './Suppliers/suppliers-list/suppliers-list.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { RecipeListComponent } from './Recipes/recipe-list/recipe-list.component';
 
 
 
@@ -37,9 +38,16 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ItemsComponent,
     AddItemComponent,
     SuppliersListComponent,
+    RecipeListComponent,
   ],
   exports:[
-    ItemStockListComponent
+    ItemStockListComponent,
+    CreateProductComponent,
+    CreateSupplierComponent,
+    UpdateProductComponent,
+    ProductsListComponent,
+    UpdateSuppliersComponent,
+    RecipeListComponent,
   ],
 
   imports: [

@@ -1,5 +1,5 @@
 ;
-import { Category, Item, Product, Sale, Supplier, User, company, CashRegister } from './models.interface';
+import { Category, Item, Product, Sale, Supplier, User, company, CashRegister, Recipes } from './models.interface';
 import { StripeResponse } from './stripeProduct.interface';
 export interface itemResponse {
   ok?:boolean,
@@ -28,6 +28,8 @@ export interface itemResponse {
   numberOfProducts:number
   total:number|string;
   registroCaja:CashRegister
-  registrosCaja:CashRegister[]
+  registrosCaja:CashRegister[],
+  recipes?:Recipes[],
+  recipe:Recipes,
 
 }
