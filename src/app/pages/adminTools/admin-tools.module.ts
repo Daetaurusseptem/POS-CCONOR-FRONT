@@ -19,6 +19,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SuppliersListComponent } from './Suppliers/suppliers-list/suppliers-list.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { EditCategoryComponent } from './Categories/edit-category/edit-category.component';
+import { RecipeListComponent } from './Recipes/recipe-list/recipe-list.component';
+
+
+
 
 @NgModule({
   declarations: [
@@ -36,8 +40,9 @@ import { EditCategoryComponent } from './Categories/edit-category/edit-category.
     AddItemComponent,
     SuppliersListComponent,
     EditCategoryComponent,
+    RecipeListComponent,
   ],
-  exports: [
+  exports:[
     ItemStockListComponent,
     ProductsListComponent,
     CategoriesListComponent,

@@ -125,4 +125,11 @@ export interface Item {
     iva?: number;
     productsSold: string[]|Product[];
   }
+
+  //recetas
+
+  export interface Recipes {
+    name: string;
+    description: string;
+  }
   

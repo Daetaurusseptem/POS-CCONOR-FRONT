@@ -1,185 +1,85 @@
-body{
+body {
+  display: flex;
   justify-content: center;
-}
-/*aquí es el botón en general*/
-.abrir {
- width: 430px;
- margin: 15px;
- padding: 15px 105px;
- border: unset;
- border-radius: 15px;
- color: #212121;
- z-index: 1;
- background: #daebf9;
- position: relative;
- font-weight: 1000;
- font-size: 17px;
- -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
- box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
- transition: all 250ms;
- overflow: hidden;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.realizar {
-  width: 430px;
-  margin: 15px;
-  padding: 15px 105px;
+.container {
+  width: 100%;
+  max-width: 960px;
+}
+
+.btn-custom {
+  width: 100%;
+  margin: 10px 0;
+  padding: 15px;
   border: unset;
   border-radius: 15px;
   color: #212121;
   z-index: 1;
-  background: #dcf4e2;
   position: relative;
-  font-weight: 1000;
+  font-weight: 700;
   font-size: 17px;
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
   box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
   transition: all 250ms;
   overflow: hidden;
- }
+}
 
- .ventas {
-  width: 430px;
-  margin: 15px;
-  padding: 15px 105px;
-  border: unset;
-  border-radius: 15px;
-  color: #212121;
-  z-index: 1;
-  background: #e3edfd;
-  position: relative;
-  font-weight: 1000;
-  font-size: 17px;
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  transition: all 250ms;
-  overflow: hidden;
- }
-
- .items {
-  width: 430px;
-  margin: 15px;
-  padding: 15px 105px;
-  border: unset;
-  border-radius: 15px;
-  color: #212121;
-  z-index: 1;
-  background: #f5e0bf;
-  position: relative;
-  font-weight: 1000;
-  font-size: 17px;
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  transition: all 250ms;
-  overflow: hidden;
- }
-
-.cerrar {
-  left: 15px;
-  width: 890px;
-  padding: 15px 105px;
-  border: unset;
-  border-radius: 15px;
-  color: #212121;
-  z-index: 1;
+.abrir { background: #daebf9; }
+.realizar { background: #dcf4e2; }
+.ventas { background: #e3edfd; }
+.items { background: #f5e0bf; }
+.cerrar { background: #e7c7b8; }
+.cerrarSesion { 
   background: #e7c7b8;
-  position: relative;
-  font-weight: 1000;
-  font-size: 17px;
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  width: 100%;
+}
+
+.btn-custom::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  border-radius: 15px;
+  z-index: -1;
   transition: all 250ms;
-  overflow: hidden;
- }
-/*Transicionado*/
-button::before {
- content: "";
- position: absolute;
- top: 0;
- left: 0;
- height: 100%;
- width: 0;
- border-radius: 15px;
- background-color: #ff0000;
- z-index: -1;
- -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
- box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
- transition: all 250ms
-}
-/*Aquí se pone todas las especificaciones de cada botón*/
-.abrir::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0;
-  border-radius: 15px;
-  background-color: #787ff6;
-  z-index: -1;
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  transition: all 250ms
- }
-.ventas::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0;
-  border-radius: 15px;
-  background-color: #4adede;
-  z-index: -1;
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  transition: all 250ms
- }
-.realizar::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0;
-  border-radius: 15px;
-  background-color: #83d1ae;
-  z-index: -1;
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  transition: all 250ms
- }
- .items::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0;
-  border-radius: 15px;
-  background-color: #f8d90f;
-  z-index: -1;
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-  transition: all 250ms
- }
-
-button:hover {
- color: #000000;
 }
 
-button:hover::before {
- width: 100%;
+.abrir::before { background-color: #787ff6; }
+.ventas::before { background-color: #4adede; }
+.realizar::before { background-color: #83d1ae; }
+.items::before { background-color: #f8d90f; }
+.cerrarSesion::before { background-color: #787ff6; }
+
+.btn-custom:hover {
+  color: #000000;
 }
 
-.caja{
-    margin: 20px;
-    width: 890px;
-    background-color: #d3e0eb;
-    color: #000000;
+.btn-custom:hover::before {
+  width: 100%;
+}
+
+.caja {
+  margin: 20px 0;
+  width: 100%;
+  background-color: #d3e0eb;
+  color: #000000;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .btn-custom {
+    font-size: 14px;
     padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
+  }
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category, Item, Product, Supplier, User, company } from 'src/app/interfaces/models.interface';
+import { Category, Item, Product, Supplier, User, company, Recipes } from 'src/app/interfaces/models.interface';
 import { CompanyService } from 'src/app/services/company.service';
 import { UsersService } from 'src/app/services/users.service';
 import { map } from 'rxjs/operators';
@@ -11,6 +11,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { ItemService } from 'src/app/services/item.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { SupplierService } from 'src/app/services/provider.service';
+import { RecipesService } from 'src/app/services/recipes.service';
 
 @Component({
   selector: 'app-company-admin-home',
@@ -88,8 +89,7 @@ export class CompanyAdminHomeComponent {
         this.users = users!;
       });
   }
-
-  getProducts(idEmpresa: string) {
+  getProducts(idEmpresa:string){
     this.productService.getCompanyProducts(idEmpresa)
       .pipe(map(item => item.products))
       .subscribe(products => {

@@ -1,0 +1,28 @@
+<div class="main-container">
+    <div class="search-container">
+      <div class="search-header">
+        <div class="search-title">
+          <h5>Búsqueda de Productos</h5>
+        </div>
+        <a class="create-product-link" routerLink="/dashboard/admin/product/new">
+          <i class="bi bi-plus-lg"></i> Crear Producto
+        </a>
+      </div>
+    </div>
+    <div class="products-container">
+      <div class="products-header">
+        <div class="products-title">
+          <h2></h2>
+        </div>
+      </div>
+      <div class="items-list-container">
+        <ul>
+          <li  *ngFor="let recipe of recipes">
+            <p>{{recipe.name}}</p>
+            <p>{{recipe.description}}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
