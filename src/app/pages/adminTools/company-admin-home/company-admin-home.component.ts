@@ -24,7 +24,8 @@ export class CompanyAdminHomeComponent {
   suppliers!: Supplier[];
   products!: Product[];
   users!: User[];
-  tabSelected: 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'inventario' = 'usuarios';
+  recipes!: Recipes[];
+  tabSelected: 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'inventario' = 'usuarios';
   tabsArray = [
     { name: 'usuarios', icon: 'bi bi-people-fill' },
     { name: 'productos', icon: 'bi bi-bag-fill' },

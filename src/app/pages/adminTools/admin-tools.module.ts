@@ -20,6 +20,8 @@ import { SuppliersListComponent } from './Suppliers/suppliers-list/suppliers-lis
 import { NgSelectModule } from '@ng-select/ng-select';
 import { EditCategoryComponent } from './Categories/edit-category/edit-category.component';
 import { RecipeListComponent } from './Recipes/recipe-list/recipe-list.component';
+import { CreateRecipeComponent } from './Recipes/create-recipe/create-recipe.component';
+import { EditRecipeComponent } from './Recipes/edit-recipe/edit-recipe.component';
 
 
 
@@ -41,6 +43,8 @@ import { RecipeListComponent } from './Recipes/recipe-list/recipe-list.component
     SuppliersListComponent,
     EditCategoryComponent,
     RecipeListComponent,
+    CreateRecipeComponent,
+    EditRecipeComponent,
   ],
   exports:[
     ItemStockListComponent,

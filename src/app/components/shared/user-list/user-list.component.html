@@ -3,7 +3,10 @@
     <div class="card-container">
       <div class="card-header">
         <h5 class="card-title mb-0">Busqueda de usuarios</h5>
-        <a class="btn btn-create-user" routerLink="/dashboard/admin/users/new" role="button">
+        <a *ngIf="userRole === 'admin'" class="btn btn-create-user" routerLink="/dashboard/admin/users/new">
+          <i class="bi bi-plus-lg"></i> Crear Usuario
+        </a>
+        <a *ngIf="userRole === 'sysadmin'" class="btn-create-user" routerLink="/dashboard/sysadmin/users/new">
           <i class="bi bi-plus-lg"></i> Crear Usuario
         </a>
       </div>

@@ -1,22 +1,22 @@
-<form [formGroup]="categoryForm" (ngSubmit)="actualizarCategory()" class="form">
-    <!-- Nombre Completo del Usuario -->
-    <div class="form-group">
+
+<div class="card mt-4">
+    <form [formGroup]="categoryForm" (ngSubmit)="actualizarCategory()" class="container mt-4">
+    <div class="mb-3">
         <label for="name" class="form-label">Nombre de categoria</label>
-        <input type="text" id="name" formControlName="name" class="form-input">
+        <input type="text" id="name" formControlName="name" class="form-control">
     </div>
 
-    <!-- Nombre de Usuario -->
-    <div class="form-group">
+    <div class="mb-3">
         <label for="description" class="form-label">Descripcion</label>
-        <textarea type="text" id="description" formControlName="description" class="form-input" ></textarea>
+        <textarea id="description" formControlName="description" class="form-control" rows="3"></textarea>
     </div>
 
-    <div class="form-group" *ngIf="categoryForm.invalid">
-        <p *ngIf="campoNoValidoDatosUsuario('name')">Nombre inválido</p>
-        <p *ngIf="campoNoValidoDatosUsuario('username')">Nombre de usuario inválido</p>
-        <p *ngIf="campoNoValidoDatosUsuario('role')">Role inválido</p>
+    <div class="alert alert-danger" *ngIf="categoryForm.invalid">
+        <p *ngIf="campoNoValidoDatosUsuario('name')" class="mb-0">Nombre inválido</p>
+        <p *ngIf="campoNoValidoDatosUsuario('username')" class="mb-0">Nombre de usuario inválido</p>
+        <p *ngIf="campoNoValidoDatosUsuario('role')" class="mb-0">Role inválido</p>
     </div>
 
-    <!-- Botón para guardar los cambios -->
-    <button type="submit" class="form-button">Guardar Cambios</button>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
 </form>
+</div>

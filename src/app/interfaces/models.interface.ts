@@ -129,6 +129,7 @@ export interface Item {
   //recetas
 
   export interface Recipes {
+    _id: string;
     name: string;
     description: string;
   }

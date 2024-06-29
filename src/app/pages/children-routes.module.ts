@@ -46,6 +46,8 @@ import { DailySalesComponent } from './userTools/daily-sales/daily-sales.compone
 import { EditCategoryComponent } from './adminTools/Categories/edit-category/edit-category.component';
 import { ItemsAvailableComponent } from './userTools/items-available/items-available.component';
 import { RecipeListComponent } from './adminTools/Recipes/recipe-list/recipe-list.component';
+import { CreateRecipeComponent } from './adminTools/Recipes/create-recipe/create-recipe.component';
+import { EditRecipeComponent } from './adminTools/Recipes/edit-recipe/edit-recipe.component';
 
 const routes: Routes = [
   {
@@ -91,6 +93,8 @@ const routes: Routes = [
 
       //recipes
       { path: 'admin/recipes', canActivate: [AdminGuard], component: RecipeListComponent },
+      { path: 'admin/recipes/new', canActivate: [AdminGuard], component: CreateRecipeComponent },
+      { path: 'admin/recipes/edit/:id', canActivate: [AdminGuard], component: EditRecipeComponent },
       //{ path: 'admin/recipes/new', canActivate: [AdminGuard], component: CreateProductComponent },
       //{ path: 'admin/recipes/edit/:id', canActivate: [AdminGuard], component: UpdateProductComponent },
 
