@@ -40,6 +40,7 @@ export class ConfirmSaleComponent {
     });
 
     this.confirmSaleForm.get('paymentMethod')!.valueChanges.subscribe((value) => {
+      console.log(value);
       if (value === 'card') {
         this.confirmSaleForm.get('paymentReference')!.setValidators([Validators.required]);
       } else {

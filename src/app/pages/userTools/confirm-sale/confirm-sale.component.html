@@ -29,11 +29,11 @@
           <label for="paymentMethod" class="form-label">Método de Pago</label>
           <select id="paymentMethod" formControlName="paymentMethod" class="form-select">
             <option value="cash">Efectivo</option>
-            <option value="card">Tarjeta</option>
+            <option value="credit">Tarjeta</option>
           </select>
         </div>
         
-        <div class="mb-3" *ngIf="confirmSaleForm.get('paymentMethod')!.value === 'card'">
+        <div class="mb-3" *ngIf="confirmSaleForm.get('paymentMethod')!.value === 'credit'">
           <label for="paymentReference" class="form-label">Referencia de Pago</label>
           <input type="text" id="paymentReference" formControlName="paymentReference" class="form-control">
         </div>
