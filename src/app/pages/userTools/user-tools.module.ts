@@ -9,6 +9,9 @@ import { UserHomeComponent } from './user-home/user-home.component';
 import { ConfirmSaleComponent } from './confirm-sale/confirm-sale.component';
 import { SuccessSaleComponent } from './success-sale/success-sale.component';
 import { CloseCashRegisterComponent } from './close-cash-register/close-cash-register.component';
+import { DailySalesComponent } from './daily-sales/daily-sales.component';
+import { ItemsAvailableComponent } from './items-available/items-available.component';
+import { AdminToolsModule } from '../adminTools/admin-tools.module';
 
 
 
@@ -20,7 +23,9 @@ import { CloseCashRegisterComponent } from './close-cash-register/close-cash-reg
     UserHomeComponent,
     ConfirmSaleComponent,
     SuccessSaleComponent,
-    CloseCashRegisterComponent
+    CloseCashRegisterComponent,
+    DailySalesComponent,
+    ItemsAvailableComponent
   ],
   exports: [
     NewsaleComponent,
@@ -32,7 +37,8 @@ import { CloseCashRegisterComponent } from './close-cash-register/close-cash-reg
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    AdminToolsModule
     
   ]
 })

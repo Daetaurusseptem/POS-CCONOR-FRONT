@@ -118,16 +118,47 @@
 }
 
 .img-cell {
-    width: 80px;
-    text-align: center;
+    position: relative;
 }
 
 .img-cell img {
-    width: 100%;
-    height: auto;
-    border-radius: 30%;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgb(15, 15, 16);
+    transition: transform 0.3s;
+}
+
+.img-cell:hover img {
+    transform: scale(1.05);
+}
+
+.img-cell .edit-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.img-cell:hover .edit-icon {
+    opacity: 1;
+    width: 85px;
+    height: 85px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
     cursor: pointer;
 }
+
+
 
 .action-cell {
     text-align: center;

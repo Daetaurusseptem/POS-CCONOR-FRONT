@@ -18,6 +18,7 @@ import { AddItemComponent } from './add-item/add-item.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SuppliersListComponent } from './Suppliers/suppliers-list/suppliers-list.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { EditCategoryComponent } from './Categories/edit-category/edit-category.component';
 
 @NgModule({
   declarations: [
@@ -34,9 +35,13 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ItemsComponent,
     AddItemComponent,
     SuppliersListComponent,
+    EditCategoryComponent,
   ],
   exports: [
-    ItemStockListComponent
+    ItemStockListComponent,
+    ProductsListComponent,
+    CategoriesListComponent,
+    SuppliersListComponent,
   ],
   imports: [
     CommonModule,

@@ -1,15 +1,22 @@
 <div class="main-container">
-    <div class="row">
-        <div class="col" *ngFor="let item of items">
-            <div class="card">
-                <img [src]="item?.img" class="card-img" alt="{{ item!.name }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ item!.name }}</h5>
-                    <p class="card-text">{{ item!.description }}</p>
-                    <p class="card-text">Marca : {{ item!.marca }} </p>
-                    <a class="btn" [routerLink]="['/dashboard/admin/product/edit/',item._id]">Mas...</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Imagen</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of items">
+                <td><div class="img-container"><img [src]="item?.img" class="img-fluid" alt="{{ item!.name }}"></div></td>
+                <td>{{ item!.name }}</td>
+                <td>{{ item!.description }}</td>
+                <td>{{ item!.marca }}</td>
+                <td><a class="btn btn-primary" [routerLink]="['/dashboard/admin/product/edit/', item._id]">Editar</a></td>
+            </tr>
+        </tbody>
+    </table>
 </div>

@@ -1,0 +1,41 @@
+<div class="container mt-5">
+    <div *ngIf="openCashRegisterWithSales; else noSales">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h2 class="mb-0">Caja Abierta del Usuario</h2>
+        </div>
+        <div class="card-body">
+          <p><strong>Usuario:</strong> {{ usuario }}</p>
+          <p><strong>Fecha de Inicio:</strong> {{ openCashRegisterWithSales.startDate | date:'short' }}</p>
+          <p><strong>Monto Inicial:</strong> {{ openCashRegisterWithSales.initialAmount | currency }}</p>
+  
+          <h3 class="mt-4">Ventas Asociadas</h3>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Método de Pago</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let sale of openCashRegisterWithSales.sales">
+                  <td>{{ sale.date | date:'short' }}</td>
+                  <td>{{ sale.total | currency }}</td>
+                  <td>{{ sale.paymentMethod | titlecase }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <ng-template #noSales>
+      <div class="alert alert-warning" role="alert">
+        No hay caja abierta para este usuario.
+      </div>
+    </ng-template>
+  </div>
+  

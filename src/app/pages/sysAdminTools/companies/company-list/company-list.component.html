@@ -37,9 +37,10 @@
           </tr>
         </thead>
         <tbody *ngIf="empresas">
-          <tr *ngFor="let company of empresas; index as i">
+        <tr *ngFor="let company of empresas; index as i">
             <td class="img-cell">
-              <img [src]="company.img" alt="Avatar de usuario" (click)="abrirModal(company)">
+                <img [src]="company.img" alt="Avatar de usuario" (click)="abrirModal(company)">
+                <i class="edit-icon bi bi-pencil-fill" (click)="abrirModal(company)"></i>
             </td>
             <td>{{ company.name }}</td>
             <td>{{ company.tel }}</td>
@@ -59,9 +60,6 @@
               </button>
               <button class="btn-edit" [routerLink]="['/dashboard/sysadmin/companies/edit', company._id]">
                 <i class="bi bi-pencil-fill"></i> Editar
-              </button>
-              <button class="btn-delete" (click)="deleteCompany(company._id!)">
-                <i class="bi bi-trash3-fill"></i>Eliminar
               </button>
             </td>
           </tr>

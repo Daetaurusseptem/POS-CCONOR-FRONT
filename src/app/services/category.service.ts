@@ -19,6 +19,11 @@ export class CategoryService {
     this.authService.headers 
     );
   };
+  getCategoryById(id:string) {
+    return this.http.get<itemResponse>(`${urlCategories}/${id}`,
+    this.authService.headers 
+    );
+  };
   getNumberOfCompanyCategories() {
     return this.http.get<itemResponse>(`${urlCategories}/number`,
     this.authService.headers 
@@ -37,7 +42,7 @@ export class CategoryService {
   }
   
   updateCategory(id:string, formData:FormData) {
-    console.log(formData);
+    console.log(`las;kdj;aklsjdlkasjdl;kajsdlkasjd;lkasj`);
     return this.http.put<itemResponse>(`${urlCategories}/${id}`, formData, this.authService.headers );
   };
 

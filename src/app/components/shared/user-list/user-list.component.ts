@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User, company } from 'src/app/interfaces/models.interface';
@@ -12,6 +12,11 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent {
+
+  @Input() padre: Boolean = false;
+  
+  
+
   adminId!: string
   companyId!: string
   users!: User[];

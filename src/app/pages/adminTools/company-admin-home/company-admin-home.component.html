@@ -33,8 +33,10 @@
   <tabs-menu [items]="tabsArray" (tabSelectedOutput)="changeTab($event)"></tabs-menu>
 
   <!-- USUARIOS -->
+
   <div *ngIf="tabSelected == 'usuarios'" class="row">
-    <div class="col-12 mx-auto text-center mb-2">
+    <user-list [padre]="false"></user-list>
+    <!-- <div class="col-12 mx-auto text-center mb-2">
       <div class="card">
         <div class="card-header">
           <div class="card-title text-center">
@@ -95,7 +97,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
   <!-- /USUARIOS -->
 
@@ -105,7 +107,8 @@
 
   <!-- PRODUCTS -->
   <div *ngIf="tabSelected == 'productos'" class="row">
-    <div class="col-12 mx-auto text-center mb-2">
+    <products-list></products-list>
+    <!-- <div class="col-12 mx-auto text-center mb-2">
       <div class="card">
         <div class="card-header">
           <div class="card-title text-center">
@@ -131,13 +134,14 @@
           <items-list [items]="products" [routerLink]=""></items-list>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
   <!-- /PRODUCTS -->
 
   <!-- PROVEEDORES -->
   <div *ngIf="tabSelected == 'proveedores'" class="row">
-    <div class="col-12 mx-auto text-center mb-2">
+    <suppliers-list></suppliers-list>
+    <!-- <div class="col-12 mx-auto text-center mb-2">
       <div class="card">
         <div class="card-header">
           <div class="card-title text-center">
@@ -193,13 +197,14 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
   <!-- /PROVEEDORES -->
 
   <!-- CATEGORIAS -->
   <div *ngIf="tabSelected == 'categorias'" class="row">
-    <div class="col-12 mx-auto text-center mb-2">
+    <categories-list></categories-list>
+    <!-- <div class="col-12 mx-auto text-center mb-2">
       <div class="card">
         <div class="card-header">
           <div class="card-title text-center">
@@ -211,7 +216,8 @@
         </div>
         <form>
           <div class="m-5">
-            <input type="text" class="form-control" id="busquedaEmpresa" aria-describedby="busquedaHelp" #terminoCategoria>
+            <input type="text" class="form-control" id="busquedaEmpresa" aria-describedby="busquedaHelp"
+              #terminoCategoria>
           </div>
         </form>
       </div>
@@ -236,7 +242,8 @@
                   <td>{{ category.name || 'No Especificado' }}</td>
                   <td>{{ category.description }}</td>
                   <td>
-                    <button class="btn btn-primary btn-sm me-2 d-inline" [routerLink]="['/dashboard/sysadmin/categories/edit', category._id]">
+                    <button class="btn btn-primary btn-sm me-2 d-inline"
+                      [routerLink]="['/dashboard/sysadmin/categories/edit', category._id]">
                       <i class="bi bi-pencil-fill"></i>
                     </button>
                     <button class="btn btn-danger btn-sm d-inline">
@@ -253,7 +260,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
   <!-- /CATEGORIAS -->
 </div>

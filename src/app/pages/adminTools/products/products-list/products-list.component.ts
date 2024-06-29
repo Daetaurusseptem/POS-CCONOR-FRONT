@@ -6,7 +6,7 @@ import { Product } from 'src/app/interfaces/models.interface';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-products-list',
+  selector: 'products-list',
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.css']
 })

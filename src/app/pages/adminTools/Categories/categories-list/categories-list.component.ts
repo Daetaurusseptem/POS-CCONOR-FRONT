@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-categories-list',
+  selector: 'categories-list',
   templateUrl: './categories-list.component.html',
   styleUrls: ['./categories-list.component.css']
 })

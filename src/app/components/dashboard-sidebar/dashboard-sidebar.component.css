@@ -6,6 +6,15 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   background-color: #f0f2f5;
   color: #333;
+  transition: width 0.3s ease;
+}
+
+.sidebar-container.collapsed {
+  width: 80px; /* Ancho en modo compacto */
+}
+
+.sidebar-container:not(.collapsed) {
+  width: 250px; /* Ancho en modo expandido */
 }
 
 /* Cabecera del sidebar */
@@ -15,22 +24,31 @@
   display: flex;
   align-items: center;
   text-transform: uppercase;
+  justify-content: center; /* Centrar el contenido en modo compacto */
 }
 
-/* Logo y el título dentro de la cabecera */
-.logo {
+.sidebar-header .logo {
   display: flex;
   align-items: center;
   text-decoration: none;
   color: #333;
   font-size: 1.5rem;
   font-weight: bold;
+  justify-content: center; /* Centrar el logo en modo compacto */
 }
 
-.logo-img {
+.sidebar-header .logo-img {
   width: 40px;
   height: 40px;
-  margin-left: 0.5rem;
+  margin: 0; /* Eliminar margen en modo compacto */
+}
+
+.sidebar-header .logo span {
+  display: none; /* Ocultar el texto del logo en modo compacto */
+}
+
+.sidebar-container:not(.collapsed) .sidebar-header .logo span {
+  display: inline; /* Mostrar el texto del logo en modo expandido */
 }
 
 .sidebar-nav {
@@ -42,8 +60,10 @@
 }
 
 .sidebar-toggle {
-  display: block;
-  padding: 0.5rem 1rem;
+  display: flex; /* Cambiar a flex para centrar iconos */
+  align-items: center;
+  justify-content: center; /* Centrar iconos en modo compacto */
+  padding: 0.5rem;
   font-size: 1rem;
   font-weight: bold;
   text-decoration: none;
@@ -54,20 +74,31 @@
   transition: background-color 0.3s ease;
 }
 
+.sidebar-container:not(.collapsed) .sidebar-toggle {
+  justify-content: flex-start; /* Alinear a la izquierda en modo expandido */
+  padding: 0.5rem 1rem;
+}
+
 .sidebar-toggle:hover {
   background-color: #aeaeae;
   color: #e9ecef;
 }
 
-/* Enlaces dentro del sidebar */
 .sidebar-link {
-  display: block;
-  padding: 0.6rem 1rem;
+  display: flex; /* Cambiar a flex para centrar iconos */
+  align-items: center;
+  justify-content: center; /* Centrar iconos en modo compacto */
+  padding: 0.6rem;
   color: #6c757db6;
   text-decoration: none;
   border-radius: 0.25rem;
   margin: 0.5rem 0;
   transition: color 0.3s ease;
+}
+
+.sidebar-container:not(.collapsed) .sidebar-link {
+  justify-content: flex-start; /* Alinear a la izquierda en modo expandido */
+  padding: 0.6rem 1rem;
 }
 
 .sidebar-link:hover {
@@ -79,4 +110,12 @@
 .sidebar-link.active {
   color: #333;
   font-weight: bold;
+}
+
+.submenu {
+  display: none; /* Ocultar submenu por defecto */
+}
+
+.submenu.show {
+  display: block; /* Mostrar submenu cuando esté abierto */
 }

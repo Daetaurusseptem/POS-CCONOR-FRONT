@@ -59,7 +59,7 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>img</th>
+                  <th>Imagen</th>
                   <th>Nombre</th>
                   <th>Nombre de Usuario</th>
                   <th>Rol</th>
@@ -127,33 +127,29 @@
     </div>
   </div>
 
-  <!-- ITEMS -->
-
-  <!-- item-list.component.html -->
-<div class="container mt-4">
-  <h2>Lista de Items</h2>
- 
-  <div class="row">
-    <div *ngFor="let item of items" class="col-md-4 mb-4">
-      <div class="card h-100">
-        <img [src]="item.product?.img" class="card-img-top" alt="{{ item.name }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ item.product?.name }}</h5>
-          <p class="card-text">Precio: {{ item.price  }}</p>
-          <p class="card-text">Stock: {{ item.stock }}</p>
-          <p class="card-text">Fecha de Recepción: {{ item.receivedDate | date }}</p>
-          <p class="card-text">Fecha de Expiración: {{ item.expirationDate ? (item.expirationDate | date) : 'N/A' }}</p>
-          <p class="card-text">Descuento: {{ item.discount }}%</p>
-          <p class="card-text">Descuento: {{ item.discount }}%</p>
-          <p class="card-text"><a class="btn btn-block btn-primary"><i class="bi bi-pencil-fill"></i>Editar</a></p>
-          <p class="card-text" (click)="deleteItem(item._id)"><a class="btn btn-block btn-danger"><i class="bi bi-trash3-fill"></i>eliminar</a></p>
+  <!-- INVENTARIO -->
+  <div *ngIf="tabSelected == 'inventario'" class="row">
+    <h2 class="mb-4">Lista de Items</h2>
+    <div class="row">
+      <div *ngFor="let item of items" class="col-md-4 mb-4">
+        <div class="card h-100">
+          <img [src]="item.product?.img" class="card-img-top" alt="{{ item.name }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ item.product?.name }}</h5>
+            <p class="card-text">Precio: {{ item.price }}</p>
+            <p class="card-text">Stock: {{ item.stock }}</p>
+            <p class="card-text">Fecha de Recepción: {{ item.receivedDate | date }}</p>
+            <p class="card-text">Fecha de Expiración: {{ item.expirationDate ? (item.expirationDate | date) : 'N/A' }}</p>
+            <p class="card-text">Descuento: {{ item.discount }}%</p>
+            <a class="btn btn-primary btn-block"><i class="bi bi-pencil-fill"></i> Editar</a>
+            <a class="btn btn-danger btn-block" (click)="deleteItem(item._id)"><i class="bi bi-trash3-fill"></i> Eliminar</a>
+          </div>
         </div>
       </div>
     </div>
+    <pagination-controls (pageChange)="pageChanged($event)" [maxSize]="totalItems"></pagination-controls>
   </div>
-  <pagination-controls (pageChange)="pageChanged($event)" [maxSize]="totalItems"></pagination-controls>
-</div>
-
+  <stock-item-list></stock-item-list>
 
   <!-- CATEGORIAS -->
   <div *ngIf="tabSelected == 'categorias'" class="row">

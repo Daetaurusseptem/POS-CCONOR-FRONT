@@ -42,6 +42,9 @@ import { CashRegisterComponent } from './userTools/cash-register/cash-register.c
 import { ConfirmSaleComponent } from './userTools/confirm-sale/confirm-sale.component';
 import { SuccessSaleComponent } from './userTools/success-sale/success-sale.component';
 import { CloseCashRegisterComponent } from './userTools/close-cash-register/close-cash-register.component';
+import { DailySalesComponent } from './userTools/daily-sales/daily-sales.component';
+import { EditCategoryComponent } from './adminTools/Categories/edit-category/edit-category.component';
+import { ItemsAvailableComponent } from './userTools/items-available/items-available.component';
 
 const routes: Routes = [
   {
@@ -79,6 +82,7 @@ const routes: Routes = [
       { path: 'admin/suppliers/edit/:id', canActivate: [AdminGuard], component: UpdateSuppliersComponent },
       //categorias
       { path: 'admin/categories', canActivate: [AdminGuard], component: CategoriesListComponent },
+      { path: 'admin/edit-category/:id', canActivate: [AdminGuard], component: EditCategoryComponent },
       { path: 'admin/categories/new/:id', canActivate: [AdminGuard], component: CreateCompanyCategoryComponent },
       //inventario
       { path: 'admin/items', canActivate: [AdminGuard], component: ItemStockListComponent },
@@ -95,6 +99,8 @@ const routes: Routes = [
       
       { path: 'user', canActivate: [userGuard], component: UserHomeComponent },
       { path: 'user/new-sale', component: NewsaleComponent, canActivate: [AuthGuardGuard, userGuard] },
+      { path: 'user/daily-sales', component: DailySalesComponent, canActivate: [AuthGuardGuard, userGuard] },
+      { path: 'user/items-available', component: ItemsAvailableComponent, canActivate: [AuthGuardGuard, userGuard] },
     ]
   }
 ];

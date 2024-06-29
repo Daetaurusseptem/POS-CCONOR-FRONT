@@ -4,6 +4,7 @@ import { itemResponse } from '../interfaces/itemResponse.interface';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { Category, Item } from '../interfaces/models.interface';
+import { Observable } from 'rxjs';
 const urlBase = `${environment.apiUrl}/items`
 @Injectable({
   providedIn: 'root'
@@ -15,15 +16,21 @@ export class ItemService {
     private authService: AuthService,
   ) { }
 
-  getItems(page: number, limit: number, search?: string) {
-
+  getItems(page: number, limit: number, search?: string): Observable<itemResponse> {
     const params: any = { page: page.toString(), limit: limit.toString() };
     if (search) {
       params.name = search;
     }
-    //console.log(this.authService.company);
-    return this.http.get<itemResponse>(`${urlBase}/${this.authService.company._id}`, { params, headers: { 'x-token': this.authService.token } });
-  };
+  
+    if (this.authService.role === 'admin') {
+      return this.http.get<itemResponse>(`${urlBase}/${this.authService.company._id}`, { params, headers: { 'x-token': this.authService.token } });
+    } else if(this.authService.role === 'user') {
+      return this.http.get<itemResponse>(`${urlBase}/${this.authService.companyId}`, { params, headers: { 'x-token': this.authService.token } });
+    } else {
+      throw new Error('Invalid role');
+    }
+  }
+  
 
   
   getNumberOfCompanyItems() {

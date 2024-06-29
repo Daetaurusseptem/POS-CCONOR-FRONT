@@ -46,7 +46,7 @@ export class UserHomeComponent {
   }
 
   viewItems() {
-    this.router.navigate(['dashboard/user/items']);
+    this.router.navigate(['dashboard/user/items-available']);
   }
 
   logout() {
