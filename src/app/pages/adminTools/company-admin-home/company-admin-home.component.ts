@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category, Item, Product, Supplier, User, company, Recipes } from 'src/app/interfaces/models.interface';
+import { Category, Item, Product, Supplier, User, company, Recipe } from 'src/app/interfaces/models.interface';
 import { CompanyService } from 'src/app/services/company.service';
 import { UsersService } from 'src/app/services/users.service';
 import { map } from 'rxjs/operators';
@@ -24,7 +24,7 @@ export class CompanyAdminHomeComponent {
   suppliers!: Supplier[];
   products!: Product[];
   users!: User[];
-  recipes!: Recipes[];
+  recipes!: Recipe[];
   tabSelected: 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'inventario' = 'usuarios';
   tabsArray = [
     { name: 'usuarios', icon: 'bi bi-people-fill' },

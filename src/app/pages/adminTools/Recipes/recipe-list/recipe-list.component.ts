@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Recipes } from 'src/app/interfaces/models.interface';
+import { Recipe } from 'src/app/interfaces/models.interface';
 import { RecipesService } from 'src/app/services/recipes.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { map } from 'rxjs';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./recipe-list.component.css']
 })
 export class RecipeListComponent implements OnInit {
-  recipes: Recipes[] = [];
+  recipes: Recipe[] = [];
   companyId!: string;
 
   constructor(

@@ -22,6 +22,7 @@ import { EditCategoryComponent } from './Categories/edit-category/edit-category.
 import { RecipeListComponent } from './Recipes/recipe-list/recipe-list.component';
 import { CreateRecipeComponent } from './Recipes/create-recipe/create-recipe.component';
 import { EditRecipeComponent } from './Recipes/edit-recipe/edit-recipe.component';
+import { IngredientListComponent } from './ingredient-list/ingredient-list.component';
 
 
 
@@ -45,6 +46,7 @@ import { EditRecipeComponent } from './Recipes/edit-recipe/edit-recipe.component
     RecipeListComponent,
     CreateRecipeComponent,
     EditRecipeComponent,
+    IngredientListComponent,
   ],
   exports:[
     ItemStockListComponent,
