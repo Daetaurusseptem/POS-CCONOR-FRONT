@@ -48,6 +48,7 @@ import { ItemsAvailableComponent } from './userTools/items-available/items-avail
 import { RecipeListComponent } from './adminTools/Recipes/recipe-list/recipe-list.component';
 import { CreateRecipeComponent } from './adminTools/Recipes/create-recipe/create-recipe.component';
 import { EditRecipeComponent } from './adminTools/Recipes/edit-recipe/edit-recipe.component';
+import { IngredientListComponent } from './adminTools/ingredient-list/ingredient-list.component';
 
 const routes: Routes = [
   {
@@ -97,6 +98,10 @@ const routes: Routes = [
       { path: 'admin/recipes/edit/:id', canActivate: [AdminGuard], component: EditRecipeComponent },
       //{ path: 'admin/recipes/new', canActivate: [AdminGuard], component: CreateProductComponent },
       //{ path: 'admin/recipes/edit/:id', canActivate: [AdminGuard], component: UpdateProductComponent },
+      
+      //INGREDIENT
+      { path: 'admin/ingredients', component: IngredientListComponent },
+
 
       //USER
       { path: 'user', canActivate:[userGuard], component:  UserHomeComponent},
@@ -114,6 +119,9 @@ const routes: Routes = [
       { path: 'user/new-sale', component: NewsaleComponent, canActivate: [AuthGuardGuard, userGuard] },
       { path: 'user/daily-sales', component: DailySalesComponent, canActivate: [AuthGuardGuard, userGuard] },
       { path: 'user/items-available', component: ItemsAvailableComponent, canActivate: [AuthGuardGuard, userGuard] },
+
+
+      
     ]
   }
 ];

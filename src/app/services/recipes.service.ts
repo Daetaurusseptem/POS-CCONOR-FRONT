@@ -1,21 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { itemResponse } from '../interfaces/itemResponse.interface';
-import { environment } from 'src/environments/environment.development';
-import { Recipes } from '../interfaces/models.interface';
+import { AuthService } from './auth.service';
+import { Recipe } from '../interfaces/models.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipesService {
-  private urlRecipes = `${environment.apiUrl}/recipe`;
+
+  private urlRecipes = `${environment.apiUrl}/recipes`;
 
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-  ) {}
+  ) { }
 
+  createRecipe(recipeData: any): Observable<any> {
+    return this.http.post<any>(`${this.urlRecipes}`, recipeData);
+  }
+
+  getRecipes(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.urlRecipes}`);
+  }
+
+  consumeIngredients(recipeId: string, quantity: number): Observable<any> {
+    return this.http.post<any>(`${this.urlRecipes}/consume`, { recipeId, quantity });
+  }
   getRecipe(id: string) {
     return this.http.get<itemResponse>(`${this.urlRecipes}/by-Id/${id}`, this.authService.headers);
   }
@@ -28,15 +41,15 @@ export class RecipesService {
     return this.http.get<itemResponse>(`${this.urlRecipes}/${companyId}`, this.authService.headers);
   }
 
-  createRecipe(recipe: Recipes) {
-    return this.http.post<itemResponse>(`${this.urlRecipes}`, recipe, this.authService.headers);
-  }
+
 
   deleteRecipe(id: string) {
     return this.http.delete<itemResponse>(`${this.urlRecipes}/${id}`, this.authService.headers);
   }
 
-  updateRecipe(id: string, recipe: Recipes) {
+  updateRecipe(id: string, recipe: Recipe) {
     return this.http.put<itemResponse>(`${this.urlRecipes}/${id}`, recipe, this.authService.headers);
   }
+
+
 }

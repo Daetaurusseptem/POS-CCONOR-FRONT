@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipesService } from 'src/app/services/recipes.service';
-import { Recipes } from 'src/app/interfaces/models.interface';
+import { Recipe } from 'src/app/interfaces/models.interface';
 
 @Component({
   selector: 'app-edit-recipe',
@@ -56,7 +56,7 @@ export class EditRecipeComponent implements OnInit {
 
   onSubmit(): void {
     if (this.recipeForm.valid) {
-      const updatedRecipe: Recipes = {
+      const updatedRecipe: Recipe = {
         ...this.recipeForm.value,
         _id: this.recipeId
       };

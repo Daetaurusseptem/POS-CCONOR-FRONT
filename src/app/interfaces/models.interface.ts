@@ -128,9 +128,20 @@ export interface Item {
 
   //recetas
 
-  export interface Recipes {
+  export interface Recipe {
     _id: string;
     name: string;
     description: string;
+  }
+  export interface Ingredient {
+    _id?: string;
+    name: string;
+    quantity: number;
+    priceProvider: number;
+    measurement: 'grms' | 'ml' | 'kg' | 'lts';
+    provider: string;
+    expirationDate?: Date;
+    receivedDate: Date;
+    company: string;
   }
   
