@@ -11,6 +11,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class CreateRecipeComponent implements OnInit {
   recipeForm: FormGroup;
+  availableIngredients: string[] = ['Ingrediente 1', 'Ingrediente 2', 'Ingrediente 3', 'Ingrediente 4'];
+  selectedIngredients: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -26,6 +28,24 @@ export class CreateRecipeComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  onIngredientSelect(event: any): void {
+    const selectedOptions = event.target.selectedOptions;
+    for (let i = 0; i < selectedOptions.length; i++) {
+      const ingredientName = selectedOptions[i].value;
+      if (!this.selectedIngredients.some(ing => ing.name === ingredientName)) {
+        this.selectedIngredients.push({
+          name: ingredientName,
+          quantity: 0,
+          unit: 'ml'
+        });
+      }
+    }
+  }
+
+  removeIngredient(index: number): void {
+    this.selectedIngredients.splice(index, 1);
+  }
 
   onSubmit() {
     if (this.recipeForm.valid) {

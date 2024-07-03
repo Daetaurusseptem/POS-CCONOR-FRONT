@@ -18,18 +18,18 @@ import Swal from 'sweetalert2';
 })
 export class NewsaleComponent {
   searchForm !: FormGroup;
-  items : any[] = [];
-  categories : any[] = [];
-  selectedCategory : string = '';
-  cart : any[] = [];
-  total : number = 0;
-  currentPage : number = 1;
-  totalPages : number = 1;
-  search : string = '';
-  companyId? : string;
+  items: any[] = [];
+  categories: any[] = [];
+  selectedCategory: string = '';
+  cart: any[] = [];
+  total: number = 0;
+  currentPage: number = 1;
+  totalPages: number = 1;
+  search: string = '';
+  companyId?: string;
 
   constructor(
-    
+
     private fb: FormBuilder,
     private itemsService: ItemService,
     private categoryService: CategoryService,
@@ -40,12 +40,12 @@ export class NewsaleComponent {
 
   ) {
     console.log(this.authService.usuario);
-    
-    if(this.authService.role == 'user'){
+
+    if (this.authService.role == 'user') {
 
       this.companyId = authService.companyId!
-      }else{  
-        this.companyId = authService.company?._id!
+    } else {
+      this.companyId = authService.company?._id!
     }
 
     console.log(this.companyId);
@@ -60,30 +60,30 @@ export class NewsaleComponent {
 
   loadCategories(): void {
     this.categoryService.getCompanyCategories(this.companyId!)
-    .pipe(
-      map(r=>r.categories!)
-    )
-    .subscribe((data: Category[]) => {
+      .pipe(
+        map(r => r.categories!)
+      )
+      .subscribe((data: Category[]) => {
 
-      console.log(data);
-      this.categories = data;
-      if (this.categories.length > 0) {
-        this.selectedCategory = this.categories[0]._id;
-        this.loadItems();
-      }
-    });
+        console.log(data);
+        this.categories = data;
+        if (this.categories.length > 0) {
+          this.selectedCategory = this.categories[0]._id;
+          this.loadItems();
+        }
+      });
   }
 
   loadItems(): void {
-    
+
     this.itemsService.getItemsByCategory(this.selectedCategory, this.search, this.currentPage)
-    
-    .subscribe(data => {
-      console.log(data);
-      this.items =[];
-      this.items = data.items!;
-      this.totalPages = data.totalPages!;
-    });
+
+      .subscribe(data => {
+        console.log(data);
+        this.items = [];
+        this.items = data.items!;
+        this.totalPages = data.totalPages!;
+      });
   }
 
   addToCart(item: any): void {
@@ -102,7 +102,7 @@ export class NewsaleComponent {
   }
 
 
-  
+
   calculateTotal(): void {
     this.total = this.cart.reduce((sum, item) => sum + item.total, 0);
   }
@@ -144,5 +144,14 @@ export class NewsaleComponent {
   goToPage(page: number): void {
     this.currentPage = page;
     this.loadItems();
+  }
+
+  // Add this method to your NewsaleComponent class
+  removeFromCart(item: any): void {
+    const index = this.cart.findIndex(cartItem => cartItem.item._id === item.item._id);
+    if (index !== -1) {
+      this.cart.splice(index, 1);
+      this.calculateTotal();
+    }
   }
 }

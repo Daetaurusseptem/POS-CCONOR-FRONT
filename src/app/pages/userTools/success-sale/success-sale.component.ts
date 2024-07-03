@@ -12,4 +12,10 @@ export class SuccessSaleComponent {
   goToNewSale(): void {
     this.router.navigate(['dashboard/user/new-sale']);
   }
+  goToHome(): void {
+    this.router.navigate(['dashboard/user']);
+  }
+  printTicket(): void {
+    //this.router.navigate(['dashboard/user']);
+  }
 }
