@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CompanyService } from 'src/app/services/company.service';
-import { User, company } from 'src/app/interfaces/models.interface';
+import { User, Company } from 'src/app/interfaces/models.interface';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
@@ -17,7 +17,7 @@ export class CreateCompanyComponent implements OnInit {
 
   
 
-  empresa: company = {
+  empresa: Company = {
     name: '',
     adminId: '',
     img: '',

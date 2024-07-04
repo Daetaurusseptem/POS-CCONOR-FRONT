@@ -6,8 +6,8 @@ import { UsuarioModel } from '../models/usuario.model';
 import { tap, Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { environment } from 'src/environments/environment';
-import { company } from '../interfaces/models.interface';
 import { Router } from '@angular/router';
+import { Company } from '../interfaces/models.interface';
 
 const url = environment.apiUrl;
 const urlAuth = `${url}/auth`;
@@ -18,7 +18,7 @@ const urlAuth = `${url}/auth`;
 export class AuthService {
   public idUsuario!: string
   usuario!: UsuarioModel;
-  company!: company;
+  company!: Company;
   companyId!: string;
 
 
@@ -73,7 +73,7 @@ export class AuthService {
       }
     };
   }
-  get getCompany(): company {
+  get getCompany(): Company {
     return this.company!;
   }
   get token(): string {

@@ -1,4 +1,4 @@
-import { company } from "../interfaces/models.interface";
+import { Company } from "../interfaces/models.interface";
 
 export class UsuarioModel {
 
@@ -10,6 +10,6 @@ export class UsuarioModel {
         public email: string,
         public img?: string,
         public password?: string,
-        public company?:company
+        public company?:Company
     ) {}
   }

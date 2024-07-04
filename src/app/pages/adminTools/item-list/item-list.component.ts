@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
-import { Item, company } from 'src/app/interfaces/models.interface';
+import { Item, Company } from 'src/app/interfaces/models.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { ItemService } from 'src/app/services/item.service';
 import { ModalService } from 'src/app/services/modal.service';

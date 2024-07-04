@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { User, company } from 'src/app/interfaces/models.interface';
+import { User, Company } from 'src/app/interfaces/models.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -17,7 +17,7 @@ export class UserListComponent {
   adminId!: string;
   companyId!: string;
   users!: User[];
-  company!: company;
+  company!: Company;
   userRole!: 'admin' | 'sysadmin' | 'user';
 
   constructor(
@@ -113,7 +113,7 @@ export class UserListComponent {
     })
   }
 
-  abrirModal(element: company | User, tipo: "empresas" | "usuarios" | "productos") {
+  abrirModal(element: Company | User, tipo: "empresas" | "usuarios" | "productos") {
     console.log(element);
     const { _id } = element;
     this.modalService.abrirModal(element.img, tipo, _id!);

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Category, User, company } from 'src/app/interfaces/models.interface';
+import { Category, User, Company } from 'src/app/interfaces/models.interface';
 import { CategoryService } from 'src/app/services/category.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { map } from 'rxjs/operators';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { Suscription, company } from 'src/app/interfaces/models.interface';
+import { Company, Suscription } from 'src/app/interfaces/models.interface';
 import { CompanyService } from 'src/app/services/company.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./company-list.component.css']
 })
 export class CompanyListComponent implements OnInit {
-  empresas!: company[];
+  empresas!: Company[];
 
   constructor(
               private companyService: CompanyService,
@@ -35,7 +35,7 @@ export class CompanyListComponent implements OnInit {
     });
   }
 
-  getLatestSubscription(empresa: company): Suscription | undefined {
+  getLatestSubscription(empresa: Company): Suscription | undefined {
     if (empresa.SuscriptionsHistory && empresa.SuscriptionsHistory.length > 0) {
       return empresa.SuscriptionsHistory.reduce((latest, current) => {
         return (new Date(latest.cutOffDate) > new Date(current.cutOffDate)) ? latest : current;
@@ -83,7 +83,7 @@ export class CompanyListComponent implements OnInit {
       }
     })
   }
-  abrirModal( company: company ) {
+  abrirModal( company:Company  ) {
     const {_id} = company
     this.modalService.abrirModal(company.img,'empresas',_id!);
   }

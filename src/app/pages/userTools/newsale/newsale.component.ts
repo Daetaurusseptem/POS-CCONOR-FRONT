@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import { itemResponse } from 'src/app/interfaces/itemResponse.interface';
-import { Category, Item, company } from 'src/app/interfaces/models.interface';
+import { Category, Item, Company } from 'src/app/interfaces/models.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { ItemService } from 'src/app/services/item.service';

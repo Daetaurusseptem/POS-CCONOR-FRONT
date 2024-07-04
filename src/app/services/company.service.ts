@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { company } from '../interfaces/models.interface';
+import { Company } from '../interfaces/models.interface';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { itemResponse } from '../interfaces/itemResponse.interface';
@@ -41,7 +41,7 @@ export class CompanyService {
     return this.http.put<itemResponse>(`${urlApiCompanies}/${id}`, formData, this.authService.headers );
   };
 
-  createCompany(company:company){
+  createCompany(company:Company){
     
     return this.http.post<itemResponse>(`${urlApiCompanies}`, company, this.authService.headers);
   };

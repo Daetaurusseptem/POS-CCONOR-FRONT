@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category, Item, Product, Supplier, User, company, Recipe } from 'src/app/interfaces/models.interface';
+import { Category, Item, Product, Supplier, User, Company, Recipe } from 'src/app/interfaces/models.interface';
 import { CompanyService } from 'src/app/services/company.service';
 import { UsersService } from 'src/app/services/users.service';
 import { map } from 'rxjs/operators';
@@ -35,7 +35,7 @@ export class CompanyAdminHomeComponent {
     { name: 'suscripcion', icon: 'bi bi-card-checklist' }
   ];
 
-  company!: company;
+  company!: Company;
   admin!: UsuarioModel;
   id: string = '';
 
@@ -131,7 +131,7 @@ export class CompanyAdminHomeComponent {
     console.log(this.tabSelected);
   }
 
-  abrirModal(element: company | User, tipo: 'empresas' | 'usuarios' | 'productos') {
+  abrirModal(element: Company | User, tipo: 'empresas' | 'usuarios' | 'productos') {
     const { _id } = element;
     this.modalService.abrirModal(element.img, tipo, _id!);
   }

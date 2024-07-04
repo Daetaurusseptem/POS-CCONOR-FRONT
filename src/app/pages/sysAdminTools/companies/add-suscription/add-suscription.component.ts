@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Suscription, company } from 'src/app/interfaces/models.interface';
+import { Company, Suscription } from 'src/app/interfaces/models.interface';
 import { CompanyService } from 'src/app/services/company.service';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 
@@ -17,7 +17,7 @@ export class AddSubscriptionComponent {
 onSubmit() {
 throw new Error('Method not implemented.');
 }
-  company!:company;
+  company!:Company;
   id:string='';
 
   subscription: Suscription = {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { company } from 'src/app/interfaces/models.interface';
+import { Company } from 'src/app/interfaces/models.interface';
 import { CompanyService } from 'src/app/services/company.service';
 import {  map} from "rxjs/operators";
 import Swal from 'sweetalert2';
@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class EditCompanyComponent {
 
-  company!:company;
+  company!:Company;
   id:string='';
 
 

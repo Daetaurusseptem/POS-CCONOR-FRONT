@@ -1,11 +1,11 @@
 ;
-import { Category, Item, Product, Sale, Supplier, User, company, CashRegister, Recipe, Ingredient } from './models.interface';
+import { Category, Item, Product, Sale, Supplier, User, Company, CashRegister, Recipe, Ingredient,  } from './models.interface';
 import { StripeResponse } from './stripeProduct.interface';
 export interface itemResponse {
   ok?:boolean,
   msg?:string,
-  company?:company,
-  companies?:company[],
+  company?:Company,
+  companies?:Company[],
   user?:User,
   item?:Item,
   items?:Item[],

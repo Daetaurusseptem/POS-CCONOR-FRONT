@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./ingredients-admin-list.component.css']
 })
 export class IngredientsAdminListComponent {
-  ingredient!: Ingredient[];
+  ingredients!: Ingredient[];
   companyName!: string;
 
   constructor(
@@ -28,8 +28,9 @@ export class IngredientsAdminListComponent {
 
   getIngredients(): void {
     this.ingredientService.getIngredients()
+      .pipe(map(item=>item.ingredients))
       .subscribe(ingredients => {
-        this.ingredient = ingredients;
+        this.ingredients = ingredients!;
         this.companyName = this.authService.company.name;
       });
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Supplier, company } from 'src/app/interfaces/models.interface';
+import { Supplier, Company } from 'src/app/interfaces/models.interface';
 import { SupplierService } from 'src/app/services/provider.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { map } from "rxjs/operators";

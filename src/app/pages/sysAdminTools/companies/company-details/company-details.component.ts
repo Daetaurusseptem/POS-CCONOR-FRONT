@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { Category, Item, Product, Supplier, User, company } from 'src/app/interfaces/models.interface';
+import { Category, Item, Product, Supplier, User, Company } from 'src/app/interfaces/models.interface';
 import { CompanyService } from 'src/app/services/company.service';
 import { UsersService } from 'src/app/services/users.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -20,7 +20,7 @@ import Swal from 'sweetalert2';
 export class CompanyDetailsComponent implements OnInit {
 
   items!: Item[];
-  company!: company;
+  company!: Company;
   admin!: User;
   id: string = '';
   users!: User[];
@@ -166,7 +166,7 @@ export class CompanyDetailsComponent implements OnInit {
       });
   }
 
-  abrirModal(element: company | User, tipo: 'empresas' | 'usuarios' | 'productos') {
+  abrirModal(element: Company | User, tipo: 'empresas' | 'usuarios' | 'productos') {
     const { _id } = element;
     this.modalService.abrirModal(element.img, tipo, _id!);
 

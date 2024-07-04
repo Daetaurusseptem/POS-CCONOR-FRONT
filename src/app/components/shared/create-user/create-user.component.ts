@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
-import { User, company } from 'src/app/interfaces/models.interface';
+import { User, Company } from 'src/app/interfaces/models.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { CompanyService } from 'src/app/services/company.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 })
 export class CreateUserReComponent {
   userRole!: 'admin' | 'sysadmin' | 'user';
-  companies!: company[];
+  companies!: Company[];
   companyId!: string;
   
   user: User = {
