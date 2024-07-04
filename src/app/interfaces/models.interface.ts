@@ -153,7 +153,7 @@ export interface Ingredient {
   priceProvider: number;
   measurement: 'grms' | 'ml' | 'kg' | 'lts';
   provider?: Supplier;
-  expirationDate?: Date;
-  receivedDate: Date;
-  company: string;
+  expirationDate?: Date|string;
+  receivedDate: Date|string;
+  company: string|String;
 }

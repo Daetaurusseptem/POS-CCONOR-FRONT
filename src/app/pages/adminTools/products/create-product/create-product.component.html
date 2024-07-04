@@ -1,42 +1,56 @@
 <div class="main-container">
-  <div class="form-container">
+    <div class="form-container">
       <div class="form-header">
-          <div class="form-title">
-              <h2>Crear Producto</h2>
-          </div>
+        <div class="form-title">
+          <h2>Crear Producto</h2>
+        </div>
       </div>
       <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form">
-          <div class="form-group">
-              <label for="name" class="form-label">Nombre:</label>
-              <input type="text" formControlName="name" id="name" placeholder="Nombre del producto" class="form-input">
-          </div>
-          <div class="form-group">
-              <label for="description" class="form-label">Descripción:</label>
-              <textarea formControlName="description" id="description" rows="3" class="form-input"></textarea>
-          </div>
-          <div class="form-group">
-              <label for="marca" class="form-label">Marca:</label>
-              <input type="text" formControlName="marca" id="marca" placeholder="Marca del producto" class="form-input">
-          </div>
-          <div class="form-group">
-              <label class="form-label">Categorías:</label>
-              <ng-select
-                  [items]="Categories"
-                  bindLabel="name"
-                  bindValue="_id"
-                  [multiple]="true"
-                  formControlName="categories"
-                  placeholder="Selecciona las categorías"
-                  class="form-select">
-              </ng-select>
-          </div>
-          <div class="form-group"> 
-              <label for="supplier" class="form-label">Proveedor:</label>
-              <select formControlName="supplier" id="supplier" class="form-select">
-                  <option *ngFor="let supplier of suppliers" [value]="supplier._id">{{ supplier.name }}</option>
-              </select>
-          </div>
-          <button type="submit" [disabled]="!productForm.valid" class="form-button">Crear Producto</button>
+        <div class="form-group">
+          <label for="name" class="form-label">Nombre:</label>
+          <input type="text" formControlName="name" id="name" placeholder="Nombre del producto" class="form-input">
+        </div>
+        <div class="form-group">
+          <label for="description" class="form-label">Descripción:</label>
+          <textarea formControlName="description" id="description" rows="3" class="form-input"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="marca" class="form-label">Marca:</label>
+          <input type="text" formControlName="marca" id="marca" placeholder="Marca del producto" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Categorías:</label>
+          <ng-select
+            [items]="Categories"
+            bindLabel="name"
+            bindValue="_id"
+            [multiple]="true"
+            formControlName="categories"
+            placeholder="Selecciona las categorías"
+            class="form-select">
+          </ng-select>
+        </div>
+        <div class="form-group"> 
+          <label for="supplier" class="form-label">Proveedor:</label>
+          <select formControlName="supplier" id="supplier" class="form-select">
+            <option *ngFor="let supplier of suppliers" [value]="supplier._id">{{ supplier.name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="isComposite" class="form-label">¿Es un producto compuesto?</label>
+          <select formControlName="isComposite" id="isComposite" class="form-select" (change)="onIsCompositeChange($event)">
+            <option [value]="false">No</option>
+            <option [value]="true">Sí</option>
+          </select>
+        </div>
+        <div class="form-group" *ngIf="isComposite">
+          <label for="recipe" class="form-label">Receta:</label>
+          <select formControlName="recipe" id="recipe" class="form-select">
+            <option *ngFor="let recipe of recipes" [value]="recipe._id">{{ recipe.name }}</option>
+          </select>
+        </div>
+        <button type="submit" [disabled]="!productForm.valid" class="form-button">Crear Producto</button>
       </form>
+    </div>
   </div>
-</div>
+  

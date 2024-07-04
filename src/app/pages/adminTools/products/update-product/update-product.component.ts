@@ -32,7 +32,7 @@ export class UpdateProductComponent {
 
 
   loadCategories() {
-    this.categoryService.getCompanyCategories(this.authService.company._id!)
+    this.categoryService.getCompanyCategories(this.authService.companyId)
       .pipe(
         map(item => {
           console.log(item);

@@ -27,7 +27,7 @@
       </div>
       <div class="mb-3">
         <label for="quantity" class="form-label">Cantidad</label>
-        <input type="number" id="quantity" class="form-control" [(ngModel)]="newIngredient.quantity" name="quantity" required>
+        <input type="number" id="quantity" class="form-control" [(ngModel)]="newIngredient.quantity" name="quantity" min=0 required>
       </div>
       <div class="mb-3">
         <label for="priceProvider" class="form-label">Precio Proveedor</label>

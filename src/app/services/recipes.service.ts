@@ -18,8 +18,8 @@ export class RecipesService {
     private authService: AuthService,
   ) { }
 
-  createRecipe(recipeData: any): Observable<any> {
-    return this.http.post<any>(`${this.urlRecipes}`, recipeData);
+  createRecipe(recipeData: any, companyId:string): Observable<any> {
+    return this.http.post<any>(`${this.urlRecipes}/${companyId}`, recipeData);
   }
 
   getRecipes(): Observable<any[]> {

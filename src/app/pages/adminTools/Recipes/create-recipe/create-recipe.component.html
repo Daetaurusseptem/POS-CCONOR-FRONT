@@ -1,62 +1,34 @@
 <div class="container mt-4">
-  <div class="row">
-    <div class="col-md-8 offset-md-2">
-      <div class="card">
-        <div class="card-header bg-secondary text-white">
-          <h2 class="mb-0">CREAR RECETA</h2>
-        </div>
-        <div class="card-body">
-          <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
-            <div class="mb-3">
-              <input type="text" class="form-control" formControlName="name" placeholder="Nombre (input)" required>
-            </div>
-            <div class="mb-3">
-              <input type="text" class="form-control" formControlName="description" placeholder="Descripción(input)" required>
-            </div>
-            
-            <div class="mb-3">
-              <label for="ingredientSelect" class="form-label">Seleccionar ingredientes</label>
-              <select multiple class="form-select" id="ingredientSelect" (change)="onIngredientSelect($event)">
-                <option *ngFor="let ingredient of availableIngredients" [value]="ingredient">{{ingredient}}</option>
-              </select>
-            </div>
-
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Ingrediente</th>
-                  <th>Cantidad</th>
-                  <th>Unidad</th>
-                  <th>Acción</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let ingredient of selectedIngredients; let i = index">
-                  <td>{{ingredient.name}}</td>
-                  <td>
-                    <input type="number" class="form-control" [(ngModel)]="ingredient.quantity" [ngModelOptions]="{standalone: true}">
-                  </td>
-                  <td>
-                    <select class="form-select" [(ngModel)]="ingredient.unit" [ngModelOptions]="{standalone: true}">
-                      <option value="ml">ml</option>
-                      <option value="mg">mg</option>
-                    </select>
-                  </td>
-                  <td>
-                    <button type="button" class="btn btn-danger btn-sm" (click)="removeIngredient(i)">Eliminar</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div class="d-grid gap-2 mt-3">
-              <button type="submit" class="btn btn-primary" [disabled]="recipeForm.invalid">
-                <i class="bi bi-save"></i> Guardar
-              </button>
-            </div>
-          </form>
+  <h2>Crear Receta</h2>
+  <form [formGroup]="createRecipeForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre de la Receta</label>
+      <input type="text" id="name" class="form-control" formControlName="name">
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Descripción</label>
+      <textarea id="description" class="form-control" formControlName="description"></textarea>
+    </div>
+    <div formArrayName="ingredients">
+      <div *ngFor="let ingredient of ingredientsArray.controls; let i = index" [formGroupName]="i" class="mb-3">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="ingredient" class="form-label">Ingrediente</label>
+            <select id="ingredient" class="form-select" formControlName="ingredient">
+              <option *ngFor="let ingredient of ingredients" [value]="ingredient._id">{{ ingredient.name }}</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="quantity" class="form-label">Cantidad</label>
+            <input type="number" id="quantity" class="form-control" formControlName="quantity">
+          </div>
+          <div class="col-md-2 d-flex align-items-end">
+            <button type="button" class="btn btn-danger" (click)="removeIngredient(i)">Eliminar</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <button type="button" class="btn btn-primary" (click)="addIngredient()">Agregar Ingrediente</button>
+    <button type="submit" class="btn btn-success mt-3">Crear Receta</button>
+  </form>
 </div>

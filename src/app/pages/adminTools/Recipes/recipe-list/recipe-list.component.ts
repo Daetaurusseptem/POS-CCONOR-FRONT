@@ -12,41 +12,38 @@ import { Router } from '@angular/router';
 })
 export class RecipeListComponent implements OnInit {
   recipes: Recipe[] = [];
-  companyId!: string;
 
-  constructor(
-    private recipeService: RecipesService,
-    private authService: AuthService,
-    private router: Router,
-  ) {
-
-    if (this.authService.usuario.role === 'admin') {
-      this.companyId = this.authService.company._id!;
-    } else if(this.authService.usuario.role === 'user') {
-      this.companyId = this.authService.companyId;
-    }
-  }
+  constructor(private recipeService: RecipesService, private router: Router) {}
 
   ngOnInit(): void {
-    this.getRecipes();
+    this.loadRecipes();
   }
-  
-  getRecipes(): void {
-    this.recipeService.getCompanyRecipes(this.companyId)
-      .pipe(map(response => response.recipes))
-      .subscribe(recipes => {
-        this.recipes = recipes || [];
-      });
+
+  loadRecipes(): void {
+    this.recipeService.getRecipes().subscribe(
+      (data: Recipe[]) => {
+        this.recipes = data;
+      },
+      error => {
+        console.error('Error fetching recipes', error);
+      }
+    );
+  }
+
+  createRecipe(): void {
+    this.router.navigate(['dashboard/admin/recipes/new']);
+  }
+
+  editRecipe(id: string): void {
+    this.router.navigate(['/edit-recipe', id]);
   }
 
   deleteRecipe(id: string): void {
     if (confirm('¿Estás seguro de que quieres eliminar esta receta?')) {
-      this.recipeService.deleteRecipe(id).subscribe(() => {
-        this.recipes = this.recipes.filter(recipe => recipe._id !== id);
-      });
+      this.recipeService.deleteRecipe(id).subscribe(r=>{
+        console.log(r);
+      }
+      );
     }
-  }
-
-  editRecipe(idRecipie: string): void {
   }
 }

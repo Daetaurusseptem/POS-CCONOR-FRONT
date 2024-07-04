@@ -1,36 +1,40 @@
-<div class="main-container">
-    <div class="search-container">
-      <div class="search-header">
-        <div class="search-title">
-          <h5>Búsqueda de Ingredientes</h5>
-        </div>
-        <a class="create-product-link" routerLink="/dashboard/admin/ingredients">
-          <i class="bi bi-plus-lg"></i> Crear Ingrediente
-        </a>
-      </div>
-      <form>
-        <div class="search-input">
-          <input type="text" id="busquedaEmpresa" #terminoEmpresa placeholder="Buscar...">
-        </div>
-      </form>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Lista de Ingredientes</h2>
+    <button class="btn btn-success" (click)="createIngredient()">Crear Ingrediente</button>
+  </div>
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      Ingredientes
     </div>
-    <div class="products-container">
-      <div class="products-header">
-        <div class="products-title">
-          <h2>Productos - {{ companyName | uppercase }}</h2>
-        </div>
-      </div>
-      <div class="ingredients-table">
-        <div class="table-header">
-          <div class="header-cell">Ingrediente</div>
-          <div class="header-cell">Cantidad</div>
-        </div>
-        <div class="table-body">
-          <div class="table-row" *ngFor="let ingredient of ingredients">
-            <div class="table-cell">{{ ingredient.name }}</div>
-            <div class="table-cell">{{ ingredient.quantity }}</div>
-          </div>
-        </div>
-      </div>
+    <div class="card-body p-0">
+      <table class="table table-hover mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Medida</th>
+            <th scope="col">Proveedor</th>
+            <th scope="col">Fecha de Recepción</th>
+            <th scope="col">Fecha de Expiración</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ingredient of ingredients">
+            <td>{{ ingredient.name }}</td>
+            <td>{{ ingredient.quantity }}</td>
+            <td>{{ ingredient.measurement }}</td>
+            <td>{{ ingredient.provider?.name }}</td>
+            <td>{{ ingredient.receivedDate | date }}</td>
+            <td>{{ ingredient.expirationDate ? (ingredient.expirationDate | date) : 'N/A' }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm me-2" (click)="editIngredient(ingredient._id!)">Editar</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteIngredient(ingredient._id!)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+</div>

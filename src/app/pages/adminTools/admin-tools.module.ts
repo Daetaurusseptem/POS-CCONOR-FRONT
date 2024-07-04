@@ -25,6 +25,8 @@ import { EditRecipeComponent } from './Recipes/edit-recipe/edit-recipe.component
 import { IngredientListComponent } from './ingredient-list/ingredient-list.component';
 import { IngredientsComponent } from './ingredients/ingredients.component';
 import { IngredientsAdminListComponent } from './ingredients/ingredients-admin-list/ingredients-admin-list.component';
+import { EditIngredientComponent } from './ingredients/edit-ingredient/edit-ingredient.component';
+
 
 
 
@@ -51,6 +53,8 @@ import { IngredientsAdminListComponent } from './ingredients/ingredients-admin-l
     IngredientListComponent,
     IngredientsComponent,
     IngredientsAdminListComponent,
+    EditIngredientComponent,
+    
   ],
   exports:[
     ItemStockListComponent,

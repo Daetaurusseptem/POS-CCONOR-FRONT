@@ -35,7 +35,7 @@ export class IngredientListComponent {
   }
 
   loadIngredients(): void {
-    this.ingredientService.getIngredientsByCompanyId(this.authService.company._id!)
+    this.ingredientService.getIngredientsByCompanyId(this.authService.companyId!)
       .pipe(map(r=>r.ingredients))
       .subscribe(data => {
       this.ingredients = data!;
@@ -44,7 +44,7 @@ export class IngredientListComponent {
 
   getSuppliers(): void {
 
-    this.providerService.getCompanySuppliers(this.authService.company._id!)
+    this.providerService.getCompanySuppliers(this.authService.companyId!)
     .pipe(
       map(resp=>{
         console.log(resp);
@@ -57,7 +57,7 @@ export class IngredientListComponent {
   }
 
   addIngredient(): void {
-    this.newIngredient.company = this.authService.company._id!
+    this.newIngredient.company = this.authService.companyId!
     console.log(this.newIngredient);
 
     this.ingredientService.createIngredient(this.newIngredient)
