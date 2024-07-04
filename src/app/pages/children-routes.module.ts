@@ -49,6 +49,7 @@ import { RecipeListComponent } from './adminTools/Recipes/recipe-list/recipe-lis
 import { CreateRecipeComponent } from './adminTools/Recipes/create-recipe/create-recipe.component';
 import { EditRecipeComponent } from './adminTools/Recipes/edit-recipe/edit-recipe.component';
 import { IngredientListComponent } from './adminTools/ingredient-list/ingredient-list.component';
+import {IngredientsAdminListComponent} from './adminTools/ingredients/ingredients-admin-list/ingredients-admin-list.component';
 
 const routes: Routes = [
   {
@@ -117,6 +118,7 @@ const routes: Routes = [
       
       //INGREDIENT
       { path: 'admin/ingredients', component: IngredientListComponent },
+      {path: 'admin/ingredients-list', component: IngredientsAdminListComponent},
 
 
       //USER

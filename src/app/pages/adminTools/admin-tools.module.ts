@@ -23,6 +23,8 @@ import { RecipeListComponent } from './Recipes/recipe-list/recipe-list.component
 import { CreateRecipeComponent } from './Recipes/create-recipe/create-recipe.component';
 import { EditRecipeComponent } from './Recipes/edit-recipe/edit-recipe.component';
 import { IngredientListComponent } from './ingredient-list/ingredient-list.component';
+import { IngredientsComponent } from './ingredients/ingredients.component';
+import { IngredientsAdminListComponent } from './ingredients/ingredients-admin-list/ingredients-admin-list.component';
 
 
 
@@ -47,6 +49,8 @@ import { IngredientListComponent } from './ingredient-list/ingredient-list.compo
     CreateRecipeComponent,
     EditRecipeComponent,
     IngredientListComponent,
+    IngredientsComponent,
+    IngredientsAdminListComponent,
   ],
   exports:[
     ItemStockListComponent,
