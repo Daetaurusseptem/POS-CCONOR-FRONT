@@ -35,7 +35,7 @@ export class RecipeListComponent implements OnInit {
   }
 
   editRecipe(id: string): void {
-    this.router.navigate(['/edit-recipe', id]);
+    this.router.navigate(['/dashboard/admin/recipes/edit', id]);
   }
 
   deleteRecipe(id: string): void {

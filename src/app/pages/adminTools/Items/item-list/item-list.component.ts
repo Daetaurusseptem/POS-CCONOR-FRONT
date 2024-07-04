@@ -56,6 +56,10 @@ export class ItemStockListComponent {
     this.loadItems();
   }
 
+  crearItem() {
+    this.router.navigate(['/dashboard/admin/items/new']);
+  }
+
   deleteItem(idItem:string){
 
     Swal.fire({

@@ -69,7 +69,7 @@ export class EditIngredientComponent {
     this.ingredientService.updateIngredient(this.ingredientId, updatedIngredient).subscribe(
       response => {
         console.log('Ingrediente actualizado con éxito', response);
-        this.router.navigate(['/ingredients']);
+        this.router.navigate(['/dashboard/admin/ingredients-list']);
       },
       error => {
         console.error('Error actualizando ingrediente', error);
