@@ -42,7 +42,7 @@ export class AddItemComponent {
     
 
   ) {
-    this.companyId = this.authservice.company._id!
+    this.companyId = this.authservice.companyId!
    }
 
   
@@ -80,7 +80,7 @@ export class AddItemComponent {
       })
       .then(res=>{
         if(res.isConfirmed){
-          this.itemService.createItem(this.authservice.getCompany._id!,obj)
+          this.itemService.createItem(this.authservice.companyId!,obj)
         
           .subscribe(resp=>{
             if(resp.ok){

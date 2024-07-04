@@ -36,7 +36,7 @@ export class CreateProductComponent {
               ) { }
 
   ngOnInit(): void {
-    this.companyId = this.authService.getCompany._id!
+    this.companyId = this.authService.companyId;
     this.productForm = this.fb.group({
       name: ['', Validators.required],
       description: [''],
@@ -81,7 +81,7 @@ export class CreateProductComponent {
       })
       .then(res=>{
         if(res.isConfirmed){
-          this.productService.createProduct(this.authService.company._id!,this.productForm.value)
+          this.productService.createProduct(this.authService.companyId,this.productForm.value)
           .subscribe(r=>{
             if(r.ok){
               Swal.fire('Registro Guardado','','success')

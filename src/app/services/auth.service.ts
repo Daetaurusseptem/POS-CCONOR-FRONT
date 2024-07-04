@@ -51,11 +51,11 @@ export class AuthService {
           if (role == 'user') {
             const company = resp.usuario.companyId;
             this.companyId = company
+          } else if (role == 'admin') {
+            this.companyId = resp.company._id;
           }
-          else {
-            const company = resp.company
-            this.company = company
-          }
+          
+          console.log('COMPAÑYYYYYY', this.companyId);
 
           this.usuario = new UsuarioModel(_id, username, name, role, email, img);
 

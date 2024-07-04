@@ -1,0 +1,36 @@
+<div class="main-container">
+    <div class="search-container">
+      <div class="search-header">
+        <div class="search-title">
+          <h5>Búsqueda de Ingredientes</h5>
+        </div>
+        <a class="create-product-link" routerLink="/dashboard/admin/ingredients">
+          <i class="bi bi-plus-lg"></i> Crear Ingrediente
+        </a>
+      </div>
+      <form>
+        <div class="search-input">
+          <input type="text" id="busquedaEmpresa" #terminoEmpresa placeholder="Buscar...">
+        </div>
+      </form>
+    </div>
+    <div class="products-container">
+      <div class="products-header">
+        <div class="products-title">
+          <h2>Productos - {{ companyName | uppercase }}</h2>
+        </div>
+      </div>
+      <div class="ingredients-table">
+        <div class="table-header">
+          <div class="header-cell">Ingrediente</div>
+          <div class="header-cell">Cantidad</div>
+        </div>
+        <div class="table-body">
+          <div class="table-row" *ngFor="let ingredient of ingredient">
+            <div class="table-cell">{{ ingredient.name }}</div>
+            <div class="table-cell">{{ ingredient.quantity }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

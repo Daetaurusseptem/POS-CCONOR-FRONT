@@ -28,7 +28,7 @@ export class CreateSupplierComponent {
    }
 
   ngOnInit(): void {
-    this.companyId = this.authService.getCompany._id!
+    this.companyId = this.authService.companyId!
     this.supplierForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
@@ -57,7 +57,7 @@ export class CreateSupplierComponent {
       })
       .then(r=>{
         if(r.isConfirmed){
-          this.supplierService.createSupplier(obj,this.authService.company._id!)
+          this.supplierService.createSupplier(obj,this.authService.companyId!)
   
           .subscribe(resp=>{
             console.log(resp);

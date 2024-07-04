@@ -15,7 +15,8 @@
                 <td>{{ item!.name }}</td>
                 <td>{{ item!.description }}</td>
                 <td>{{ item!.marca }}</td>
-                <td><a class="btn btn-primary" [routerLink]="['/dashboard/admin/product/edit/', item._id]">Editar</a></td>
+                <td *ngIf="userRole === 'admin'"><a class="btn btn-primary"  [routerLink]="['/dashboard/admin/product/edit/', item._id]">Editar</a></td>
+                <td *ngIf="userRole === 'sysadmin'"><a class="btn btn-primary"  [routerLink]="['/dashboard/sysadmin/product/edit/', item._id]">Editar</a></td>
             </tr>
         </tbody>
     </table>

@@ -23,7 +23,7 @@ export class ItemService {
     }
   
     if (this.authService.role === 'admin') {
-      return this.http.get<itemResponse>(`${urlBase}/${this.authService.company._id}`, { params, headers: { 'x-token': this.authService.token } });
+      return this.http.get<itemResponse>(`${urlBase}/${this.authService.companyId}`, { params, headers: { 'x-token': this.authService.token } });
     } else if(this.authService.role === 'user') {
       return this.http.get<itemResponse>(`${urlBase}/${this.authService.companyId}`, { params, headers: { 'x-token': this.authService.token } });
     } else {

@@ -1,27 +1,36 @@
-<!-- item-list.component.html -->
+<!-- INVENTARIO -->
 <div class="container mt-4">
-  <h2>Lista de Items</h2>
-  <div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Buscar item..." [(ngModel)]="searchTerm">
-    <button class="btn btn-outline-secondary" type="button" (click)="onSearch()">Buscar</button>
-  </div>
-  <div class="row">
-    <div *ngFor="let item of items" class="col-md-4 mb-4">
-      <div class="card h-100">
-        <img [src]="item.product?.img" class="card-img-top" alt="{{ item.name }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ item.product?.name }}</h5>
-          <p class="card-text">Precio: {{ item.price  }}</p>
-          <p class="card-text">Stock: {{ item.stock }}</p>
-          <p class="card-text">Fecha de Recepción: {{ item.receivedDate | date }}</p>
-          <p class="card-text">Fecha de Expiración: {{ item.expirationDate ? (item.expirationDate | date) : 'N/A' }}</p>
-          <p class="card-text">Descuento: {{ item.discount }}%</p>
-          <p class="card-text">Descuento: {{ item.discount }}%</p>
-          <p class="card-text"><a class="btn btn-block btn-primary"><i class="bi bi-pencil-fill"></i>Editar</a></p>
-          <p class="card-text" (click)="deleteItem(item._id)"><a class="btn btn-block btn-danger"><i class="bi bi-trash3-fill"></i>eliminar</a></p>
-        </div>
-      </div>
-    </div>
+  <h2 class="mb-4">Lista de Items</h2>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Fecha de Recepción</th>
+          <th>Fecha de Expiración</th>
+          <th>Descuento</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items">
+          <td><img [src]="item.product?.img" class="img-thumbnail" alt="{{ item.name }}" style="max-width: 100px;"></td>
+          <td>{{ item.product?.name }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.stock }}</td>
+          <td>{{ item.receivedDate | date }}</td>
+          <td>{{ item.expirationDate ? (item.expirationDate | date) : 'N/A' }}</td>
+          <td>{{ item.discount }}%</td>
+          <td>
+            <a class="btn btn-primary btn-sm"><i class="bi bi-pencil-fill"></i> Editar</a>
+            <a class="btn btn-danger btn-sm" (click)="deleteItem(item._id)"><i class="bi bi-trash3-fill"></i> Eliminar</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <pagination-controls (pageChange)="pageChanged($event)" [maxSize]="totalItems"></pagination-controls>
 </div>

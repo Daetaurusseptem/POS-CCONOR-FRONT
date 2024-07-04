@@ -41,13 +41,13 @@ export class CreateUserReComponent {
     this.userRole = this.authService.role;
     if (this.userRole === 'admin') {
       this.user.role = 'user';
-      this.companyId = this.authService.company._id!;
+      this.companyId = this.authService.companyId!;
     } else if (this.userRole === 'sysadmin') {
       this.user.role = 'admin';
       this.companyId = ''; // Sysadmin no asigna companyId por defecto
     } else {
       this.user.role = 'user';
-      this.companyId = this.authService.company._id!;
+      this.companyId = this.authService.companyId!;
     }
   }
   
@@ -58,7 +58,7 @@ export class CreateUserReComponent {
   
     if (form.valid) {
       if (this.userRole === 'admin') {
-        this.user.companyId = this.authService.company._id!;
+        this.user.companyId = this.authService.companyId!;
       } else if (this.userRole === 'sysadmin') {
         delete this.user.companyId; // Eliminar companyId para sysadmin
       }
