@@ -6,7 +6,7 @@
 
   <!-- Logo y Título -->
   <div class="sidebar-header">
-    <a href="/" class="logo">
+    <a class="logo">
       <span *ngIf="!isCollapsed">Cconor POS</span>
       <img src="../../../assets/img/cconor-logo-no-text.png" alt="" class="logo-img">
     </a>
@@ -20,7 +20,7 @@
         <span *ngIf="!isCollapsed">{{menuItem.title}}</span>
       </a>
       <div class="submenu" [class.show]="menuItem.isOpen">
-        <ul>
+        <ul style="list-style-type:none">
           <li *ngFor="let item of menuItem.submenu">
             <a [routerLink]="item.url" routerLinkActive="active" class="sidebar-link">
               <i [class]="item.icon"></i>

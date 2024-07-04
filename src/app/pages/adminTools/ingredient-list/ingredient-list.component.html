@@ -1,15 +1,24 @@
 <div class="container mt-4">
-    <h2>Ingredientes</h2>
-    <ul class="list-group mb-3">
-      <li class="list-group-item" *ngFor="let ingredient of ingredients">
-        <div class="row">
-          <div class="col-md-4">{{ ingredient.name }}</div>
-          <div class="col-md-2">{{ ingredient.quantity }} {{ ingredient.measurement }}</div>
-          <div class="col-md-2">{{ ingredient.priceProvider | currency }}</div>
-          <div class="col-md-4">{{ ingredient.provider }}</div>
+    <h2 class="mb-4">Ingredientes</h2>
+    <ul class="list-group mb-4">
+      <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let ingredient of ingredients">
+        <div class="row w-100">
+          <div class="col-md-4 d-flex align-items-center">
+            <i class="bi bi-basket2-fill me-2"></i>{{ ingredient.name }}
+          </div>
+          <div class="col-md-2 d-flex align-items-center">
+            <i class="bi bi-tag-fill me-2"></i>{{ ingredient.quantity }} {{ ingredient.measurement }}
+          </div>
+          <div class="col-md-2 d-flex align-items-center">
+            <i class="bi bi-currency-dollar me-2"></i>{{ ingredient.priceProvider | currency }}
+          </div>
+          <div class="col-md-4 d-flex align-items-center">
+            <i class="bi bi-truck me-2"></i>{{ ingredient.provider }}
+          </div>
         </div>
       </li>
     </ul>
+  
     <!-- Formulario para agregar un nuevo ingrediente -->
     <form (ngSubmit)="addIngredient()" #ingredientForm="ngForm">
       <div class="mb-3">
@@ -47,7 +56,9 @@
         <label for="expirationDate" class="form-label">Fecha de Expiración</label>
         <input type="date" id="expirationDate" class="form-control" [(ngModel)]="newIngredient.expirationDate" name="expirationDate">
       </div>
-      <button type="submit" class="btn btn-primary">Agregar Ingrediente</button>
+      <button type="submit" class="btn btn-primary">
+        <i class="bi bi-plus-circle-fill me-2"></i>Agregar Ingrediente
+      </button>
     </form>
   </div>
   

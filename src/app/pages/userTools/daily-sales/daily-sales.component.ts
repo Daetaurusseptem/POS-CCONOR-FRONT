@@ -15,7 +15,7 @@ interface Sale {
   templateUrl: './daily-sales.component.html',
   styleUrls: ['./daily-sales.component.css']
 })
-export class DailySalesComponent {
+export class DailySalesComponent implements OnInit {
 
   openCashRegisterWithSales: any;
   usuario = '';
@@ -43,33 +43,58 @@ export class DailySalesComponent {
   }
 
   generarPDF() {
-    const doc = new jsPDF();
-    doc.setFontSize(18);
-    doc.text('Historial de Ventas Diarias', 14, 22);
-    doc.setFontSize(12);
-    doc.text(`Usuario: ${this.usuario}`, 14, 30);
-    doc.text(`Fecha de Inicio: ${new Date(this.openCashRegisterWithSales.startDate).toLocaleDateString()}`, 14, 36);
-    doc.text(`Monto Inicial $: ${this.openCashRegisterWithSales.initialAmount}`, 14, 42);
+    const doc = new jsPDF({
+      format: [58.28, 350.89] // Ancho 58mm, Alto ajustable
+    });
+
+    const marginX = 2; // Margen horizontal en mm
+    let currentY = 10; // Posición vertical inicial en mm
+
+    // Título
+    doc.setFontSize(10);
+    doc.text('Historial de Ventas Diarias', marginX, currentY);
+    currentY += 4;
+
+    // Información del usuario y fecha de inicio
+    doc.setFontSize(8);
+    doc.text(`Usuario: ${this.usuario}`, marginX, currentY);
+    currentY += 4;
+    doc.text(`Fecha de Inicio: ${new Date(this.openCashRegisterWithSales.startDate).toLocaleDateString()}`, marginX, currentY);
+    currentY += 4;
+    doc.text(`Monto Inicial $: ${this.openCashRegisterWithSales.initialAmount}`, marginX, currentY);
+    currentY += 6;
 
     // Subtotal
     const subtotal = this.openCashRegisterWithSales.sales.reduce((sum: number, sale: Sale) => sum + sale.total, 0);
 
     (doc as any).autoTable({
-      head: [['Fecha', 'Monto', 'Metodo de Pago']],
-
+      head: [['Fecha', 'Monto', 'Método de Pago']],
       body: [
         ...this.openCashRegisterWithSales.sales.map((sale: Sale) => [
           new Date(sale.date).toLocaleString(),
           sale.total.toFixed(2),
-          sale.paymentMethod
+          sale.paymentMethod,
         ]),
-
-        [{ content: 'Subtotal', colSpan: 1, style: { haling: 'right', fontSize: 'bold' } }, { content: subtotal.toFixed(2), colSpan: 1, style: { haling: 'right', fontSize: 'bold' } }, '']
+        [{ content: 'Subtotal', colSpan: 1, styles: { halign: 'right', fontStyle: 'bold' } }, { content: subtotal.toFixed(2), colSpan: 1, styles: { halign: 'right', fontStyle: 'bold' } }, '']
       ],
-
-      startY: 50,
-      theme: 'plain',
+      startY: currentY,
+      margin: { left: marginX, right: marginX },
+      styles: { fontSize: 7, cellPadding: 1, overflow: 'linebreak' },
+      columnStyles: { 0: { cellWidth: 20 }, 1: { cellWidth: 18 }, 2: { cellWidth: 20 } },
+      theme: 'plain'
     });
-    doc.save('Historial_de_Ventas_Diarias.pdf');
+
+    // Crear un Blob del PDF y abrirlo en una nueva ventana para imprimir automáticamente
+    const pdfBlob = doc.output('blob');
+    const url = URL.createObjectURL(pdfBlob);
+    const printWindow = window.open(url)!;
+
+    // Esperar a que la ventana cargue el contenido y luego ejecutar la impresión
+    printWindow.onload = () => {
+      printWindow.print();
+      printWindow.onafterprint = () => {
+        printWindow.close();
+      };
+    };
   }
 }

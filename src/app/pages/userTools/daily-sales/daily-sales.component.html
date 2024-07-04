@@ -27,6 +27,14 @@
                 </tr>
               </tbody>
             </table>
+            <div class="container">
+              <!-- Tu contenido aquí -->
+              <button (click)="generarPDF()">Generar e Imprimir PDF</button>
+              <iframe id="pdf-frame" style="display:none;"></iframe>
+            </div>
+            
+            
+            
           </div>
           <!-- Descargar el perro PDF :D -->
            <button (click)="generarPDF()" class="btn btn-success mt-3">Descargar Historial de Ventas</button>

@@ -77,7 +77,7 @@ export class NewsaleComponent {
   loadItems(): void {
 
     this.itemsService.getItemsByCategory(this.selectedCategory, this.search, this.currentPage)
-
+      .pipe(map(r=>{console.log('ItemResp: ',r); return r}))
       .subscribe(data => {
         console.log(data);
         this.items = [];
@@ -121,9 +121,11 @@ export class NewsaleComponent {
         name: item.item.product.name,
         quantity: item.quantity,
         unitPrice: item.item.price,
-        subtotal: item.total
+        subtotal: item.total,
+        _id:item.item._id
       }))
     };
+
 
     this.router.navigate(['dashboard/user/new-sale/confirm-sale'], { state: { sale: saleData } });
   }

@@ -55,10 +55,12 @@
           </div>
         </div>
         
+        
         <div class="text-center">
-          <button type="submit" class="btn btn-primary btn-lg">Confirmar Venta</button>
+          <button [disabled]="!confirmSaleForm.valid" type="submit" class="btn btn-primary btn-lg">Confirmar Venta</button>
         </div>
       </form>
+      
     </div>
   </div>
 </div>

@@ -59,7 +59,7 @@ export class ConfirmSaleComponent {
     if (this.confirmSaleForm.invalid) {
       return;
     }
-
+    console.log(this.confirmSaleForm);
     const saleData = {
       ...this.sale,
       paymentMethod: this.confirmSaleForm.value.paymentMethod,

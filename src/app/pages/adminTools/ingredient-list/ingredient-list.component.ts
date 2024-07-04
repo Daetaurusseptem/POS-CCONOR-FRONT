@@ -18,7 +18,7 @@ export class IngredientListComponent {
     quantity: 0,
     priceProvider: 0,
     measurement: 'grms',
-    provider: '',
+    provider: undefined,
     receivedDate: new Date(),
     company: ''
   };
@@ -35,8 +35,10 @@ export class IngredientListComponent {
   }
 
   loadIngredients(): void {
-    this.ingredientService.getIngredients().subscribe(data => {
-      this.ingredients = data;
+    this.ingredientService.getIngredientsByCompanyId(this.authService.company._id!)
+      .pipe(map(r=>r.ingredients))
+      .subscribe(data => {
+      this.ingredients = data!;
     });
   }
 
@@ -58,15 +60,17 @@ export class IngredientListComponent {
     this.newIngredient.company = this.authService.company._id!
     console.log(this.newIngredient);
 
-    this.ingredientService.createIngredient(this.newIngredient).subscribe(newIngredient => {
-      this.ingredients.push(newIngredient);
+    this.ingredientService.createIngredient(this.newIngredient)
+     .pipe(map(resp =>resp.ingredient)) 
+    .subscribe(newIngredient => {
+      this.ingredients.push(newIngredient!);
       // Reset newIngredient after successful addition
       this.newIngredient = {
         name: '',
         quantity: 0,
         priceProvider: 0,
         measurement: 'grms',
-        provider: '',
+        provider: undefined,
         receivedDate: new Date(),
         company: ''
       };

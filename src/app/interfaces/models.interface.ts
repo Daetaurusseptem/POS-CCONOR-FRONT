@@ -1,5 +1,7 @@
 // Interfaces for Angular based on Mongoose models
 
+import { Provider } from "@angular/core";
+
 
   
 
@@ -124,6 +126,8 @@ export interface Item {
     discount: number;
     iva?: number;
     productsSold: string[]|Product[];
+    paymentReference:string,
+    paymentMethod: 'cash' | 'credit',
   }
 
   //recetas
@@ -139,7 +143,7 @@ export interface Item {
     quantity: number;
     priceProvider: number;
     measurement: 'grms' | 'ml' | 'kg' | 'lts';
-    provider: string;
+    provider?: Supplier;
     expirationDate?: Date;
     receivedDate: Date;
     company: string;
