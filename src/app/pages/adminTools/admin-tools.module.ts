@@ -52,12 +52,16 @@ import { EditIngredientComponent } from './ingredients/edit-ingredient/edit-ingr
     IngredientListComponent,
     IngredientsComponent,
     IngredientsAdminListComponent,
+    EditIngredientComponent,
+    UpdateItemComponent
   ],
   exports:[
     ItemStockListComponent,
     ProductsListComponent,
     CategoriesListComponent,
     SuppliersListComponent,
+    EditIngredientComponent,
+    UpdateItemComponent
   ],
   imports: [
     CommonModule,
