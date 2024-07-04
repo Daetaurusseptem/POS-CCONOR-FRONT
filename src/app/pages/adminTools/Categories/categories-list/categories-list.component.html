@@ -4,7 +4,7 @@
           <div class="search-title">
               <h5>Búsqueda de Categorías</h5>
           </div>
-          <a class="create-category-link" routerLink="new/{{ company._id }}" role="button">
+          <a class="create-category-link" routerLink="categories/new/{{ companyId }}" role="button">
               <i class="bi bi-plus-lg"></i> Crear Categoría
           </a>
       </div>
@@ -44,7 +44,7 @@
                   </tr>
               </tbody>
           </table>
-          <div class="loading-spinner" *ngIf="true">
+          <div class="loading-spinner" *ngIf="!categories">
               <app-loading-data-spinner></app-loading-data-spinner>
               <p>Cargando Registros</p>
           </div>

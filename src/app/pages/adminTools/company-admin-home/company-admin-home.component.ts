@@ -67,16 +67,16 @@ export class CompanyAdminHomeComponent {
       });
   }
 
-  getCategories(idEmpresa: string) {
-    this.categoryService.getCompanyCategories(idEmpresa)
+  getCategories() {
+    this.categoryService.getCompanyCategories(this.authService.companyId)
       .pipe(map(i => i.categories))
       .subscribe(categories => {
         this.categories = categories!;
       });
   }
 
-  getSuppliers(idEmpresa: string) {
-    this.suppliersService.getCompanySuppliers(idEmpresa)
+  getSuppliers() {
+    this.suppliersService.getCompanySuppliers(this.authService.companyId)
       .pipe(map(i => i.suppliers))
       .subscribe(suppliers => {
         this.suppliers = suppliers!;
@@ -112,16 +112,16 @@ export class CompanyAdminHomeComponent {
         this.getUsers();
         break;
       case 'productos':
-        this.getProducts(this.authService.company._id!);
+        this.getProducts(this.authService.companyId);
         break;
       case 'items':
-        this.getProducts(this.authService.company._id!);
+        this.getProducts(this.authService.companyId);
         break;
       case 'proveedores':
-        this.getSuppliers(this.authService.company._id!);
+        this.getSuppliers();
         break;
       case 'categorias':
-        this.getCategories(this.authService.company._id!);
+        this.getCategories();
         break;
       default:
         break;

@@ -22,7 +22,7 @@ export class ProductsListComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getProducts(this.authService.company._id!);
+    this.getProducts(this.authService.companyId);
   }
 
   getProducts(idEmpresa: string): void {

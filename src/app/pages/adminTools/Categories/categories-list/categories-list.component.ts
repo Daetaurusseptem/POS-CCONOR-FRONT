@@ -13,21 +13,28 @@ export class CategoriesListComponent {
 
   categories!: Category[];
   company!: any;
+  companyId!: string;
 
   constructor(
     private categoryService: CategoryService,
     private authService: AuthService
-  ) { }
-
-  ngOnInit(): void {
-    this.company = this.authService.company;
-    this.getCategories(this.company._id);
+  ) { 
+    this.companyId = this.authService.companyId;
   }
 
-  getCategories(idEmpresa: string) {
-    this.categoryService.getCompanyCategories(idEmpresa)
+  ngOnInit(): void {
+    this.getCategories();
+  }
+
+  getCategories() {
+    this.categoryService.getCompanyCategories(this.authService.companyId)
       .pipe(
-        map(i => i.categories)
+        map(i => {
+           console.log(this.categories);
+          return i.categories;})
+
+
+
       )
       .subscribe(categories => {
         this.categories = categories!;

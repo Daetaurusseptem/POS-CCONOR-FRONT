@@ -63,12 +63,28 @@ const routes: Routes = [
       { path: 'sysadmin/users', canActivate: [SysAdminGuard], component: UserListComponent },
       { path: 'sysadmin/users/edit/:id', canActivate: [SysAdminGuard], component: UserEditComponent },
       { path: 'sysadmin/users/new', canActivate: [SysAdminGuard], component: CreateUserReComponent },
+
       { path: 'sysadmin/companies', canActivate: [SysAdminGuard], component: CompanyListComponent },
       { path: 'sysadmin/companies/new', canActivate: [SysAdminGuard], component: CreateCompanyComponent },
       { path: 'sysadmin/companies/edit/:id', canActivate: [SysAdminGuard], component: EditCompanyComponent },
       { path: 'sysadmin/companies/details/:id', canActivate: [SysAdminGuard], component: CompanyDetailsComponent },
       { path: 'sysadmin/companies/subscriptions/select', canActivate: [SysAdminGuard], component: SelectSubscriptionsComponent },
       { path: 'sysadmin/companies/subscription/:id', canActivate: [SysAdminGuard], component: AddSubscriptionComponent },
+
+      { path: 'sysadmin/suppliers', canActivate: [SysAdminGuard], component: SuppliersListComponent },
+      { path: 'sysadmin/suppliers/new/:id', canActivate: [SysAdminGuard], component: CreateSupplierComponent },
+      { path: 'sysadmin/suppliers/edit/:id', canActivate: [SysAdminGuard], component: UpdateSuppliersComponent },
+
+      { path: 'sysadmin/products', canActivate: [SysAdminGuard], component: ProductsListComponent },
+      { path: 'sysadmin/product/new', canActivate: [SysAdminGuard], component: CreateProductComponent },
+      { path: 'sysadmin/product/edit/:id', canActivate: [SysAdminGuard], component: UpdateProductComponent },
+
+      { path: 'sysadmin/categories', canActivate: [SysAdminGuard], component: CategoriesListComponent },
+      { path: 'sysadmin/edit-category/:id', canActivate: [SysAdminGuard], component: EditCategoryComponent },
+      //http://localhost:4200/dashboard/sysadmin/categories/edit/666b6b801834c39dcd72dbd9
+      { path: 'sysadmin/categories/new/:id', canActivate: [SysAdminGuard], component: CreateCompanyCategoryComponent },
+
+      /*----------------------------------------------------------------------------------------------------------------------*/
 
       //ADMIN
       { path: 'admin', canActivate: [AdminGuard], component: CompanyAdminHomeComponent },

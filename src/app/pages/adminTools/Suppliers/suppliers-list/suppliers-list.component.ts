@@ -12,20 +12,21 @@ import { map } from "rxjs/operators";
 export class SuppliersListComponent {
 
   suppliers!: Supplier[];
-  company!: company;
+  companyId!: string;
 
   constructor(
     private suppliersService: SupplierService,
     private authService: AuthService,
-  ) { }
-
-  ngOnInit(): void {
-    this.company = this.authService.getCompany;
-    this.getSuppliers(this.company._id!);
+  ) { 
+    this.companyId = this.authService.companyId!;
   }
 
-  getSuppliers(idEmpresa: string) {
-    this.suppliersService.getCompanySuppliers(idEmpresa)
+  ngOnInit(): void {
+    this.getSuppliers();
+  }
+
+  getSuppliers() {
+    this.suppliersService.getCompanySuppliers(this.authService.companyId)
       .pipe(
         map(i => {
           console.log('sups', i);

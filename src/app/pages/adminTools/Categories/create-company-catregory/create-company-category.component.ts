@@ -50,7 +50,7 @@ export class CreateCompanyCategoryComponent {
     
     if (form.valid) {
       console.log(form.value);
-      this.categoryService.createCategory(this.category,this.authService.company._id!).subscribe({
+      this.categoryService.createCategory(this.category,this.authService.companyId!).subscribe({
         next: (createdCompany) => {
           Swal.fire({
             text:'Categoria creado correctamente',
@@ -75,8 +75,12 @@ export class CreateCompanyCategoryComponent {
     }
   }
   getCompanyId(){
-    this.companyId=  this.authService.company._id!;
-    this.category.companyId=this.companyId
+    if (this.authService.company && this.authService.companyId) {
+      this.companyId=  this.authService.companyId!;
+      this.category.companyId=this.companyId
+    } else {
+      console.log('no company id');
+    }
   }
 
 }

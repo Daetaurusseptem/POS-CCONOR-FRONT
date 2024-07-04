@@ -18,6 +18,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./company-details.component.css']
 })
 export class CompanyDetailsComponent implements OnInit {
+
   items!: Item[];
   company!: company;
   admin!: User;
@@ -28,6 +29,8 @@ export class CompanyDetailsComponent implements OnInit {
   categories!: Category[];
   totalItems: number = 0;
   currentPage: number = 1;
+  adminId: string = '';
+  userRole!: 'admin' | 'sysadmin' | 'user';
 
   itemsPerPage: number = 10;
   searchTerm: string = '';
@@ -52,15 +55,23 @@ export class CompanyDetailsComponent implements OnInit {
     private categoryService: CategoryService,
     private modalService: ModalService,
     private itemService: ItemService,
-  ) {}
+  ) {
+    this.adminId = this.authService.idUsuario;
+    this.getRole();
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {  
       this.id = params['id'];
+    
       this.getCompany(this.id);
       this.getUsers();
       this.getItemsCompany();
     });
+  }
+
+  getRole() {
+    this.userRole = this.authService.role;
   }
 
   getCompany(id: string) {
@@ -68,6 +79,7 @@ export class CompanyDetailsComponent implements OnInit {
       .pipe(map(item => item.company))
       .subscribe(company => {
         this.company = company!;
+        console.log('company: ',this.company);
         this.getAdmin(company!.adminId!);
       });
   }
