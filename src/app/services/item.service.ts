@@ -43,6 +43,10 @@ export class ItemService {
     return this.http.get<itemResponse>(`${urlBase}/company/${id}`, this.authService.headers);
   };
 
+  getItemById(id: string) {
+    return this.http.get<itemResponse>(`${urlBase}/item/${id}`, this.authService.headers);
+  };
+
   getCompanyItemsSysadmin(id: string) {
     return this.http.get<itemResponse>(`${urlBase}/company/sysadmin/${id}`, this.authService.headers);
   };

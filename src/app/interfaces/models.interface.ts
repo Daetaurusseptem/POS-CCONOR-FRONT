@@ -105,9 +105,9 @@ export interface Item {
   img: string;
   stock: number;
   price: number;
-  expirationDate?: Date;
+  expirationDate?: string;
   discount: number;
-  receivedDate: Date;
+  receivedDate: string;
   supplier: string;
   product?: Product;
 }
