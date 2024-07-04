@@ -28,7 +28,7 @@ import { CreateSupplierComponent } from './adminTools/Suppliers/create-supplier/
 import { UpdateProductComponent } from './adminTools/products/update-product/update-product.component';
 import { UpdateSuppliersComponent } from './adminTools/Suppliers/update-suppliers/update-suppliers.component';
 import { CreateCompanyCategoryComponent } from './adminTools/Categories/create-company-catregory/create-company-category.component';
-import { AddItemComponent } from './adminTools/add-item/add-item.component';
+import { AddItemComponent } from './adminTools/Items/add-item/add-item.component';
 import { OpenCashRegisterComponent } from './userTools/open-cash-register/open-cash-register.component';
 import { CashRegisterGuard } from '../guards/cash-register.guard';
 import { UserHomeComponent } from './userTools/user-home/user-home.component';
@@ -37,7 +37,7 @@ import { NewsaleComponent } from './userTools/newsale/newsale.component';
 import { ProductsListComponent } from './adminTools/products/products-list/products-list.component';
 import { SuppliersListComponent } from './adminTools/Suppliers/suppliers-list/suppliers-list.component';
 import { CategoriesListComponent } from './adminTools/Categories/categories-list/categories-list.component';
-import { ItemStockListComponent } from './adminTools/item-list/item-list.component';
+import { ItemStockListComponent } from './adminTools/Items/item-list/item-list.component';
 import { CashRegisterComponent } from './userTools/cash-register/cash-register.component';
 import { ConfirmSaleComponent } from './userTools/confirm-sale/confirm-sale.component';
 import { SuccessSaleComponent } from './userTools/success-sale/success-sale.component';
@@ -50,6 +50,7 @@ import { CreateRecipeComponent } from './adminTools/Recipes/create-recipe/create
 import { EditRecipeComponent } from './adminTools/Recipes/edit-recipe/edit-recipe.component';
 import { IngredientListComponent } from './adminTools/ingredient-list/ingredient-list.component';
 import {IngredientsAdminListComponent} from './adminTools/ingredients/ingredients-admin-list/ingredients-admin-list.component';
+import { UpdateItemComponent } from './adminTools/Items/update-item/update-item.component';
 import { EditIngredientComponent } from './adminTools/ingredients/edit-ingredient/edit-ingredient.component';
 
 const routes: Routes = [
@@ -109,6 +110,7 @@ const routes: Routes = [
       //inventario
       { path: 'admin/items', canActivate: [AdminGuard], component: ItemStockListComponent },
       { path: 'admin/items/new', canActivate: [AdminGuard], component: AddItemComponent },
+      { path: 'admin/items-update/:id', canActivate: [AdminGuard], component: UpdateItemComponent },
 
       //recipes
       { path: 'admin/recipes', canActivate: [AdminGuard], component: RecipeListComponent },

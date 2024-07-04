@@ -6,15 +6,14 @@ import { RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateCompanyCategoryComponent } from './Categories/create-company-catregory/create-company-category.component';
 import { CategoriesListComponent } from './Categories/categories-list/categories-list.component';
-import { ItemStockListComponent } from './item-list/item-list.component'; // Asegúrate de importar correctamente
+import { ItemStockListComponent } from './Items/item-list/item-list.component'; // Asegúrate de importar correctamente
 import { ComponentsModule } from 'src/app/components/components.module';
 import { CreateProductComponent } from './products/create-product/create-product.component';
 import { CreateSupplierComponent } from './Suppliers/create-supplier/create-supplier.component';
 import { UpdateProductComponent } from './products/update-product/update-product.component';
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { UpdateSuppliersComponent } from './Suppliers/update-suppliers/update-suppliers.component';
-import { ItemsComponent } from './items/items.component';
-import { AddItemComponent } from './add-item/add-item.component';
+import { AddItemComponent } from './Items/add-item/add-item.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SuppliersListComponent } from './Suppliers/suppliers-list/suppliers-list.component';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -25,6 +24,7 @@ import { EditRecipeComponent } from './Recipes/edit-recipe/edit-recipe.component
 import { IngredientListComponent } from './ingredient-list/ingredient-list.component';
 import { IngredientsComponent } from './ingredients/ingredients.component';
 import { IngredientsAdminListComponent } from './ingredients/ingredients-admin-list/ingredients-admin-list.component';
+import { UpdateItemComponent } from './Items/update-item/update-item.component';
 import { EditIngredientComponent } from './ingredients/edit-ingredient/edit-ingredient.component';
 
 
@@ -43,7 +43,6 @@ import { EditIngredientComponent } from './ingredients/edit-ingredient/edit-ingr
     UpdateProductComponent,
     ProductsListComponent,
     UpdateSuppliersComponent,
-    ItemsComponent,
     AddItemComponent,
     SuppliersListComponent,
     EditCategoryComponent,
@@ -53,8 +52,6 @@ import { EditIngredientComponent } from './ingredients/edit-ingredient/edit-ingr
     IngredientListComponent,
     IngredientsComponent,
     IngredientsAdminListComponent,
-    EditIngredientComponent,
-    
   ],
   exports:[
     ItemStockListComponent,

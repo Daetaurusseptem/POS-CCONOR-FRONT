@@ -41,7 +41,7 @@ export class CreateProductComponent {
   ) { }
 
   ngOnInit(): void {
-    this.companyId = this.authService.companyId;
+    this.companyId = this.authService.companyId
     this.productForm = this.fb.group({
       name: ['', Validators.required],
       description: [''],
