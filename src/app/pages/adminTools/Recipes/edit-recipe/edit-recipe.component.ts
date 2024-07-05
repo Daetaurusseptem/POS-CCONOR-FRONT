@@ -21,8 +21,6 @@ export class EditRecipeComponent implements OnInit {
   ) {
     this.recipeForm = this.fb.group({
       name: ['', Validators.required],
-      description: ['', Validators.required],
-      // Puedes agregar más campos aquí según tu modelo de receta
     });
     this.recipeId = '';
   }
@@ -38,18 +36,13 @@ export class EditRecipeComponent implements OnInit {
 
   loadRecipe(): void {
     this.recipeService.getRecipe(this.recipeId).subscribe(
-      (response) => {
-        console.log(response);
-        const recipe = response.recipe;
-        this.recipeForm.patchValue({
-          name: recipe.name,
-          description: recipe.description,
-          // Actualiza aquí con más campos si es necesario
-        });
+      (response: any) => {
+        if (response && response.data) {
+          this.recipeForm.patchValue(response.data);
+        }
       },
-      (error) => {
-        console.error('Error al cargar la receta:', error);
-        // Aquí podrías manejar el error, por ejemplo, redirigiendo a la lista de recetas
+      (err) => {
+        console.error('Error al cargar la receta:', err);
       }
     );
   }

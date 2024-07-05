@@ -30,7 +30,7 @@ export class RecipesService {
     return this.http.post<any>(`${this.urlRecipes}/consume`, { recipeId, quantity });
   }
   getRecipe(id: string) {
-    return this.http.get<itemResponse>(`${this.urlRecipes}/by-Id/${id}`, this.authService.headers);
+    return this.http.get<itemResponse>(`${this.urlRecipes}/recipe/${id}`, this.authService.headers);
   }
 
   getAllRecipes() {

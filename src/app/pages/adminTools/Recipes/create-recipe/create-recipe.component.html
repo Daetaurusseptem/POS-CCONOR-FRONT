@@ -1,34 +1,43 @@
 <div class="container mt-4">
-  <h2>Crear Receta</h2>
-  <form [formGroup]="createRecipeForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-      <label for="name" class="form-label">Nombre de la Receta</label>
-      <input type="text" id="name" class="form-control" formControlName="name">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h2 class="mb-0">Crear Receta</h2>
     </div>
-    <div class="mb-3">
-      <label for="description" class="form-label">Descripción</label>
-      <textarea id="description" class="form-control" formControlName="description"></textarea>
-    </div>
-    <div formArrayName="ingredients">
-      <div *ngFor="let ingredient of ingredientsArray.controls; let i = index" [formGroupName]="i" class="mb-3">
-        <div class="row">
-          <div class="col-md-6">
-            <label for="ingredient" class="form-label">Ingrediente</label>
-            <select id="ingredient" class="form-select" formControlName="ingredient">
-              <option *ngFor="let ingredient of ingredients" [value]="ingredient._id">{{ ingredient.name }}</option>
-            </select>
-          </div>
-          <div class="col-md-4">
-            <label for="quantity" class="form-label">Cantidad</label>
-            <input type="number" id="quantity" class="form-control" formControlName="quantity">
-          </div>
-          <div class="col-md-2 d-flex align-items-end">
-            <button type="button" class="btn btn-danger" (click)="removeIngredient(i)">Eliminar</button>
+    <div class="card-body">
+      <form [formGroup]="createRecipeForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre de la Receta</label>
+          <input type="text" class="form-control" id="name" formControlName="name">
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Descripción</label>
+          <textarea class="form-control" id="description" rows="3" formControlName="description"></textarea>
+        </div>
+        <div formArrayName="ingredients">
+          <h4 class="mb-3">Ingredientes</h4>
+          <div *ngFor="let ingredient of ingredientsArray.controls; let i = index" [formGroupName]="i" class="row mb-3 align-items-end">
+            <div class="col-md-5">
+              <label [for]="'ingredient'+i" class="form-label">Ingrediente</label>
+              <select [id]="'ingredient'+i" class="form-select" formControlName="ingredient">
+                <option *ngFor="let ingredient of ingredients" [value]="ingredient._id">{{ ingredient.name }}</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label [for]="'quantity'+i" class="form-label">Cantidad</label>
+              <input type="number" [id]="'quantity'+i" class="form-control" formControlName="quantity">
+            </div>
+            <div class="col-md-3">
+              <button type="button" class="btn btn-outline-danger" (click)="removeIngredient(i)">Eliminar</button>
+            </div>
           </div>
         </div>
-      </div>
+        <div class="mb-3 d-flex justify-content-center">
+          <button type="button" class="btn btn-outline-primary" (click)="addIngredient()">Agregar Ingrediente</button>
+        </div>
+        <div class="mb-3 d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary">Crear Receta</button>
+        </div>
+      </form>
     </div>
-    <button type="button" class="btn btn-primary" (click)="addIngredient()">Agregar Ingrediente</button>
-    <button type="submit" class="btn btn-success mt-3">Crear Receta</button>
-  </form>
+  </div>
 </div>

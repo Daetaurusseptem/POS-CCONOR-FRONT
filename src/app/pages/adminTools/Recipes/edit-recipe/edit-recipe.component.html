@@ -14,14 +14,6 @@
                   El nombre es requerido.
                 </div>
               </div>
-              <div class="mb-3">
-                <label for="description" class="form-label">Descripción</label>
-                <textarea class="form-control" id="description" rows="3" formControlName="description" required></textarea>
-                <div *ngIf="recipeForm.get('description')?.invalid && recipeForm.get('description')?.touched" class="text-danger">
-                  La descripción es requerida.
-                </div>
-              </div>
-              <!-- Puedes agregar más campos aquí según tu modelo de receta -->
               <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary" [disabled]="recipeForm.invalid">Actualizar Receta</button>
                 <button type="button" class="btn btn-secondary" routerLink="/dashboard/admin/recipes">Cancelar</button>
