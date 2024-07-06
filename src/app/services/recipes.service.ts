@@ -48,7 +48,7 @@ export class RecipesService {
   }
 
   updateRecipe(id: string, recipe: Recipe) {
-    return this.http.put<itemResponse>(`${this.urlRecipes}/${id}`, recipe, this.authService.headers);
+    return this.http.put<itemResponse>(`${this.urlRecipes}/update/${id}`, recipe, this.authService.headers);
   }
 
 

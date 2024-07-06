@@ -1,37 +1,54 @@
-<!-- INVENTARIO -->
-<div class="container mt-4">
-  <h2 class="mb-4">Lista de Items</h2>
-  <a class="btn btn-primary btn-sm" (click)="crearItem()"><i class="bi bi-plus-lg"></i> Crear Item</a>
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Imagen</th>
-          <th>Nombre</th>
-          <th>Precio</th>
-          <th>Stock</th>
-          <th>Fecha de Recepción</th>
-          <th>Fecha de Expiración</th>
-          <th>Descuento</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of items">
-          <td><img [src]="item.product?.img" class="img-thumbnail" alt="{{ item.name }}" style="max-width: 100px;"></td>
-          <td>{{ item.product?.name }}</td>
-          <td>{{ item.price }}</td>
-          <td>{{ item.stock }}</td>
-          <td>{{ item.receivedDate | date }}</td>
-          <td>{{ item.expirationDate ? (item.expirationDate | date) : 'N/A' }}</td>
-          <td>{{ item.discount }}%</td>
-          <td>
-            <a class="btn btn-primary btn-sm" [routerLink]="['/dashboard/admin/items-update', item._id]" ><i class="bi bi-pencil-fill"></i> Editar</a>
-            <a class="btn btn-danger btn-sm" (click)="deleteItem(item._id)"><i class="bi bi-trash3-fill"></i> Eliminar</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<div class="container">
+  <div class="card-container">
+    <div class="card-header">
+      <h5 class="card-title mb-0">Lista de Items</h5>
+      <a class="btn btn-create-user" (click)="crearItem()">
+        <i> Crear Item</i>
+      </a>
+    </div>
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead class="table-options">
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th>Fecha de Recepción</th>
+              <th>Fecha de Expiración</th>
+              <th>Descuento</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of items">
+              <td><img [src]="item.product?.img" alt="{{ item.name }}" class="avatar-pointer"></td>
+              <td>{{ item.product?.name }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.stock }}</td>
+              <td>{{ item.receivedDate | date }}</td>
+              <td>{{ item.expirationDate ? (item.expirationDate | date) : 'N/A' }}</td>
+              <td>{{ item.discount }}%</td>
+              <td>
+                <button class="btn-edit" [routerLink]="['/dashboard/admin/items-update', item._id]">
+                  <i class="bi bi-pencil-fill"></i> Editar
+                </button>
+                <button class="btn-delete" (click)="deleteItem(item._id)">
+                  <i class="bi bi-pencil-fill"></i> Eliminar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="loading-spinner" *ngIf="!items">
+          <app-loading-data-spinner></app-loading-data-spinner>
+          <p>Loading Records</p>
+        </div>
+      </div>
+    </div>
+
+    <pagination-controls (pageChange)="pageChanged($event)" [maxSize]="totalItems"></pagination-controls>
   </div>
-  <pagination-controls (pageChange)="pageChanged($event)" [maxSize]="totalItems"></pagination-controls>
 </div>

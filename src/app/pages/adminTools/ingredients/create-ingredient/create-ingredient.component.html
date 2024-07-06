@@ -1,0 +1,59 @@
+<div class="container mt-4">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white d-flex align-items-center">
+      <i class="bi bi-egg me-2 fs-4"></i>
+      <h2 class="mb-0">Crear Ingredientes</h2>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="addIngredient()" #ingredientForm="ngForm">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="newIngredient.name" name="name" placeholder="Introduce el nombre del ingrediente" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="quantity" class="form-label">Cantidad</label>
+            <input type="number" class="form-control" id="quantity" [(ngModel)]="newIngredient.quantity" name="quantity" min="0" placeholder="Cantidad en stock" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="priceProvider" class="form-label">Precio Proveedor</label>
+            <input type="number" class="form-control" id="priceProvider" [(ngModel)]="newIngredient.priceProvider" name="priceProvider" placeholder="Precio por unidad del proveedor" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="measurement" class="form-label">Medida</label>
+            <select class="form-select" id="measurement" [(ngModel)]="newIngredient.measurement" name="measurement" required>
+              <option value="grms">grms</option>
+              <option value="ml">ml</option>
+              <option value="kg">kg</option>
+              <option value="lts">lts</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="provider" class="form-label">Proveedor</label>
+            <select class="form-select" id="provider" [(ngModel)]="newIngredient.provider" name="provider" required>
+              <option *ngFor="let supplier of suppliers" [value]="supplier._id">{{ supplier.name }}</option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="receivedDate" class="form-label">Fecha de Recepción</label>
+            <input type="date" class="form-control" id="receivedDate" [(ngModel)]="newIngredient.receivedDate" name="receivedDate" required>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="expirationDate" class="form-label">Fecha de Expiración</label>
+          <input type="date" class="form-control" id="expirationDate" [(ngModel)]="newIngredient.expirationDate" name="expirationDate">
+        </div>
+        <div class="text-end">
+          <div class="d-flex justify-content-between">
+            <app-back-button></app-back-button>
+            <button type="submit" class="btn btn-primary">Agregar Ingrediente</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

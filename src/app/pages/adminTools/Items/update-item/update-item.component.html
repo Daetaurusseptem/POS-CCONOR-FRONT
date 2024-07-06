@@ -1,45 +1,58 @@
-<div class="card mt-4">
-    <form [formGroup]="ItemForm" (ngSubmit)="updateItem()" class="container mt-4">
-      <div class="mb-3">
-        <label for="name" class="form-label">Nombre del Item</label>
-        <input type="text" id="name" formControlName="name" class="form-control">
-      </div>
-  
-      <div class="mb-3">
-        <label for="stock" class="form-label">Stock</label>
-        <input type="number" id="stock" formControlName="stock" class="form-control">
-      </div>
-  
-      <div class="mb-3">
-        <label for="price" class="form-label">Precio</label>
-        <input type="number" id="price" formControlName="price" class="form-control">
-      </div>
-  
-      <div class="mb-3">
-        <label for="discount" class="form-label">Descuento</label>
-        <input type="number" id="discount" formControlName="discount" class="form-control">
-      </div>
-  
-      <div class="mb-3">
-        <label for="expirationDate" class="form-label">Fecha de Expiración</label>
-        <input type="date" id="expirationDate" formControlName="expirationDate" class="form-control">
-      </div>
-  
-      <div class="mb-3">
-        <label for="receivedDate" class="form-label">Fecha de Recepción</label>
-        <input type="date" id="receivedDate" formControlName="receivedDate" class="form-control">
-      </div>
-  
-      <div class="alert alert-danger" *ngIf="ItemForm.invalid">
-        <p *ngIf="campoNoValidoDatosItem('name')" class="mb-0">Nombre Invalido</p>
-        <p *ngIf="campoNoValidoDatosItem('stock')" class="mb-0">Stock Invalido</p>
-        <p *ngIf="campoNoValidoDatosItem('price')" class="mb-0">Precio Invalido</p>
-        <p *ngIf="campoNoValidoDatosItem('expirationDate')" class="mb-0">Fecha de Expiración Invalida</p>
-        <p *ngIf="campoNoValidoDatosItem('discount')" class="mb-0">Descuento Invalido</p>
-        <p *ngIf="campoNoValidoDatosItem('receivedDate')" class="mb-0">Fecha de Recepción Invalida</p>
-      </div>
-  
-      <button type="submit" class="btn btn-primary">Actualizar Item</button>
-    </form>
+<div class="container mt-4">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h2 class="mb-0">Editar Item</h2>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="ItemForm" (ngSubmit)="updateItem()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre del Item</label>
+          <input type="text" class="form-control" id="name" formControlName="name" placeholder="Introduce el nombre del item">
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="stock" class="form-label">Stock</label>
+            <input type="number" class="form-control" id="stock" formControlName="stock" placeholder="Introduce la cantidad en stock">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="price" class="form-label">Precio</label>
+            <div class="input-group">
+              <span class="input-group-text">$</span>
+              <input type="number" class="form-control" id="price" formControlName="price" placeholder="Introduce el precio">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="discount" class="form-label">Descuento</label>
+            <div class="input-group">
+              <input type="number" class="form-control" id="discount" formControlName="discount" placeholder="Introduce el descuento">
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="expirationDate" class="form-label">Fecha de Expiración</label>
+            <input type="date" class="form-control" id="expirationDate" formControlName="expirationDate" placeholder="Selecciona la fecha de expiración">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="receivedDate" class="form-label">Fecha de Recepción</label>
+          <input type="date" class="form-control" id="receivedDate" formControlName="receivedDate" placeholder="Selecciona la fecha de recepción">
+        </div>
+        <div *ngIf="ItemForm.invalid" class="alert alert-danger">
+          <p *ngIf="campoNoValidoDatosItem('name')" class="mb-0">Nombre Inválido</p>
+          <p *ngIf="campoNoValidoDatosItem('stock')" class="mb-0">Stock Inválido</p>
+          <p *ngIf="campoNoValidoDatosItem('price')" class="mb-0">Precio Inválido</p>
+          <p *ngIf="campoNoValidoDatosItem('expirationDate')" class="mb-0">Fecha de Expiración Inválida</p>
+          <p *ngIf="campoNoValidoDatosItem('discount')" class="mb-0">Descuento Inválido</p>
+          <p *ngIf="campoNoValidoDatosItem('receivedDate')" class="mb-0">Fecha de Recepción Inválida</p>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <app-back-button></app-back-button>
+          <button type="submit" class="btn btn-primary">Actualizar Item</button>
+        </div>
+      </form>
+    </div>
   </div>
-  
+</div>

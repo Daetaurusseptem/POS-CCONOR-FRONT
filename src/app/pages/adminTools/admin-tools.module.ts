@@ -21,11 +21,11 @@ import { EditCategoryComponent } from './Categories/edit-category/edit-category.
 import { RecipeListComponent } from './Recipes/recipe-list/recipe-list.component';
 import { CreateRecipeComponent } from './Recipes/create-recipe/create-recipe.component';
 import { EditRecipeComponent } from './Recipes/edit-recipe/edit-recipe.component';
-import { IngredientListComponent } from './ingredient-list/ingredient-list.component';
-import { IngredientsComponent } from './ingredients/ingredients.component';
-import { IngredientsAdminListComponent } from './ingredients/ingredients-admin-list/ingredients-admin-list.component';
 import { UpdateItemComponent } from './Items/update-item/update-item.component';
+import { IngredientListComponent } from './ingredients/ingredient-list/ingredient-list.component';
+import { CreateIngredientComponent } from './ingredients/create-ingredient/create-ingredient.component';
 import { EditIngredientComponent } from './ingredients/edit-ingredient/edit-ingredient.component';
+
 
 
 
@@ -49,9 +49,9 @@ import { EditIngredientComponent } from './ingredients/edit-ingredient/edit-ingr
     RecipeListComponent,
     CreateRecipeComponent,
     EditRecipeComponent,
+    UpdateItemComponent,
     IngredientListComponent,
-    IngredientsComponent,
-    IngredientsAdminListComponent,
+    CreateIngredientComponent,
     EditIngredientComponent,
     UpdateItemComponent
   ],
@@ -60,7 +60,6 @@ import { EditIngredientComponent } from './ingredients/edit-ingredient/edit-ingr
     ProductsListComponent,
     CategoriesListComponent,
     SuppliersListComponent,
-    EditIngredientComponent,
     UpdateItemComponent
   ],
   imports: [

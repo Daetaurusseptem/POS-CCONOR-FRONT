@@ -1,29 +1,40 @@
 <div class="container mt-4">
-    <h2>Editar Ingrediente</h2>
-    <form [formGroup]="editIngredientForm" (ngSubmit)="onSubmit()">
-      <div class="mb-3">
-        <label for="name" class="form-label">Nombre</label>
-        <input type="text" id="name" class="form-control" formControlName="name">
-      </div>
-      <div class="mb-3">
-        <label for="quantity" class="form-label">Cantidad</label>
-        <input type="number" id="quantity" class="form-control" formControlName="quantity">
-      </div>
-      <div class="mb-3">
-        <label for="priceProvider" class="form-label">Precio del Proveedor</label>
-        <input type="number" id="priceProvider" class="form-control" formControlName="priceProvider">
-      </div>
-      
-      
-      <div class="mb-3">
-        <label for="receivedDate" class="form-label">Fecha de Recepción</label>
-        <input type="date" id="receivedDate" class="form-control" formControlName="receivedDate">
-      </div>
-      <div class="mb-3">
-        <label for="expirationDate" class="form-label">Fecha de Expiración</label>
-        <input type="date" id="expirationDate" class="form-control" formControlName="expirationDate">
-      </div>
-      <button type="submit" class="btn btn-success">Guardar Cambios</button>
-    </form>
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white d-flex align-items-center">
+      <i class="bi bi-pencil me-2 fs-4"></i>
+      <h2 class="mb-0">Editar Ingrediente</h2>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="editIngredientForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="name" formControlName="name" placeholder="Introduce el nombre del ingrediente">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="quantity" class="form-label">Cantidad</label>
+            <input type="number" class="form-control" id="quantity" formControlName="quantity" placeholder="Cantidad en stock">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="priceProvider" class="form-label">Precio del Proveedor</label>
+            <input type="number" class="form-control" id="priceProvider" formControlName="priceProvider" placeholder="Precio por unidad del proveedor">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="receivedDate" class="form-label">Fecha de Recepción</label>
+            <input type="date" class="form-control" id="receivedDate" formControlName="receivedDate">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="expirationDate" class="form-label">Fecha de Expiración</label>
+          <input type="date" class="form-control" id="expirationDate" formControlName="expirationDate">
+        </div>
+        <div class="d-flex justify-content-between">
+          <app-back-button></app-back-button>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
   </div>
-  
+</div>

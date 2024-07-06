@@ -1,24 +1,25 @@
-<div class="main-container">
-    <div class="form-container">
-      <div class="form-header">
-        <div class="form-title">
-          <h2>Crear Producto</h2>
+<div class="container mt-4">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h2 class="mb-0">Crear Producto</h2>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="name" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nombre del producto">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="marca" class="form-label">Marca:</label>
+            <input type="text" class="form-control" formControlName="marca" id="marca" placeholder="Marca del producto">
+          </div>
         </div>
-      </div>
-      <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form">
-        <div class="form-group">
-          <label for="name" class="form-label">Nombre:</label>
-          <input type="text" formControlName="name" id="name" placeholder="Nombre del producto" class="form-input">
-        </div>
-        <div class="form-group">
+        <div class="mb-3">
           <label for="description" class="form-label">Descripción:</label>
-          <textarea formControlName="description" id="description" rows="3" class="form-input"></textarea>
+          <textarea class="form-control" formControlName="description" id="description" rows="3"></textarea>
         </div>
-        <div class="form-group">
-          <label for="marca" class="form-label">Marca:</label>
-          <input type="text" formControlName="marca" id="marca" placeholder="Marca del producto" class="form-input">
-        </div>
-        <div class="form-group">
+        <div class="mb-3">
           <label class="form-label">Categorías:</label>
           <ng-select
             [items]="Categories"
@@ -26,31 +27,38 @@
             bindValue="_id"
             [multiple]="true"
             formControlName="categories"
-            placeholder="Selecciona las categorías"
-            class="form-select">
+            placeholder="Selecciona las categorías">
           </ng-select>
         </div>
-        <div class="form-group"> 
-          <label for="supplier" class="form-label">Proveedor:</label>
-          <select formControlName="supplier" id="supplier" class="form-select">
-            <option *ngFor="let supplier of suppliers" [value]="supplier._id">{{ supplier.name }}</option>
-          </select>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="supplier" class="form-label">Proveedor:</label>
+            <select class="form-select" formControlName="supplier" id="supplier">
+              <option value="" disabled selected>Selecciona un proveedor</option>
+              <option *ngFor="let supplier of suppliers" [value]="supplier._id">{{ supplier.name }}</option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="isComposite" class="form-label">¿Es un producto compuesto?</label>
+            <select class="form-select" formControlName="isComposite" id="isComposite" (change)="onIsCompositeChange($event)">
+              <option [value]="false">No</option>
+              <option [value]="true">Sí</option>
+            </select>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="isComposite" class="form-label">¿Es un producto compuesto?</label>
-          <select formControlName="isComposite" id="isComposite" class="form-select" (change)="onIsCompositeChange($event)">
-            <option [value]="false">No</option>
-            <option [value]="true">Sí</option>
-          </select>
-        </div>
-        <div class="form-group" *ngIf="isComposite">
+        <div class="mb-3" *ngIf="isComposite">
           <label for="recipe" class="form-label">Receta:</label>
-          <select formControlName="recipe" id="recipe" class="form-select">
+          <select class="form-select" formControlName="recipe" id="recipe">
+            <option value="" disabled selected>Selecciona una receta</option>
             <option *ngFor="let recipe of recipes" [value]="recipe._id">{{ recipe.name }}</option>
           </select>
         </div>
-        <button type="submit" [disabled]="!productForm.valid" class="form-button">Crear Producto</button>
+        
+        <div class="d-flex justify-content-between">
+          <app-back-button></app-back-button>
+          <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid">Crear Producto</button>
+        </div>
       </form>
     </div>
   </div>
-  
+</div>
