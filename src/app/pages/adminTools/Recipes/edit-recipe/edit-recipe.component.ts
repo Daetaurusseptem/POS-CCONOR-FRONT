@@ -21,6 +21,7 @@ export class EditRecipeComponent implements OnInit {
   ) {
     this.recipeForm = this.fb.group({
       name: ['', Validators.required],
+      description: ['', Validators.required],
     });
     this.recipeId = '';
   }
@@ -49,21 +50,22 @@ export class EditRecipeComponent implements OnInit {
 
   onSubmit(): void {
     if (this.recipeForm.valid) {
-      const updatedRecipe: Recipe = {
-        ...this.recipeForm.value,
-        _id: this.recipeId
-      };
+        const updatedRecipe: Recipe = {
+            ...this.recipeForm.value,
+            _id: this.recipeId
+        };
 
-      this.recipeService.updateRecipe(this.recipeId, updatedRecipe).subscribe(
-        (response) => {
-          console.log('Receta actualizada:', response);
-          this.router.navigate(['/dashboard/admin/recipes']);
-        },
-        (error) => {
-          console.error('Error al actualizar la receta:', error);
-          // Aquí podrías mostrar un mensaje de error al usuario
-        }
-      );
+        this.recipeService.updateRecipe(this.recipeId, updatedRecipe).subscribe(
+            (response) => {
+                console.log('Receta actualizada:', response);
+                this.router.navigate(['/dashboard/admin/recipes']);
+            },
+            (error) => {
+                console.error('Error al actualizar la receta:', error);
+                // Aquí podrías mostrar un mensaje de error al usuario
+            }
+        );
     }
-  }
+}
+
 }
