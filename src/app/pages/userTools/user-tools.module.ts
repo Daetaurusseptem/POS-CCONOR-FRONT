@@ -12,6 +12,7 @@ import { CloseCashRegisterComponent } from './close-cash-register/close-cash-reg
 import { DailySalesComponent } from './daily-sales/daily-sales.component';
 import { ItemsAvailableComponent } from './items-available/items-available.component';
 import { AdminToolsModule } from '../adminTools/admin-tools.module';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 
 
@@ -25,20 +26,21 @@ import { AdminToolsModule } from '../adminTools/admin-tools.module';
     SuccessSaleComponent,
     CloseCashRegisterComponent,
     DailySalesComponent,
-    ItemsAvailableComponent
+    ItemsAvailableComponent,
   ],
   exports: [
     NewsaleComponent,
     CashRegisterComponent,
     OpenCashRegisterComponent
   ],
-
+  
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterLink,
-    AdminToolsModule
+    AdminToolsModule,
+    ComponentsModule
     
   ]
 })
