@@ -8,11 +8,11 @@
       <form [formGroup]="createRecipeForm" (ngSubmit)="onSubmit()">
         <div class="mb-3">
           <label for="name" class="form-label">Nombre de la Receta</label>
-          <input type="text" class="form-control" id="name" formControlName="name">
+          <input type="text" class="form-control" id="name" formControlName="name" placeholder="Introduce el nombre de la receta">
         </div>
         <div class="mb-3">
           <label for="description" class="form-label">Descripción</label>
-          <textarea class="form-control" id="description" rows="3" formControlName="description"></textarea>
+          <textarea class="form-control" id="description" rows="3" formControlName="description" placeholder="Describe brevemente la receta"></textarea>
         </div>
         <div formArrayName="ingredients">
           <h4 class="mb-3">Ingredientes</h4>
@@ -25,7 +25,7 @@
             </div>
             <div class="col-md-4">
               <label [for]="'quantity'+i" class="form-label">Cantidad</label>
-              <input type="number" [id]="'quantity'+i" class="form-control" formControlName="quantity">
+              <input type="number" [id]="'quantity'+i" class="form-control" formControlName="quantity" placeholder="Cantidad necesaria">
             </div>
             <div class="col-md-3">
               <button type="button" class="btn btn-outline-danger" (click)="removeIngredient(i)">Eliminar</button>
@@ -35,7 +35,9 @@
         <div class="mb-3 d-flex justify-content-center">
           <button type="button" class="btn btn-outline-primary" (click)="addIngredient()">Agregar Ingrediente</button>
         </div>
-        <div class="mb-3 d-flex justify-content-center">
+
+        <div class="d-flex justify-content-between">
+          <app-back-button></app-back-button>
           <button type="submit" class="btn btn-primary">Crear Receta</button>
         </div>
       </form>

@@ -9,17 +9,17 @@
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="name" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="name" formControlName="name">
+            <input type="text" class="form-control" id="name" formControlName="name" placeholder="Introduce el nombre del ingrediente">
           </div>
           <div class="col-md-6 mb-3">
             <label for="quantity" class="form-label">Cantidad</label>
-            <input type="number" class="form-control" id="quantity" formControlName="quantity">
+            <input type="number" class="form-control" id="quantity" formControlName="quantity" placeholder="Cantidad en stock">
           </div>
         </div>
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="priceProvider" class="form-label">Precio del Proveedor</label>
-            <input type="number" class="form-control" id="priceProvider" formControlName="priceProvider">
+            <input type="number" class="form-control" id="priceProvider" formControlName="priceProvider" placeholder="Precio por unidad del proveedor">
           </div>
           <div class="col-md-6 mb-3">
             <label for="receivedDate" class="form-label">Fecha de Recepción</label>
@@ -31,8 +31,8 @@
           <input type="date" class="form-control" id="expirationDate" formControlName="expirationDate">
         </div>
         <div class="d-flex justify-content-between">
-          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
           <app-back-button></app-back-button>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
         </div>
       </form>
     </div>

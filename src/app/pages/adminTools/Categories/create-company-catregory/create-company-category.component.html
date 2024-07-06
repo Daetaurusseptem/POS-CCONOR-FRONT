@@ -1,23 +1,25 @@
-
-<div class="container mt-3 card">
-    <h2>Crear Nueva Categoria</h2>
-    <form #categorForm="ngForm">
-      <!-- Nombre Categoria -->
-      <div class="mb-3">
-        <label for="fullName" class="form-label">Nombre Categoria</label>
-        <input type="text" class="form-control" id="name" [(ngModel)]="category.name" name="name" required>
-      </div>
-  
-      <!-- Nombre de Caetgoria -->
-      <div class="mb-3">
-        <label for="description" class="form-label">Descripcion Categoria</label>
-        <input type="text" class="form-control" id="description" [(ngModel)]="category.description" name="username" required>
-      </div>
-
-      <!-- Botón para crear el usuario -->
-      <button type="submit" class="btn btn-primary" (click)="createCategory(categorForm)" [disabled]="!categorForm.form.valid">Crear Categoria</button>
-      
-
-    </form>
+<div class="container mt-4">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h2 class="mb-0">Crear Nueva Categoría</h2>
+    </div>
+    <div class="card-body">
+      <form #categorForm="ngForm">
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre Categoría</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="category.name" name="name" required placeholder="Introduce el nombre de la categoría">
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Descripción Categoría</label>
+          <textarea class="form-control" id="description" [(ngModel)]="category.description" name="description" rows="3" required placeholder="Describe la categoría"></textarea>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <app-back-button></app-back-button>
+          <button type="submit" class="btn btn-primary" (click)="createCategory(categorForm)" [disabled]="!categorForm.form.valid">
+            Crear Categoría
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-  
+</div>
