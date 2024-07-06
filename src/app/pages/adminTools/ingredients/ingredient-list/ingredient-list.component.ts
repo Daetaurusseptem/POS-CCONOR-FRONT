@@ -5,23 +5,20 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Ingredient } from 'src/app/interfaces/models.interface';
 import { map } from 'rxjs/operators';
 
-
 @Component({
-  selector: 'app-ingredients-admin-list',
-  templateUrl: './ingredients-admin-list.component.html',
-  styleUrls: ['./ingredients-admin-list.component.css']
+  selector: 'app-ingredient-list',
+  templateUrl: './ingredient-list.component.html',
+  styleUrls: ['./ingredient-list.component.css']
 })
-export class IngredientsAdminListComponent {
-  createIngredient(): void {
-    this.router.navigate(['dashboard/admin/ingredients']);
-  }
+export class IngredientListComponent {
+
   ingredients: Ingredient[] = [];
 
   constructor(
-    private ingredientService: IngredientService, 
-    private authService: AuthService, 
+    private ingredientService: IngredientService,
+    private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadIngredients();
@@ -29,18 +26,19 @@ export class IngredientsAdminListComponent {
 
   loadIngredients(): void {
     this.ingredientService.getIngredientsByCompanyId(this.authService.companyId)
-    .pipe(map(item=>{
-      console.log(item);
-      return item.ingredients;
-    }))
-    .subscribe(ingredients=>{this.ingredients = ingredients!})
-      
+      .pipe(map(item => {
+        console.log(item);
+        return item.ingredients;
+      }))
+      .subscribe(ingredients => { this.ingredients = ingredients! })
   }
 
-  
-
   editIngredient(id: string): void {
-    this.router.navigate(['dashboard/admin/edit-ingredient', id]);
+    this.router.navigate(['dashboard/admin/ingredients/edit/', id]);
+  }
+
+  createIngredient(): void {
+    this.router.navigate(['dashboard/admin/ingredients/new']);
   }
 
   deleteIngredient(id: string): void {

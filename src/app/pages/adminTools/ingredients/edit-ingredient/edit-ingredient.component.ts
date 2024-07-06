@@ -12,6 +12,7 @@ import { IngredientService } from 'src/app/services/ingredient.service';
   styleUrls: ['./edit-ingredient.component.css']
 })
 export class EditIngredientComponent {
+
   editIngredientForm!: FormGroup;
   ingredientId!: string;
 
@@ -19,8 +20,8 @@ export class EditIngredientComponent {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private ingredientService: IngredientService,
-    private router: Router
-  ) {}
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
     this.ingredientId = this.route.snapshot.paramMap.get('id')!;
@@ -36,29 +37,33 @@ export class EditIngredientComponent {
 
   loadIngredient(): void {
     this.ingredientService.getIngredientById(this.ingredientId)
-    .pipe(map(r=>r.ingredient))
-    .subscribe(ingredient=> {
-      
-      ingredient!.expirationDate = this.formatDate(ingredient!.expirationDate as string);
-      ingredient!.receivedDate = this.formatDate(ingredient!.receivedDate as string);
-      
-      this.editIngredientForm.patchValue(ingredient!);
+      .pipe(map(r => r.ingredient))
+      .subscribe(ingredient => {
+
+        ingredient!.expirationDate = this.formatDate(ingredient!.expirationDate as string);
+        ingredient!.receivedDate = this.formatDate(ingredient!.receivedDate as string);
+
+        this.editIngredientForm.patchValue(ingredient!);
       },
-      error => {
-        console.error('Error fetching ingredient', error);
-      }
-    );
+        error => {
+          console.error('Error fetching ingredient', error);
+        }
+      );
   }
 
   formatDate(isoString: string): string {
     return moment(isoString).format('YYYY-MM-DD');
   }
 
+  regresarOrCancelar() {
+
+  }
+
   onSubmit(): void {
     if (this.editIngredientForm.invalid) {
       return;
     }
-    
+
     const updatedIngredient: Ingredient = {
       expirationDate: moment(this.editIngredientForm.value.expirationDate).toISOString(),
       receivedDate: moment(this.editIngredientForm.value.receivedDate).toISOString(),
@@ -69,7 +74,7 @@ export class EditIngredientComponent {
     this.ingredientService.updateIngredient(this.ingredientId, updatedIngredient).subscribe(
       response => {
         console.log('Ingrediente actualizado con éxito', response);
-        this.router.navigate(['/dashboard/admin/ingredients-list']);
+        this.router.navigate(['/dashboard/admin/ingredients']);
       },
       error => {
         console.error('Error actualizando ingrediente', error);

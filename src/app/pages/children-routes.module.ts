@@ -48,9 +48,9 @@ import { ItemsAvailableComponent } from './userTools/items-available/items-avail
 import { RecipeListComponent } from './adminTools/Recipes/recipe-list/recipe-list.component';
 import { CreateRecipeComponent } from './adminTools/Recipes/create-recipe/create-recipe.component';
 import { EditRecipeComponent } from './adminTools/Recipes/edit-recipe/edit-recipe.component';
-import { IngredientListComponent } from './adminTools/ingredient-list/ingredient-list.component';
-import {IngredientsAdminListComponent} from './adminTools/ingredients/ingredients-admin-list/ingredients-admin-list.component';
 import { UpdateItemComponent } from './adminTools/Items/update-item/update-item.component';
+import { IngredientListComponent } from './adminTools/ingredients/ingredient-list/ingredient-list.component';
+import { CreateIngredientComponent } from './adminTools/ingredients/create-ingredient/create-ingredient.component';
 import { EditIngredientComponent } from './adminTools/ingredients/edit-ingredient/edit-ingredient.component';
 
 const routes: Routes = [
@@ -120,9 +120,9 @@ const routes: Routes = [
       //{ path: 'admin/recipes/edit/:id', canActivate: [AdminGuard], component: UpdateProductComponent },
       
       //INGREDIENT
-      { path: 'admin/ingredients', component: IngredientListComponent },
-      {path: 'admin/ingredients-list', component: IngredientsAdminListComponent},
-      { path: 'admin/edit-ingredient/:id', component: EditIngredientComponent },
+      { path: 'admin/ingredients', component: IngredientListComponent},
+      { path: 'admin/ingredients/new', component: CreateIngredientComponent},
+      { path: 'admin/ingredients/edit/:id', component: EditIngredientComponent},
 
       //USER
       { path: 'user', canActivate:[userGuard], component:  UserHomeComponent},
