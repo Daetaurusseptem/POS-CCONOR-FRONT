@@ -19,6 +19,7 @@ import { SpinnerComponent } from './shared/loading-spinner/loading-spinner.compo
 import { LoadingDataSpinnerComponent } from './shared/loading-data-spinner/loading-data-spinner.component';
 import { ItemsListComponent } from './shared/items-list/items-list.component';
 import { TabsMenuComponent } from './shared/tabs-menu/tabs-menu.component';
+import { BackButtonComponent } from './shared/back-button/back-button.component';
 
 
 
@@ -34,7 +35,8 @@ import { TabsMenuComponent } from './shared/tabs-menu/tabs-menu.component';
     SpinnerComponent,
     LoadingDataSpinnerComponent,
     ItemsListComponent,
-    TabsMenuComponent
+    TabsMenuComponent,
+    BackButtonComponent
   ],
   exports:[
     NavbarComponent,
@@ -46,7 +48,8 @@ import { TabsMenuComponent } from './shared/tabs-menu/tabs-menu.component';
     LoadingDataSpinnerComponent,
     CreateUserReComponent,
     ItemsListComponent,
-    TabsMenuComponent
+    TabsMenuComponent,
+    BackButtonComponent
   ],
   imports: [
     CommonModule,
