@@ -55,7 +55,7 @@ export class ProductService {
     return this.http.put<itemResponse>(`${urlProducts}/${id}`, formData, this.authService.headers);
   };
 
-  createProduct(empresaId: string, product: Product) {
+  createProduct(empresaId: string, product: FormData) {
 
     return this.http.post<itemResponse>(`${urlProducts}/${empresaId}`, product, this.authService.headers);
   };

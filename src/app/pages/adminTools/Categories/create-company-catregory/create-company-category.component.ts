@@ -58,7 +58,7 @@ export class CreateCompanyCategoryComponent {
           })
           .then(()=>{
             if(this.userRole=='admin'){
-              this.router.navigateByUrl('/dashboard/admin')
+              this.router.navigateByUrl('/dashboard/admin/categories')
             }else if(this.userRole=='sysadmin'){
               this.router.navigateByUrl('/dashboard/sysadmin/categories')
             }

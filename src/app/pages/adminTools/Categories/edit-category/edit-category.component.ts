@@ -78,7 +78,7 @@ export class EditCategoryComponent {
               .subscribe(
                 r => {
                   console.log('Respuesta del servicio:', r);
-                  this.router.navigateByUrl('/dashboard/sysadmin/users');
+                  this.router.navigateByUrl('/dashboard/admin/categories');
                 },
                 error => {
                   console.error('Error al actualizar la categoría:', error);

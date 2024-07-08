@@ -9,7 +9,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { SupplierService } from 'src/app/services/provider.service';
 import { RecipesService } from 'src/app/services/recipes.service';
 import Swal from 'sweetalert2';
-
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -38,6 +38,7 @@ export class CreateProductComponent {
     private productService: ProductService,
     private recipeService: RecipesService,
     private modal: ModalService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -91,17 +92,23 @@ export class CreateProductComponent {
   onSubmit() {
     if (this.productForm.valid) {
       Swal.fire({
-        text: 'Estas seguro?',
+        title: 'Crear Producto',
+        text: '¿Estás seguro de crear este producto?',
         icon: 'question',
         showCancelButton: true,
-        confirmButtonText: 'Sí',
+        confirmButtonText: 'Si',
         cancelButtonText: 'No'
       }).then(res => {
         if (res.isConfirmed) {
-          this.productService.createProduct(this.authService.companyId, this.productForm.value)
-            .subscribe(r => {
+          const formValue = {...this.productForm.value};
+          if (!this.isComposite || !formValue.recipe) {
+            delete formValue.recipe;
+          }
+          this.productService.createProduct(this.authService.companyId, formValue).subscribe(
+            r => {
               if (r.ok) {
                 Swal.fire('Registro Guardado', '', 'success');
+                this.router.navigate(['/dashboard/admin/products']);
               } else {
                 Swal.fire('Registro No Guardado', '', 'error');
               }
@@ -110,6 +117,4 @@ export class CreateProductComponent {
       });
     }
   }
-
-
 }
