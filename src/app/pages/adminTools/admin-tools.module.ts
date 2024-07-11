@@ -25,6 +25,8 @@ import { UpdateItemComponent } from './Items/update-item/update-item.component';
 import { IngredientListComponent } from './ingredients/ingredient-list/ingredient-list.component';
 import { CreateIngredientComponent } from './ingredients/create-ingredient/create-ingredient.component';
 import { EditIngredientComponent } from './ingredients/edit-ingredient/edit-ingredient.component';
+import { StatisticsComponent } from './statistics/statistics.component';
+import { NgChartsModule } from 'ng2-charts';
 
 
 
@@ -53,7 +55,8 @@ import { EditIngredientComponent } from './ingredients/edit-ingredient/edit-ingr
     IngredientListComponent,
     CreateIngredientComponent,
     EditIngredientComponent,
-    UpdateItemComponent
+    UpdateItemComponent,
+    StatisticsComponent
   ],
   exports:[
     ItemStockListComponent,
@@ -69,7 +72,9 @@ import { EditIngredientComponent } from './ingredients/edit-ingredient/edit-ingr
     FormsModule,
     ComponentsModule,
     NgxPaginationModule,
-    NgSelectModule
+    NgSelectModule,
+    NgChartsModule
+    
   ]
 })
 export class AdminToolsModule { }

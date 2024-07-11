@@ -52,6 +52,7 @@ import { UpdateItemComponent } from './adminTools/Items/update-item/update-item.
 import { IngredientListComponent } from './adminTools/ingredients/ingredient-list/ingredient-list.component';
 import { CreateIngredientComponent } from './adminTools/ingredients/create-ingredient/create-ingredient.component';
 import { EditIngredientComponent } from './adminTools/ingredients/edit-ingredient/edit-ingredient.component';
+import { StatisticsComponent } from './adminTools/statistics/statistics.component';
 
 const routes: Routes = [
   {
@@ -119,16 +120,17 @@ const routes: Routes = [
       //{ path: 'admin/recipes/new', canActivate: [AdminGuard], component: CreateProductComponent },
       //{ path: 'admin/recipes/edit/:id', canActivate: [AdminGuard], component: UpdateProductComponent },
       
-      //INGREDIENT
+      //ingredients
       { path: 'admin/ingredients', component: IngredientListComponent},
       { path: 'admin/ingredients/new', component: CreateIngredientComponent},
       { path: 'admin/ingredients/edit/:id', component: EditIngredientComponent},
+      //estadisticas
+      { path: 'admin/statistics', component: StatisticsComponent },
 
       //USER
       { path: 'user', canActivate:[userGuard], component:  UserHomeComponent},
       { path: 'user/new-sale', component: NewsaleComponent, canActivate: [AuthGuardGuard, userGuard]},
       { path: 'user/open-cash-register', component: CashRegisterComponent, canActivate: [AuthGuardGuard, userGuard]},
-      
       { path: 'user/new-sale/confirm-sale', component: ConfirmSaleComponent },
       { path: 'user/sales-success', component: SuccessSaleComponent},
       { path: 'user/sales-success/close-cash-register', component: CloseCashRegisterComponent},

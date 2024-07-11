@@ -7,14 +7,17 @@
       <ul class="list-group list-group-flush mb-4">
         <li class="list-group-item" *ngFor="let product of sale.productsSold">
           <div class="row align-items-center">
-            <div class="col-md-6">
+            <div class="col-md-3">
               <strong>{{ product.name }}</strong>
+            </div>
+            <div class="col-md-3">
+              <span>Precio unitario: {{ product.unitPrice }}</span>
             </div>
             <div class="col-md-3 text-md-end">
               Cantidad: {{ product.quantity }}
             </div>
             <div class="col-md-3 text-md-end">
-              Precio: {{ product.unitPrice* product.quantity | currency }}
+              total: {{ product.unitPrice * product.quantity | currency }}
             </div>
           </div>
         </li>
@@ -28,41 +31,53 @@
         <div class="mb-3">
           <label for="paymentMethod" class="form-label">Método de Pago</label>
           <select id="paymentMethod" formControlName="paymentMethod" class="form-select">
+            <option value="">Seleccione el método de pago</option>
             <option value="cash">Efectivo</option>
             <option value="credit">Tarjeta</option>
           </select>
+          <div *ngIf="paymentMethod?.touched && paymentMethod?.invalid" class="text-danger">
+            <small *ngIf="paymentMethod?.errors?.['required']">Método de pago es requerido</small>
+          </div>
         </div>
         
-        <div class="mb-3" *ngIf="confirmSaleForm.get('paymentMethod')!.value === 'credit'">
+        <div class="mb-3" *ngIf="paymentMethod?.value === 'credit'">
           <label for="paymentReference" class="form-label">Referencia de Pago</label>
           <input type="text" id="paymentReference" formControlName="paymentReference" class="form-control">
+          <div *ngIf="paymentReference?.touched && paymentReference?.invalid" class="text-danger">
+            <small *ngIf="paymentReference?.errors?.['required']">Referencia de pago es requerida</small>
+          </div>
         </div>
         
-        <div  class="row mb-3">
-          
-            <div *ngIf="confirmSaleForm.get('paymentMethod')!.value === 'cash'" class="col-md-6">
-              <label for="receivedAmount" class="form-label">Cantidad Recibida</label>
-              <div class="input-group">
-                <span class="input-group-text">$</span>
-                <input type="number" id="receivedAmount" formControlName="receivedAmount" class="form-control" min="0">
-              </div>
+        <div class="row mb-3" *ngIf="paymentMethod?.value === 'cash'">
+          <div class="col-md-6">
+            <label for="receivedAmount" class="form-label">Cantidad Recibida</label>
+            <div class="input-group">
+              <span class="input-group-text">$</span>
+              <input type="number" id="receivedAmount" formControlName="receivedAmount" class="form-control" min="0">
             </div>
-            <div *ngIf="confirmSaleForm.get('paymentMethod')!.value === 'cash'" class="col-md-6">
-              <label for="change" class="form-label">Cambio</label>
-              <div class="input-group">
-                <span class="input-group-text">$</span>
-                <input type="number" id="change" formControlName="change" class="form-control" [value]="change" readonly min="0">
+            <div *ngIf="receivedAmount?.touched && receivedAmount?.invalid" class="text-danger">
+              <div class="card-danger">
+                
               </div>
+              <p *ngIf="receivedAmount?.errors?.['required']">Cantidad recibida es requerida</p>
+              <p *ngIf="receivedAmount?.errors?.['min']">Cantidad recibida no puede ser negativa</p>
+              <p *ngIf="receivedAmount?.errors?.['pattern']">Cantidad recibida debe ser un número válido</p>
+              <p *ngIf="receivedAmount?.errors?.['insufficientAmount']">La cantidad recibida debe ser mayor o igual al total</p>
             </div>
           </div>
-          
-        
+          <div class="col-md-6">
+            <label for="change" class="form-label">Cambio</label>
+            <div class="input-group">
+              <span class="input-group-text">$</span>
+              <input type="number" id="change" formControlName="change" class="form-control" [value]="change" readonly>
+            </div>
+          </div>
+        </div>
         
         <div class="text-center">
           <button [disabled]="!confirmSaleForm.valid" type="submit" class="btn btn-primary btn-lg">Confirmar Venta</button>
         </div>
       </form>
-      
     </div>
   </div>
 </div>

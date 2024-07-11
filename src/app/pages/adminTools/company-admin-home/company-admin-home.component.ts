@@ -12,6 +12,7 @@ import { ItemService } from 'src/app/services/item.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { SupplierService } from 'src/app/services/provider.service';
 import { RecipesService } from 'src/app/services/recipes.service';
+import { TabSelectedService } from 'src/app/service/tab-selected.service';
 
 @Component({
   selector: 'app-company-admin-home',
@@ -25,8 +26,10 @@ export class CompanyAdminHomeComponent {
   products!: Product[];
   users!: User[];
   recipes!: Recipe[];
-  tabSelected: 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'inventario' = 'usuarios';
-  tabsArray = [
+
+  
+
+  tabSelected: 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'inventario' = localStorage.getItem('tabSelected') as 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'inventario';  tabsArray = [
     { name: 'usuarios', icon: 'bi bi-people-fill' },
     { name: 'productos', icon: 'bi bi-bag-fill' },
     { name: 'inventario', icon: 'bi bi-box-fill' },
@@ -38,8 +41,14 @@ export class CompanyAdminHomeComponent {
   company!: Company;
   admin!: UsuarioModel;
   id: string = '';
+  
 
   ngOnInit(): void {
+    if(localStorage.getItem('tabSelected')==null){
+      this.tabSelected = 'usuarios';
+    }
+    console.log(this.tabSelected);
+    this.changeTab(this.tabSelected)
     this.admin = this.authService.usuario;
     this.getUsers();
     this.getAdminCompany(this.admin.id);
@@ -55,7 +64,8 @@ export class CompanyAdminHomeComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private tabSelectedService: TabSelectedService
   ) {}
 
   getAdminCompany(id: string) {
@@ -106,22 +116,28 @@ export class CompanyAdminHomeComponent {
       });
   }
 
-  changeTab(tab: 'usuarios' | 'productos' | 'items' | 'suscripciones' | 'proveedores' | 'categorias' | 'inventario') {
+  changeTab(tab: 'usuarios' | 'productos' | 'items' | 'suscripciones' | 'proveedores' | 'categorias' | 'inventario'|'recetas') {
+    console.log('cambiacion', tab);
     switch (tab) {
       case 'usuarios':
+        this.tabSelectedService.updateTabSelected(tab);
         this.getUsers();
         break;
       case 'productos':
+        this.tabSelectedService.updateTabSelected(tab);
         this.getProducts(this.authService.companyId);
         break;
-      case 'items':
+        case 'items':
+        this.tabSelectedService.updateTabSelected(tab);
         this.getProducts(this.authService.companyId);
         break;
-      case 'proveedores':
+        case 'proveedores':
+        this.tabSelectedService.updateTabSelected(tab);
         this.getSuppliers();
         break;
-      case 'categorias':
-        this.getCategories();
+        case 'categorias':
+          this.tabSelectedService.updateTabSelected(tab);
+          this.getCategories();
         break;
       default:
         break;

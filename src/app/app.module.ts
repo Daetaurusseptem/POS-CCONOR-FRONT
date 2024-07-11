@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { PagesModule } from './pages/pages.module';
 import { RouterLink } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { NgChartsModule } from 'ng2-charts';
 
 
 
@@ -33,6 +34,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     RouterLink,
     HttpClientModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
