@@ -16,8 +16,12 @@
                 <td>{{ item!.description }}</td>
                 <td>{{ item!.marca }}</td>
                 <td *ngIf="userRole === 'admin'">
-                    <a class="btn btn-primary" [routerLink]="['/dashboard/admin/product/edit/', item._id]">Editar</a>
-                    <a class="btn btn-danger" (click)="eliminarProduct(item._id)">Eliminar</a>
+                    <button class="btn-edit" [routerLink]="['/dashboard/admin/product/edit/', item._id]">
+                        <i class="bi bi-pencil"></i> Editar
+                    </button>
+                    <button class="btn-delete" (click)="eliminarProduct(item._id)">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </button>
                 </td>
                 <td *ngIf="userRole === 'sysadmin'">
                     <a class="btn btn-primary" [routerLink]="['/dashboard/sysadmin/product/edit/', item._id]">Editar</a>

@@ -80,6 +80,7 @@ const routes: Routes = [
 
       { path: 'sysadmin/products', canActivate: [SysAdminGuard], component: ProductsListComponent },
       { path: 'sysadmin/product/new', canActivate: [SysAdminGuard], component: CreateProductComponent },
+      { path: 'sysadmin/product/new/:id', canActivate: [SysAdminGuard], component: CreateProductComponent },
       { path: 'sysadmin/product/edit/:id', canActivate: [SysAdminGuard], component: UpdateProductComponent },
 
       { path: 'sysadmin/categories', canActivate: [SysAdminGuard], component: CategoriesListComponent },

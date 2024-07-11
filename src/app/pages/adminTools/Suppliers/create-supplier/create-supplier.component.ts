@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { SupplierService } from 'src/app/services/provider.service';
@@ -21,6 +21,7 @@ export class CreateSupplierComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private activatedRoute: ActivatedRoute,
     private supplierService: SupplierService,
     private router: Router,
   ) {
@@ -28,7 +29,17 @@ export class CreateSupplierComponent {
    }
 
   ngOnInit(): void {
-    this.companyId = this.authService.companyId!
+    if(this.authService.usuario.role == 'sysadmin') {
+      this.activatedRoute.params.subscribe(params=>{
+        console.log(params);
+        this.companyId = params['id'];
+        console.log(this.companyId);
+      })
+    }else {
+      this.companyId = this.authService.companyId
+    }
+    
+
     this.supplierForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
@@ -57,7 +68,7 @@ export class CreateSupplierComponent {
       })
       .then(r=>{
         if(r.isConfirmed){
-          this.supplierService.createSupplier(obj,this.authService.companyId!)
+          this.supplierService.createSupplier(obj,this.companyId)
   
           .subscribe(resp=>{
             console.log(resp);

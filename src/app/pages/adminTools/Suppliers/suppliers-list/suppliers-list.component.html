@@ -4,7 +4,7 @@
           <div class="search-title">
               <h5>Búsqueda de Proveedores</h5>
           </div>
-          <a class="create-supplier-link" [routerLink]="'new/' + companyId" role="button">
+          <a class="create-supplier-link" (click)="crearSupplier()"  [routerLink]="'new/' + companyId" role="button">
               <i class="bi bi-plus-lg"></i> Crear Proveedor
           </a>
       </div>

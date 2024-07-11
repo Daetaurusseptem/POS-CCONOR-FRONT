@@ -86,7 +86,7 @@ export class UserListComponent {
     })
     .then(resp=>{
       if(resp.isConfirmed){
-        this.userService.deleteuser(id)
+        this.userService.deleteuserByCompanyAdmin(id, this.companyId)
         .subscribe(resp=>{
           if(resp.ok==true){
             Swal.fire({

@@ -108,9 +108,9 @@ export class UserEditComponent {
             this.userService.updateUser(this.user._id!, this.userForm.value)
               .subscribe(r => {
                 if (this.authService.usuario.role === 'sysadmin') {
-                  this.router.navigateByUrl(`/dashboard/sysadmin/companies/details/${this.id}`);
+                  this.router.navigateByUrl('/dashboard/sysadmin/users');
                 } else if (this.authService.usuario.role === 'admin') {
-                  this.router.navigateByUrl('/dashboard/admin/users');
+                  this.router.navigateByUrl(`/dashboard/admin/users/edit/${this.id}`);
                 }
                 
               })

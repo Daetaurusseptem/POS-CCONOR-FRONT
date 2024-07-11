@@ -6,7 +6,7 @@ import { UsuarioModel } from '../models/usuario.model';
 import { tap, Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from '../interfaces/models.interface';
 
 const url = environment.apiUrl;
@@ -24,7 +24,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private activatedRouter: ActivatedRoute,
 
   ){}
 
@@ -53,6 +54,8 @@ export class AuthService {
             this.companyId = company
           } else if (role == 'admin') {
             this.companyId = resp.company._id;
+          }else if (role == 'sysAdmin') {
+            
           }
           
           console.log('COMPAÑYYYYYY', this.companyId);

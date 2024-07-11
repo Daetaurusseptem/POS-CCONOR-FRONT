@@ -9,7 +9,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { SupplierService } from 'src/app/services/provider.service';
 import { RecipesService } from 'src/app/services/recipes.service';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -39,10 +39,22 @@ export class CreateProductComponent {
     private recipeService: RecipesService,
     private modal: ModalService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
-    this.companyId = this.authService.companyId
+    if(this.authService.usuario.role == 'sysadmin') {
+      this.activatedRoute.params.subscribe(params=>{
+        console.log(params);
+        this.companyId = params['id'];
+        console.log(this.companyId);
+      })
+    }else {
+      this.companyId = this.authService.companyId
+    }
+
+
+    
     this.productForm = this.fb.group({
       name: ['', Validators.required],
       description: [''],
@@ -74,7 +86,7 @@ export class CreateProductComponent {
   }
 
   loadRecipes() {
-    this.recipeService.getCompanyRecipes(this.authService.companyId)
+    this.recipeService.getCompanyRecipes(this.companyId)
       .pipe(map(item => item.recipes))
       .subscribe(recipes => {
         this.recipes = recipes!;

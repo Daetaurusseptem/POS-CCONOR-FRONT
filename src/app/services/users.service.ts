@@ -62,6 +62,10 @@ export class UsersService {
     return this.http.delete<itemResponse>(`${urlApiUsers}/${id}`, this.authService.headers);
   }
   
+  deleteuserByCompanyAdmin(id:string, companyId:string){
+    return this.http.delete<itemResponse>(`${urlApiUsers}/admin/${companyId}/${id}`, this.authService.headers);
+  }
+  
 
 
   updateUser(id:string, formData:FormData) {
