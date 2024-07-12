@@ -18,7 +18,6 @@ import Swal from 'sweetalert2';
   styleUrls: ['./company-details.component.css']
 })
 export class CompanyDetailsComponent implements OnInit {
-
   items!: Item[];
   company!: Company;
   admin!: User;
@@ -36,12 +35,12 @@ export class CompanyDetailsComponent implements OnInit {
   searchTerm: string = '';
   tabSelected: 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'inventario' = 'usuarios';
   tabsArray = [
-    { name: 'usuarios', icon: 'bi bi-people-fill'},
-    { name: 'productos', icon: 'bi bi-bag-fill'},
-    { name: 'inventario', icon: 'bi bi-box-fill'},
-    { name: 'categorias', icon: 'bi bi-bag-fill'},
-    { name: 'proveedores', icon: 'bi bi-file-earmark-person'},
-    { name: 'suscripciones', icon: 'bi bi-card-checklist'}
+    { name: 'usuarios', icon: 'bi bi-people-fill' },
+    { name: 'productos', icon: 'bi bi-bag-fill' },
+    { name: 'inventario', icon: 'bi bi-box-fill' },
+    { name: 'categorias', icon: 'bi bi-bag-fill' },
+    { name: 'proveedores', icon: 'bi bi-file-earmark-person' },
+    { name: 'suscripciones', icon: 'bi bi-card-checklist' }
   ];
 
   constructor(
@@ -54,16 +53,15 @@ export class CompanyDetailsComponent implements OnInit {
     private suppliersService: SupplierService,
     private categoryService: CategoryService,
     private modalService: ModalService,
-    private itemService: ItemService,
+    private itemService: ItemService
   ) {
     this.adminId = this.authService.idUsuario;
     this.getRole();
   }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {  
+    this.activatedRoute.params.subscribe(params => {
       this.id = params['id'];
-    
       this.getCompany(this.id);
       this.getUsers();
       this.getItemsCompany();
@@ -79,7 +77,7 @@ export class CompanyDetailsComponent implements OnInit {
       .pipe(map(item => item.company))
       .subscribe(company => {
         this.company = company!;
-        console.log('company: ',this.company);
+        console.log('company: ', this.company);
         this.getAdmin(company!.adminId!);
       });
   }
@@ -123,7 +121,7 @@ export class CompanyDetailsComponent implements OnInit {
     this.userService.getAllUsersOfCompany(this.id)
       .pipe(map(item => {
         console.log(item);
-        return item.users
+        return item.users;
       }))
       .subscribe(users => {
         this.users = users!;
@@ -157,7 +155,6 @@ export class CompanyDetailsComponent implements OnInit {
       });
   }
 
-  //Pendiente
   getItemsCompany() {
     this.itemService.getCompanyItemsSysadmin(this.id)
       .pipe(map(item => item.items))
@@ -169,40 +166,37 @@ export class CompanyDetailsComponent implements OnInit {
   abrirModal(element: Company | User, tipo: 'empresas' | 'usuarios' | 'productos') {
     const { _id } = element;
     this.modalService.abrirModal(element.img, tipo, _id!);
-
   }
 
-
-  deleteItem(idItem:string){
-
+  deleteItem(idItem: string) {
     Swal.fire({
-      title:'estas seguro?',
-      text:'Esto eliminara definitivamente el stock seleccionado',
-      showCancelButton:true
+      title: '¿Estás seguro?',
+      text: 'Esto eliminará definitivamente el stock seleccionado',
+      showCancelButton: true
     })
-    .then(res=>{
-      if(res.isConfirmed ==true){
+    .then(res => {
+      if (res.isConfirmed) {
         this.itemService.deleteItem(idItem)
-        .subscribe(r=>{
-          Swal.fire({
-
-            title:'Eliminado',
-            text:'Registro eliminado'
-          })
-          .then(r=>{
-            if(r.isConfirmed){
-              this.router.navigateByUrl('/dashboard/admin')
-            }
-          })
-        })
+          .subscribe(() => {
+            Swal.fire({
+              title: 'Eliminado',
+              text: 'Registro eliminado'
+            })
+            .then(r => {
+              if (r.isConfirmed) {
+                this.router.navigateByUrl('/dashboard/admin');
+              }
+            });
+          });
       }
-    })
-
+    });
   }
+
   pageChanged(event: any): void {
     this.currentPage = event;
     this.loadItems();
   }
+
   loadItems(): void {
     console.log(this.searchTerm);
     this.itemService.getItems(this.currentPage, this.itemsPerPage, this.searchTerm).subscribe({
@@ -217,4 +211,7 @@ export class CompanyDetailsComponent implements OnInit {
     });
   }
 
+  editItem() {
+    
+  }
 }

@@ -4,6 +4,7 @@ import { SupplierService } from 'src/app/services/provider.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { map } from "rxjs/operators";
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -49,5 +50,35 @@ crearSupplier() {
       .subscribe(suppliers => {
         this.suppliers = suppliers!;
       });
+  }
+
+  deleteSupplier(id: string) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminarlo',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.suppliersService.deleteSupplier(id).subscribe(() => {
+          this.suppliers = this.suppliers.filter(supplier => supplier._id !== id);
+          Swal.fire(
+            '¡Eliminado!',
+            'El proveedor ha sido eliminado.',
+            'success'
+          );
+        }, error => {
+          Swal.fire(
+            'Error',
+            'Hubo un problema al eliminar el proveedor.',
+            'error'
+          );
+        });
+      }
+    });
   }
 }

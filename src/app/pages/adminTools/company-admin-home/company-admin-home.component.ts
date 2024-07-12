@@ -35,7 +35,7 @@ export class CompanyAdminHomeComponent {
     { name: 'inventario', icon: 'bi bi-box-fill' },
     { name: 'categorias', icon: 'bi bi-bag-fill' },
     { name: 'proveedores', icon: 'bi bi-file-earmark-person' },
-    { name: 'suscripcion', icon: 'bi bi-card-checklist' }
+    //{ name: 'suscripcion', icon: 'bi bi-card-checklist' }
   ];
 
   company!: Company;
