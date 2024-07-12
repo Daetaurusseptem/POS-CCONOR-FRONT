@@ -1,0 +1,51 @@
+<div class="container mt-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="card-title text-center mb-4">Detalle de Venta</h2>
+  
+        <div *ngIf="sale">
+          <div class="mb-3">
+            <strong>Usuario:</strong> {{ usuario.name }}
+          </div>
+          <div class="mb-3">
+            <strong>Fecha:</strong> {{ sale.date | date }}
+          </div>
+          <div class="mb-3">
+            <strong>Total:</strong> {{ sale.total | currency }}
+          </div>
+          <div class="mb-3" *ngIf="sale.paymentMethod === 'cash'">
+            <strong>Pago con:</strong> {{ sale.receivedAmount | currency }}
+          </div>
+          <div class="mb-3" *ngIf="sale.paymentMethod === 'cash'">
+            <strong>Cambio:</strong> {{ sale.change | currency }}
+          </div>
+          <div class="mb-3" *ngIf="sale.paymentMethod === 'credit'">
+            <strong>Referencia de Pago:</strong> {{ sale.paymentReference }}
+          </div>
+  
+          <h4 class="text-secondary mb-3">Productos vendidos:</h4>
+          <ul class="list-group list-group-flush mb-4">
+            <li class="list-group-item" *ngFor="let product of products">
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <strong>{{ product.product.name }}</strong>
+                </div>
+                <div class="col-md-3 text-md-end">
+                  Cantidad: {{ product.quantity }}
+                </div>
+                <div class="col-md-3 text-md-end">
+                  Precio: {{ product.unitPrice * product.quantity | currency }}
+                </div>
+              </div>
+            </li>
+          </ul>
+  
+          <div class="d-flex justify-content-between">
+            <app-back-button></app-back-button>
+            <button class="btn btn-primary" (click)="generarPDF()">Imprimir Ticket</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

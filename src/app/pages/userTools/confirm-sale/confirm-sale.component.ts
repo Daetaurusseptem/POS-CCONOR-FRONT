@@ -100,22 +100,18 @@ export class ConfirmSaleComponent implements OnInit {
     let currentY = 10;
 
     doc.setFontSize(10);
-    
-    doc.text(this.authService.companyId, marginX, currentY);
     doc.text('Ticket de Venta', marginX, currentY);
     currentY += 4;
 
     doc.setFontSize(8);
-    doc.text(`Cajero: ${this.usuario}`, marginX, currentY);
+    doc.text(`Usuario: ${this.usuario}`, marginX, currentY);
     currentY += 4;
     doc.text(`Fecha: ${new Date().toLocaleDateString()}`, marginX, currentY);
     currentY += 4;
     doc.text(`Total: $${this.totalAmount.toFixed(2)}`, marginX, currentY);
     currentY += 4;
-    doc.text(`Pago con: ${this.confirmSaleForm.get('receivedAmount')!.value ||'tarjeta'}`, marginX, currentY);
+    doc.text(`Pago con: $${this.confirmSaleForm.get('receivedAmount')!.value.toFixed(2)}`, marginX, currentY);
     currentY += 6;
-    if(this.confirmSaleForm.get('receivedAmount')!.value != null)
-
     doc.text(`Cambio: $${this.change.toFixed(2)}`, marginX, currentY);
     currentY += 6;
 
@@ -126,10 +122,10 @@ export class ConfirmSaleComponent implements OnInit {
         product.quantity,
         product.subtotal
       ]),
-      startY: currentY+1,
+      startY: currentY,
       margin: { left: marginX, right: marginX },
       styles: { fontSize: 7, cellPadding: 1, overflow: 'linebreak' },
-      columnStyles: { 0: { cellWidth: 20 }, 1: { cellWidth: 15 }, 2: { cellWidth: 15 } },
+      columnStyles: { 0: { cellWidth: 28 }, 1: { cellWidth: 15 }, 2: { cellWidth: 15 } },
       theme: 'plain'
     });
 

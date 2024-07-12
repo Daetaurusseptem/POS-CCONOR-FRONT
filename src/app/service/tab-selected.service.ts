@@ -11,6 +11,7 @@ export class TabSelectedService {
 
   updateTabSelected(tab:'usuarios' | 'productos' | 'items' | 'suscripciones' | 'proveedores' | 'categorias' | 'inventario'){  
     localStorage.removeItem('tabSelected');
+    console.log(tab);
     localStorage.setItem('tabSelected',tab);
 
   }

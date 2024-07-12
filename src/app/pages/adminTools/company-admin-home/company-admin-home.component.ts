@@ -29,7 +29,8 @@ export class CompanyAdminHomeComponent {
 
   
 
-  tabSelected: 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'inventario' = localStorage.getItem('tabSelected') as 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'inventario';  tabsArray = [
+  tabSelected: 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'inventario' = localStorage.getItem('tabSelected') as 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'inventario';  
+  tabsArray = [
     { name: 'usuarios', icon: 'bi bi-people-fill' },
     { name: 'productos', icon: 'bi bi-bag-fill' },
     { name: 'inventario', icon: 'bi bi-box-fill' },

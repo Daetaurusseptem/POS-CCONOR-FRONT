@@ -11,6 +11,7 @@ import { CategoryService } from 'src/app/services/category.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { ItemService } from 'src/app/services/item.service';
 import Swal from 'sweetalert2';
+import { TabSelectedService } from 'src/app/service/tab-selected.service';
 
 @Component({
   selector: 'app-company-details',
@@ -32,9 +33,11 @@ export class CompanyDetailsComponent implements OnInit {
   adminId: string = '';
   userRole!: 'admin' | 'sysadmin' | 'user';
 
+  
+
   itemsPerPage: number = 10;
   searchTerm: string = '';
-  tabSelected: 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'inventario' = 'usuarios';
+  tabSelected: 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'inventario' = localStorage.getItem('tabSelected') as 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'inventario';  
   tabsArray = [
     { name: 'usuarios', icon: 'bi bi-people-fill'},
     { name: 'productos', icon: 'bi bi-bag-fill'},
@@ -55,12 +58,16 @@ export class CompanyDetailsComponent implements OnInit {
     private categoryService: CategoryService,
     private modalService: ModalService,
     private itemService: ItemService,
+    private tabSelectedService: TabSelectedService,
   ) {
     this.adminId = this.authService.idUsuario;
     this.getRole();
   }
 
   ngOnInit(): void {
+    if(localStorage.getItem('tabSelected')==null){
+      this.tabSelected = 'usuarios';
+    }
     this.activatedRoute.params.subscribe(params => {  
       this.id = params['id'];
     
@@ -94,21 +101,26 @@ export class CompanyDetailsComponent implements OnInit {
   }
 
   changeTab(tab: 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'inventario') {
+console.log(tab);
     switch (tab) {
       case 'usuarios':
+        this.tabSelectedService.updateTabSelected(tab);
         this.getUsers();
         break;
-      case 'productos':
+        case 'productos':
+        this.tabSelectedService.updateTabSelected(tab);
         this.getProducts(this.id);
         break;
-      case 'inventario':
-        console.log('Inventario');
+        case 'inventario':
+        this.tabSelectedService.updateTabSelected(tab);
         this.getItemsCompany();
         break;
-      case 'proveedores':
+        case 'proveedores':
+        this.tabSelectedService.updateTabSelected(tab);
         this.getSuppliers(this.id);
         break;
-      case 'categorias':
+        case 'categorias':
+        this.tabSelectedService.updateTabSelected(tab);
         this.getCategories(this.id);
         break;
       default:

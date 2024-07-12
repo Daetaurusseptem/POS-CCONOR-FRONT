@@ -17,6 +17,7 @@
                   <th scope="col">Fecha</th>
                   <th scope="col">Total</th>
                   <th scope="col">Método de Pago</th>
+                  <th scope="col">opciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -24,6 +25,7 @@
                   <td>{{ sale.date | date:'short' }}</td>
                   <td>{{ sale.total | currency }}</td>
                   <td>{{ sale.paymentMethod | titlecase }}</td>
+                  <td><button class="btn btn-success" (click)="getReceipt(sale._id)">ver más...</button></td>
                 </tr>
               </tbody>
             </table>

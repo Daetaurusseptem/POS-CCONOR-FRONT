@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <tabs-menu [items]="tabsArray" (tabSelectedOutput)="changeTab($event)"></tabs-menu>
+  <tabs-menu [default]="tabSelected" [items]="tabsArray" (tabSelectedOutput)="changeTab($event)"></tabs-menu>
 
   <!-- USUARIOS -->
   <div *ngIf="tabSelected == 'usuarios'" class="row">

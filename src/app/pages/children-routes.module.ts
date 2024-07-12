@@ -53,6 +53,7 @@ import { IngredientListComponent } from './adminTools/ingredients/ingredient-lis
 import { CreateIngredientComponent } from './adminTools/ingredients/create-ingredient/create-ingredient.component';
 import { EditIngredientComponent } from './adminTools/ingredients/edit-ingredient/edit-ingredient.component';
 import { StatisticsComponent } from './adminTools/statistics/statistics.component';
+import { SaleDetailComponent } from './userTools/sale-detail/sale-detail.component';
 
 const routes: Routes = [
   {
@@ -142,6 +143,7 @@ const routes: Routes = [
       { path: 'user', canActivate: [userGuard], component: UserHomeComponent },
       { path: 'user/new-sale', component: NewsaleComponent, canActivate: [AuthGuardGuard, userGuard] },
       { path: 'user/daily-sales', component: DailySalesComponent, canActivate: [AuthGuardGuard, userGuard] },
+      { path: 'user/sale-details/:saleId', component: SaleDetailComponent, canActivate: [AuthGuardGuard, userGuard] },
       { path: 'user/items-available', component: ItemsAvailableComponent, canActivate: [AuthGuardGuard, userGuard] },
 
 

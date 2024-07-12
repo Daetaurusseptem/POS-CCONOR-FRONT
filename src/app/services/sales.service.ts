@@ -19,4 +19,8 @@ export class SalesService {
     console.log(saleData);
     return this.http.post<itemResponse>(this.baseUrl, saleData, this.authService.headers);
   }
+
+  getSaleById(saleId: string) {
+    return this.http.get<itemResponse>(`${this.baseUrl}/${saleId}`, this.authService.headers);
+  }
 }

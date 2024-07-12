@@ -113,23 +113,26 @@ export interface Item {
 }
 
 export interface ProductSold {
-  itemId: string;
+  product: string|Item;
   quantity: number;
   unitPrice: number;
   subtotal: number;
 }
 
 export interface Sale {
-  companyId: number;
-  _id?: string; // Assuming there is an ID field, usually provided by the database
+  companyId: string;
+  _id?: string;
+  product?: Product;
   user: string | User;
   date: Date;
   total: number;
   discount: number;
   iva?: number;
-  productsSold: ProductSold[]; // Actualizado a ProductSold[]
-  paymentReference: string;
+  productsSold: ProductSold[];
+  paymentReference?: string; // Ahora es opcional
   paymentMethod: 'cash' | 'credit';
+  receivedAmount?: number; // Agregado campo opcional
+  change?: number; // Agregado campo opcional
 }
 
 // Recetas

@@ -117,7 +117,7 @@ export class NewsaleComponent {
       total: this.total,
       discount: 0,
       productsSold: this.cart.map(item => ({
-        productId: item.item.product._id,
+        product: item.item.product._id,
         name: item.item.product.name,
         quantity: item.quantity,
         unitPrice: item.item.price,

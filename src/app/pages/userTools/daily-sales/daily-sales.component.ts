@@ -3,6 +3,7 @@ import { CashRegisterService } from 'src/app/services/cash-register.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
+import { Router } from '@angular/router';
 
 interface Sale {
   date: Date;
@@ -16,13 +17,18 @@ interface Sale {
   styleUrls: ['./daily-sales.component.css']
 })
 export class DailySalesComponent implements OnInit {
+getReceipt(id:string){
+  this.router.navigateByUrl(`/dashboard/user/sale-details/${id}`)
+}
 
   openCashRegisterWithSales: any;
   usuario = '';
 
   constructor(
     private cashRegisterService: CashRegisterService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.loadOpenCashRegisterWithSales();

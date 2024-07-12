@@ -13,6 +13,7 @@ import { DailySalesComponent } from './daily-sales/daily-sales.component';
 import { ItemsAvailableComponent } from './items-available/items-available.component';
 import { AdminToolsModule } from '../adminTools/admin-tools.module';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { SaleDetailComponent } from './sale-detail/sale-detail.component';
 
 
 
@@ -27,6 +28,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CloseCashRegisterComponent,
     DailySalesComponent,
     ItemsAvailableComponent,
+    SaleDetailComponent,
   ],
   exports: [
     NewsaleComponent,
