@@ -19,7 +19,6 @@ import { TabSelectedService } from 'src/app/service/tab-selected.service';
   styleUrls: ['./company-details.component.css']
 })
 export class CompanyDetailsComponent implements OnInit {
-
   items!: Item[];
   company!: Company;
   admin!: User;
@@ -39,12 +38,12 @@ export class CompanyDetailsComponent implements OnInit {
   searchTerm: string = '';
   tabSelected: 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'inventario' = localStorage.getItem('tabSelected') as 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'inventario';  
   tabsArray = [
-    { name: 'usuarios', icon: 'bi bi-people-fill'},
-    { name: 'productos', icon: 'bi bi-bag-fill'},
-    { name: 'inventario', icon: 'bi bi-box-fill'},
-    { name: 'categorias', icon: 'bi bi-bag-fill'},
-    { name: 'proveedores', icon: 'bi bi-file-earmark-person'},
-    { name: 'suscripciones', icon: 'bi bi-card-checklist'}
+    { name: 'usuarios', icon: 'bi bi-people-fill' },
+    { name: 'productos', icon: 'bi bi-bag-fill' },
+    { name: 'inventario', icon: 'bi bi-box-fill' },
+    { name: 'categorias', icon: 'bi bi-bag-fill' },
+    { name: 'proveedores', icon: 'bi bi-file-earmark-person' },
+    { name: 'suscripciones', icon: 'bi bi-card-checklist' }
   ];
 
   constructor(
@@ -57,20 +56,27 @@ export class CompanyDetailsComponent implements OnInit {
     private suppliersService: SupplierService,
     private categoryService: CategoryService,
     private modalService: ModalService,
+<<<<<<< HEAD
     private itemService: ItemService,
     private tabSelectedService: TabSelectedService,
+=======
+    private itemService: ItemService
+>>>>>>> origin
   ) {
     this.adminId = this.authService.idUsuario;
     this.getRole();
   }
 
   ngOnInit(): void {
+<<<<<<< HEAD
     if(localStorage.getItem('tabSelected')==null){
       this.tabSelected = 'usuarios';
     }
     this.activatedRoute.params.subscribe(params => {  
+=======
+    this.activatedRoute.params.subscribe(params => {
+>>>>>>> origin
       this.id = params['id'];
-    
       this.getCompany(this.id);
       this.getUsers();
       this.getItemsCompany();
@@ -86,7 +92,7 @@ export class CompanyDetailsComponent implements OnInit {
       .pipe(map(item => item.company))
       .subscribe(company => {
         this.company = company!;
-        console.log('company: ',this.company);
+        console.log('company: ', this.company);
         this.getAdmin(company!.adminId!);
       });
   }
@@ -135,7 +141,7 @@ console.log(tab);
     this.userService.getAllUsersOfCompany(this.id)
       .pipe(map(item => {
         console.log(item);
-        return item.users
+        return item.users;
       }))
       .subscribe(users => {
         this.users = users!;
@@ -169,7 +175,6 @@ console.log(tab);
       });
   }
 
-  //Pendiente
   getItemsCompany() {
     this.itemService.getCompanyItemsSysadmin(this.id)
       .pipe(map(item => item.items))
@@ -181,40 +186,37 @@ console.log(tab);
   abrirModal(element: Company | User, tipo: 'empresas' | 'usuarios' | 'productos') {
     const { _id } = element;
     this.modalService.abrirModal(element.img, tipo, _id!);
-
   }
 
-
-  deleteItem(idItem:string){
-
+  deleteItem(idItem: string) {
     Swal.fire({
-      title:'estas seguro?',
-      text:'Esto eliminara definitivamente el stock seleccionado',
-      showCancelButton:true
+      title: '¿Estás seguro?',
+      text: 'Esto eliminará definitivamente el stock seleccionado',
+      showCancelButton: true
     })
-    .then(res=>{
-      if(res.isConfirmed ==true){
+    .then(res => {
+      if (res.isConfirmed) {
         this.itemService.deleteItem(idItem)
-        .subscribe(r=>{
-          Swal.fire({
-
-            title:'Eliminado',
-            text:'Registro eliminado'
-          })
-          .then(r=>{
-            if(r.isConfirmed){
-              this.router.navigateByUrl('/dashboard/admin')
-            }
-          })
-        })
+          .subscribe(() => {
+            Swal.fire({
+              title: 'Eliminado',
+              text: 'Registro eliminado'
+            })
+            .then(r => {
+              if (r.isConfirmed) {
+                this.router.navigateByUrl('/dashboard/admin');
+              }
+            });
+          });
       }
-    })
-
+    });
   }
+
   pageChanged(event: any): void {
     this.currentPage = event;
     this.loadItems();
   }
+
   loadItems(): void {
     console.log(this.searchTerm);
     this.itemService.getItems(this.currentPage, this.itemsPerPage, this.searchTerm).subscribe({
@@ -229,4 +231,7 @@ console.log(tab);
     });
   }
 
+  editItem() {
+    
+  }
 }

@@ -4,7 +4,7 @@
   align-items: center;
   min-height: 100vh;
   background-color: #f5f5f5;
-  background-image: url('../../../assets/img/logo.png');
+  background-image: url('../../../assets/img/light.jpeg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -14,7 +14,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 80vh;
+  max-height: 80vh;
   background-color: #f5f5f5;
 }
 
