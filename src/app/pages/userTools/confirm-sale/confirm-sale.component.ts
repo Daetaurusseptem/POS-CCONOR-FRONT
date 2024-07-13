@@ -110,7 +110,7 @@ export class ConfirmSaleComponent implements OnInit {
     currentY += 4;
     doc.text(`Total: $${this.totalAmount.toFixed(2)}`, marginX, currentY);
     currentY += 4;
-    doc.text(`Pago con: $${this.confirmSaleForm.get('receivedAmount')!.value.toFixed(2)}`, marginX, currentY);
+    doc.text(`Pago con: $${this.confirmSaleForm.get('receivedAmount')!.value  }`, marginX, currentY);
     currentY += 6;
     doc.text(`Cambio: $${this.change.toFixed(2)}`, marginX, currentY);
     currentY += 6;

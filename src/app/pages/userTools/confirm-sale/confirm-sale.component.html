@@ -58,8 +58,9 @@
           </div>
         </div>
         
-        <div class="text-center">
-          <button [disabled]="!confirmSaleForm.valid" type="submit" class="btn btn-primary btn-lg">Confirmar Venta</button>
+        <div class="d-flex justify-content-between">
+          <app-back-button></app-back-button>
+          <button [disabled]="!confirmSaleForm.valid" type="submit" class="btn btn-primary">Confirmar Venta</button>
         </div>
       </form>
       

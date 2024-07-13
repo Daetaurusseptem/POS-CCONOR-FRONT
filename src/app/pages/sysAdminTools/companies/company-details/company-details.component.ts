@@ -56,26 +56,18 @@ export class CompanyDetailsComponent implements OnInit {
     private suppliersService: SupplierService,
     private categoryService: CategoryService,
     private modalService: ModalService,
-<<<<<<< HEAD
     private itemService: ItemService,
     private tabSelectedService: TabSelectedService,
-=======
-    private itemService: ItemService
->>>>>>> origin
   ) {
     this.adminId = this.authService.idUsuario;
     this.getRole();
   }
 
   ngOnInit(): void {
-<<<<<<< HEAD
     if(localStorage.getItem('tabSelected')==null){
       this.tabSelected = 'usuarios';
     }
     this.activatedRoute.params.subscribe(params => {  
-=======
-    this.activatedRoute.params.subscribe(params => {
->>>>>>> origin
       this.id = params['id'];
       this.getCompany(this.id);
       this.getUsers();
