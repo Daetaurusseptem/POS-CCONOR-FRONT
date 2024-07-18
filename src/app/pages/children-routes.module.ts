@@ -54,6 +54,7 @@ import { CreateIngredientComponent } from './adminTools/ingredients/create-ingre
 import { EditIngredientComponent } from './adminTools/ingredients/edit-ingredient/edit-ingredient.component';
 import { StatisticsComponent } from './adminTools/statistics/statistics.component';
 import { SaleDetailComponent } from './userTools/sale-detail/sale-detail.component';
+import { ManagePrintersComponent } from './adminTools/manage-printers/manage-printers.component';
 
 const routes: Routes = [
   {
@@ -128,6 +129,7 @@ const routes: Routes = [
       { path: 'admin/ingredients/edit/:id', component: EditIngredientComponent},
       //estadisticas
       { path: 'admin/statistics', component: StatisticsComponent },
+      { path: 'admin/manage-printers', component:ManagePrintersComponent },
 
       //USER
       { path: 'user', canActivate:[userGuard], component:  UserHomeComponent},

@@ -27,6 +27,7 @@ import { CreateIngredientComponent } from './ingredients/create-ingredient/creat
 import { EditIngredientComponent } from './ingredients/edit-ingredient/edit-ingredient.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { NgChartsModule } from 'ng2-charts';
+import { ManagePrintersComponent } from './manage-printers/manage-printers.component';
 
 
 
@@ -56,7 +57,8 @@ import { NgChartsModule } from 'ng2-charts';
     CreateIngredientComponent,
     EditIngredientComponent,
     UpdateItemComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    ManagePrintersComponent
   ],
   exports:[
     ItemStockListComponent,
