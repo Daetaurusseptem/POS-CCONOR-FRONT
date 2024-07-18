@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 import { Item } from 'src/app/interfaces/models.interface';
 import { ItemService } from 'src/app/services/item.service';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-update-item',
@@ -14,39 +13,42 @@ import * as moment from 'moment';
   styleUrls: ['./update-item.component.css']
 })
 export class UpdateItemComponent implements OnInit {
+
   idItem!: string;
   item!: Item;
-  ItemForm: FormGroup = this.fb.group({
-    name: ['', Validators.required],
-    stock: ['', Validators.required],
-    price: ['', Validators.required],
-    expirationDate: ['', Validators.required],
-    discount: ['', Validators.required],
-    receivedDate: ['', Validators.required],
-  });
+  ItemForm: FormGroup;
 
   constructor(
     private itemService: ItemService,
     private fb: FormBuilder,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
-  ) { }
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.ItemForm = this.fb.group({
+      name: ['', Validators.required],
+      stock: ['', Validators.required],
+      price: ['', Validators.required],
+      expirationDate: ['', Validators.required],
+      discount: ['', Validators.required],
+      receivedDate: ['', Validators.required],
+    });
+  }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       this.idItem = params['id'];
-      this.loadItems();
+      this.loadItem();
     });
   }
 
-  loadItems() {
+  loadItem() {
     this.itemService.getItemById(this.idItem)
       .pipe(map(response => response.item))
       .subscribe(item => {
         this.item = item!;
         const exp = this.formatDate(item!.expirationDate!);
         const rec = this.formatDate(item!.receivedDate!);
-        this.ItemForm.setValue({
+        this.ItemForm.patchValue({
           name: item!.name,
           stock: item!.stock,
           price: item!.price,
@@ -65,9 +67,13 @@ export class UpdateItemComponent implements OnInit {
     if (this.ItemForm.valid) {
       Swal.fire({
         title: '¿Estás seguro?',
+        text: '¿Quieres actualizar este ítem?',
         icon: 'question',
         showCancelButton: true,
-        cancelButtonColor: '#F176B7'
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, actualizar',
+        cancelButtonText: 'Cancelar'
       }).then(response => {
         if (response.isConfirmed) {
           const updatedItem = {
@@ -76,11 +82,19 @@ export class UpdateItemComponent implements OnInit {
             receivedDate: moment(this.ItemForm.value.receivedDate).toISOString(),
           };
           this.itemService.updateItem(this.item._id!, updatedItem).subscribe(
-            r => this.router.navigateByUrl('/dashboard/admin/items'),
-            error => console.error('Error en el servicio', error)
+            () => {
+              Swal.fire('¡Actualizado!', 'El ítem ha sido actualizado correctamente', 'success');
+              this.router.navigateByUrl('/dashboard/admin/items');
+            },
+            error => {
+              console.error('Error en el servicio de actualización', error);
+              Swal.fire('Error', 'Hubo un problema al actualizar el ítem', 'error');
+            }
           );
         }
-      }).catch(err => console.error('Error en el diálogo de confirmación', err));
+      }).catch(error => {
+        console.error('Error en el diálogo de confirmación', error);
+      });
     } else {
       console.log('Formulario no válido');
     }

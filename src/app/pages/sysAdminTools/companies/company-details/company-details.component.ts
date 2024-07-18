@@ -64,7 +64,10 @@ export class CompanyDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
+    if(localStorage.getItem('tabSelected')==null){
+      this.tabSelected = 'usuarios';
+    }
+    this.activatedRoute.params.subscribe(params => {  
       this.id = params['id'];
       this.getCompany(this.id);
       this.getUsers();

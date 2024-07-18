@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipesService } from 'src/app/services/recipes.service';
 import { Recipe } from 'src/app/interfaces/models.interface';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-recipe',
@@ -50,22 +51,41 @@ export class EditRecipeComponent implements OnInit {
 
   onSubmit(): void {
     if (this.recipeForm.valid) {
-        const updatedRecipe: Recipe = {
+      Swal.fire({
+        title: '¿Estás seguro de querer actualizar la receta?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Actualizar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const updatedRecipe: Recipe = {
             ...this.recipeForm.value,
             _id: this.recipeId
-        };
+          };
 
-        this.recipeService.updateRecipe(this.recipeId, updatedRecipe).subscribe(
+          this.recipeService.updateRecipe(this.recipeId, updatedRecipe).subscribe(
             (response) => {
-                console.log('Receta actualizada:', response);
-                this.router.navigate(['/dashboard/admin/recipes']);
+              console.log('Receta actualizada', response);
+              Swal.fire({
+                title: 'Receta actualizada',
+                text: 'La receta se ha actualizado correctamente.',
+                icon: 'success'
+              });
+              this.router.navigate(['/dashboard/admin/recipes']);
             },
             (error) => {
-                console.error('Error al actualizar la receta:', error);
-                // Aquí podrías mostrar un mensaje de error al usuario
+              console.error('Error al actualizar la receta:', error);
+              Swal.fire({
+                title: 'Error',
+                text: 'No se pudo actualizar la receta.',
+                icon: 'error'
+              });
             }
-        );
+          );
+        }
+      });
     }
-}
-
+  }
 }

@@ -4,6 +4,7 @@ import { RecipesService } from 'src/app/services/recipes.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { map } from 'rxjs';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-recipe-list',
@@ -25,7 +26,12 @@ export class RecipeListComponent implements OnInit {
         this.recipes = data;
       },
       error => {
-        console.error('Error fetching recipes', error);
+        console.error('Error al obtener las recetas', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error al obtener las recetas'
+        });
       }
     );
   }
@@ -39,11 +45,36 @@ export class RecipeListComponent implements OnInit {
   }
 
   deleteRecipe(id: string): void {
-    if (confirm('¿Estás seguro de que quieres eliminar esta receta?')) {
-      this.recipeService.deleteRecipe(id).subscribe(r=>{
-        console.log(r);
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, bórrala!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.recipeService.deleteRecipe(id).subscribe(
+          r => {
+            console.log('Receta eliminada', r);
+            Swal.fire(
+              '¡Eliminada!',
+              'La receta ha sido eliminada.',
+              'success'
+            );
+            this.loadRecipes();
+          },
+          error => {
+            console.error('Error al eliminar la receta', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Error al eliminar la receta'
+            });
+          }
+        );
       }
-      );
-    }
+    });
   }
 }
