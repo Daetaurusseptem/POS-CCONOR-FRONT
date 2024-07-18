@@ -41,11 +41,31 @@ export class CategoriesListComponent implements OnInit {
   }
 
   crearCategory() {
-    if (this.authService.role === 'admin') {
-      this.router.navigate(['/dashboard/admin/categories/new/', this.companyId]);
-    } else if (this.authService.role === 'sysadmin') {
-      this.router.navigate(['/dashboard/sysadmin/categories/new/', this.companyId]);
-    }
+    Swal.fire({
+      title: 'Crear nueva categoría',
+      text: "¿Deseas crear una nueva categoría?",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, crear',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const role = this.authService.role;
+        const navigateTo = role === 'admin' 
+          ? `/dashboard/admin/categories/new/${this.companyId}` 
+          : `/dashboard/sysadmin/categories/new/${this.companyId}`;
+
+        this.router.navigate([navigateTo]).catch((error) => {
+          Swal.fire(
+            'Error',
+            'Hubo un problema al redirigir a la creación de la categoría.',
+            'error'
+          );
+        });
+      }
+    });
   }
 
   eliminarCategory(id: string) {

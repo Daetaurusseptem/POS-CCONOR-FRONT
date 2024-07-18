@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
-import { Category, User } from 'src/app/interfaces/models.interface';
+import { Category } from 'src/app/interfaces/models.interface';
 import { CategoryService } from 'src/app/services/category.service';
-import { UsersService } from 'src/app/services/users.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,9 +14,9 @@ import Swal from 'sweetalert2';
 export class EditCategoryComponent {
 
   category!: Category;
+
   constructor(
     private categoryService: CategoryService,
-    private userService: UsersService,
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -26,14 +25,12 @@ export class EditCategoryComponent {
   categoryForm: FormGroup = this.fb.group({
     name: ['', Validators.required], // Inicializa con un string vacío o datos existentes
     description: ['', Validators.required],
-  }
-  );
+  });
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      this.loadCategory(params['id'])
-
-    })
+      this.loadCategory(params['id']);
+    });
   }
 
   loadCategory(idCategory: string) {
@@ -42,22 +39,17 @@ export class EditCategoryComponent {
       .subscribe(category => {
         console.log(category!.name);
         this.category = category!;
-        console.log("Categoria obtenida: ", this.category);
+        console.log("Categoría obtenida: ", this.category);
         this.categoryForm.setValue({
           name: category!.name,
           description: category!.description,
-        })
+        });
         console.log(this.categoryForm.value);
-      })
+      });
   }
 
-
   campoNoValidoDatosUsuario(campo: string): boolean {
-    if (this.categoryForm.get(campo)?.invalid) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.categoryForm.get(campo)?.invalid || false;
   }
 
   actualizarCategory() {
@@ -67,32 +59,49 @@ export class EditCategoryComponent {
 
       Swal.fire({
         title: '¿Estás seguro?',
+        text: '¿Deseas actualizar la categoría?',
         icon: 'question',
         showCancelButton: true,
-        cancelButtonColor: '#F176B7'
-      })
-        .then(resp => {
-          if (resp.isConfirmed) {
-            console.log('Confirmación recibida, actualizando categoría...');
-            this.categoryService.updateCategory(this.category._id!, this.categoryForm.value)
-              .subscribe(
-                r => {
-                  console.log('Respuesta del servicio:', r);
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, actualizar',
+        cancelButtonText: 'Cancelar'
+      }).then(resp => {
+        if (resp.isConfirmed) {
+          console.log('Confirmación recibida, actualizando categoría...');
+          this.categoryService.updateCategory(this.category._id!, this.categoryForm.value)
+            .subscribe(
+              r => {
+                console.log('Respuesta del servicio:', r);
+                Swal.fire({
+                  text: 'Categoría actualizada correctamente',
+                  icon: 'success'
+                }).then(() => {
                   this.router.navigateByUrl('/dashboard/admin/categories');
-                },
-                error => {
-                  console.error('Error al actualizar la categoría:', error);
-                }
-              );
-          } else {
-            console.log('Actualización cancelada por el usuario');
-          }
-        })
-        .catch(error => {
-          console.error('Error en el diálogo de confirmación:', error);
-        });
+                });
+              },
+              error => {
+                console.error('Error al actualizar la categoría:', error);
+                Swal.fire({
+                  title: 'Error',
+                  text: 'No se pudo actualizar la categoría',
+                  icon: 'error'
+                });
+              }
+            );
+        } else {
+          console.log('Actualización cancelada por el usuario');
+        }
+      }).catch(error => {
+        console.error('Error en el diálogo de confirmación:', error);
+      });
     } else {
       console.log('Formulario no válido');
+      Swal.fire({
+        title: 'Formulario no válido',
+        text: 'Por favor, completa todos los campos requeridos.',
+        icon: 'warning'
+      });
     }
   }
 }

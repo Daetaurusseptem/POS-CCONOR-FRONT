@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { map } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { Category, Product, Recipe, Supplier } from 'src/app/interfaces/models.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { CategoryService } from 'src/app/services/category.service';
@@ -9,26 +10,21 @@ import { ProductService } from 'src/app/services/product.service';
 import { SupplierService } from 'src/app/services/provider.service';
 import { RecipesService } from 'src/app/services/recipes.service';
 import Swal from 'sweetalert2';
-import { ActivatedRoute, Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
   styleUrls: ['./create-product.component.css']
 })
-export class CreateProductComponent {
+export class CreateProductComponent implements OnInit {
 
-  
   suppliers!: Supplier[];
   Categories!: Category[];
   recipes!: Recipe[];
   companyId = '';
   isComposite = false;
-  public imagenSubir!: File;
 
   productForm!: FormGroup;
-  public imgTemp: any = null;
 
   constructor(
     private fb: FormBuilder,
@@ -39,22 +35,18 @@ export class CreateProductComponent {
     private recipeService: RecipesService,
     private modal: ModalService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    if(this.authService.usuario.role == 'sysadmin') {
-      this.activatedRoute.params.subscribe(params=>{
-        console.log(params);
+    if (this.authService.usuario.role === 'sysadmin') {
+      this.activatedRoute.params.subscribe(params => {
         this.companyId = params['id'];
-        console.log(this.companyId);
-      })
-    }else {
-      this.companyId = this.authService.companyId
+      });
+    } else {
+      this.companyId = this.authService.companyId;
     }
 
-
-    
     this.productForm = this.fb.group({
       name: ['', Validators.required],
       description: [''],
@@ -64,6 +56,7 @@ export class CreateProductComponent {
       isComposite: [false, Validators.required],
       recipe: ['']
     });
+
     this.loadCategories();
     this.loadSuppliers();
     this.loadRecipes();
@@ -94,7 +87,7 @@ export class CreateProductComponent {
   }
 
   onIsCompositeChange(event: Event): void {
-    const value = (event.target as HTMLSelectElement).value === 'true';
+    const value = (event.target as HTMLInputElement).checked;
     this.isComposite = value;
     if (!value) {
       this.productForm.get('recipe')!.setValue('');
@@ -108,15 +101,15 @@ export class CreateProductComponent {
         text: '¿Estás seguro de crear este producto?',
         icon: 'question',
         showCancelButton: true,
-        confirmButtonText: 'Si',
+        confirmButtonText: 'Sí',
         cancelButtonText: 'No'
       }).then(res => {
         if (res.isConfirmed) {
-          const formValue = {...this.productForm.value};
+          const formValue = { ...this.productForm.value };
           if (!this.isComposite || !formValue.recipe) {
             delete formValue.recipe;
           }
-          this.productService.createProduct(this.authService.companyId, formValue).subscribe(
+          this.productService.createProduct(this.authService.companyId!, formValue).subscribe(
             r => {
               if (r.ok) {
                 Swal.fire('Registro Guardado', '', 'success');
@@ -124,7 +117,12 @@ export class CreateProductComponent {
               } else {
                 Swal.fire('Registro No Guardado', '', 'error');
               }
-            });
+            },
+            error => {
+              console.error('Error al crear producto', error);
+              Swal.fire('Error', 'Hubo un problema al crear el producto', 'error');
+            }
+          );
         }
       });
     }

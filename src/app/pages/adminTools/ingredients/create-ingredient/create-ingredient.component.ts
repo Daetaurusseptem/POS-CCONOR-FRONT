@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { IngredientService } from 'src/app/services/ingredient.service';
 import { SupplierService } from 'src/app/services/provider.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-ingredient',
@@ -50,7 +51,7 @@ export class CreateIngredientComponent {
       .pipe(
         map(resp => {
           console.log(resp);
-          return resp.suppliers
+          return resp.suppliers;
         })
       )
       .subscribe(data => {
@@ -59,26 +60,53 @@ export class CreateIngredientComponent {
   }
 
   addIngredient() {
-    this.newIngredient.company = this.authService.companyId!
+    this.newIngredient.company = this.authService.companyId!;
     console.log(this.newIngredient);
 
-    this.ingredientService.createIngredient(this.newIngredient)
-      .pipe(map(resp => resp.ingredient))
-      .subscribe(newIngredient => {
+    Swal.fire({
+      title: '¿Deseas añadir este ingrediente?',
+      text: 'Confirma la adición del nuevo ingrediente',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, añadir',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.ingredientService.createIngredient(this.newIngredient)
+          .pipe(map(resp => resp.ingredient))
+          .subscribe({
+            next: newIngredient => {
+              this.ingredients.push(newIngredient!);
+              // Reset newIngredient after successful addition
+              this.newIngredient = {
+                name: '',
+                quantity: 0,
+                priceProvider: 0,
+                measurement: 'grms',
+                provider: undefined,
+                receivedDate: new Date(),
+                company: ''
+              };
 
-        this.ingredients.push(newIngredient!);
-        // Reset newIngredient after successful addition
-        this.newIngredient = {
-          name: '',
-          quantity: 0,
-          priceProvider: 0,
-          measurement: 'grms',
-          provider: undefined,
-          receivedDate: new Date(),
-          company: ''
-        };
-
-        this.router.navigate(['dashboard/admin/ingredients']);
-      });
+              Swal.fire({
+                text: 'Ingrediente añadido correctamente',
+                icon: 'success'
+              }).then(() => {
+                this.router.navigate(['dashboard/admin/ingredients']);
+              });
+            },
+            error: error => {
+              console.error('Error al añadir el ingrediente:', error);
+              Swal.fire({
+                title: 'Error',
+                text: 'No se pudo añadir el ingrediente',
+                icon: 'error'
+              });
+            }
+          });
+      }
+    });
   }
 }
