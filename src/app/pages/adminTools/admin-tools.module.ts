@@ -65,7 +65,8 @@ import { ManagePrintersComponent } from './manage-printers/manage-printers.compo
     ProductsListComponent,
     CategoriesListComponent,
     SuppliersListComponent,
-    UpdateItemComponent
+    UpdateItemComponent,
+    StatisticsComponent
   ],
   imports: [
     CommonModule,

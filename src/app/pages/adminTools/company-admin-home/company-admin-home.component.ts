@@ -27,25 +27,23 @@ export class CompanyAdminHomeComponent {
   users!: User[];
   recipes!: Recipe[];
 
-  
-
-  tabSelected: 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'inventario' = localStorage.getItem('tabSelected') as 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'inventario';  
+  tabSelected: 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'estadisticas' | 'inventario' = localStorage.getItem('tabSelected') as 'usuarios' | 'productos' | 'suscripciones' | 'proveedores' | 'categorias' | 'items' | 'recetas' | 'inventario' | 'estadisticas';
   tabsArray = [
     { name: 'usuarios', icon: 'bi bi-people-fill' },
     { name: 'productos', icon: 'bi bi-bag-fill' },
     { name: 'inventario', icon: 'bi bi-box-fill' },
     { name: 'categorias', icon: 'bi bi-bag-fill' },
     { name: 'proveedores', icon: 'bi bi-file-earmark-person' },
+    { name: 'estadisticas', icon: 'bi bi-bar-chart-fill' },
     //{ name: 'suscripcion', icon: 'bi bi-card-checklist' }
   ];
 
   company!: Company;
   admin!: UsuarioModel;
   id: string = '';
-  
 
   ngOnInit(): void {
-    if(localStorage.getItem('tabSelected')==null){
+    if (localStorage.getItem('tabSelected') == null) {
       this.tabSelected = 'usuarios';
     }
     console.log(this.tabSelected);
@@ -67,7 +65,7 @@ export class CompanyAdminHomeComponent {
     private authService: AuthService,
     private modalService: ModalService,
     private tabSelectedService: TabSelectedService
-  ) {}
+  ) { }
 
   getAdminCompany(id: string) {
     return this.userService.getCompanyAdmin(id)
@@ -101,7 +99,7 @@ export class CompanyAdminHomeComponent {
         this.users = users!;
       });
   }
-  getProducts(idEmpresa:string){
+  getProducts(idEmpresa: string) {
     this.productService.getCompanyProducts(idEmpresa)
       .pipe(map(item => item.products))
       .subscribe(products => {
@@ -117,7 +115,7 @@ export class CompanyAdminHomeComponent {
       });
   }
 
-  changeTab(tab: 'usuarios' | 'productos' | 'items' | 'suscripciones' | 'proveedores' | 'categorias' | 'inventario'|'recetas') {
+  changeTab(tab: 'usuarios' | 'productos' | 'items' | 'suscripciones' | 'proveedores' | 'categorias' | 'inventario' | 'recetas' | 'estadisticas') {
     console.log('cambiacion', tab);
     switch (tab) {
       case 'usuarios':
@@ -128,17 +126,17 @@ export class CompanyAdminHomeComponent {
         this.tabSelectedService.updateTabSelected(tab);
         this.getProducts(this.authService.companyId);
         break;
-        case 'items':
+      case 'items':
         this.tabSelectedService.updateTabSelected(tab);
         this.getProducts(this.authService.companyId);
         break;
-        case 'proveedores':
+      case 'proveedores':
         this.tabSelectedService.updateTabSelected(tab);
         this.getSuppliers();
         break;
-        case 'categorias':
-          this.tabSelectedService.updateTabSelected(tab);
-          this.getCategories();
+      case 'categorias':
+        this.tabSelectedService.updateTabSelected(tab);
+        this.getCategories();
         break;
       default:
         break;
