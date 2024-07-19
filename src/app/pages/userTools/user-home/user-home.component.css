@@ -34,6 +34,7 @@ body {
 .ventas { background: #e3edfd; }
 .items { background: #f5e0bf; }
 .cerrar { background: #e7c7b8; }
+.consuelo { background: #b879b3 ; }
 .cerrarSesion { 
   background: #e7c7b8;
   width: 100%;
@@ -55,7 +56,8 @@ body {
 .ventas::before { background-color: #4adede; }
 .realizar::before { background-color: #83d1ae; }
 .items::before { background-color: #f8d90f; }
-.cerrarSesion::before { background-color: #787ff6; }
+.cerrarSesion::before { background-color: #f67878; }
+.consuelo::before { background-color: #d241c6; }
 
 .btn-custom:hover {
   color: #000000;

@@ -5,6 +5,7 @@
             <div>
               <button class="btn btn-primary me-2" (click)="prevWeek()">Semana Anterior</button>
               <button class="btn btn-primary" (click)="nextWeek()">Semana Siguiente</button>
+              <button class="btn btn-primary" (click)="downloadCsvWhitPage()">Generar Informe</button>
             </div>
           </div>
           <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="mb-4">

@@ -92,4 +92,7 @@ export class StatisticsComponent {
     this.searchForm.patchValue({ year: this.year, week: this.week });
     this.loadTopSellingProducts();
   }
+  downloadCsvWhitPage(){
+    this.statisticsService.downloadCsv(this.topSellingProducts,"recuentos");
+  }
 }
