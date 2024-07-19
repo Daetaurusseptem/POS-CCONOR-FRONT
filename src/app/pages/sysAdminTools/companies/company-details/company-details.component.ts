@@ -57,7 +57,7 @@ export class CompanyDetailsComponent implements OnInit {
     private categoryService: CategoryService,
     private modalService: ModalService,
     private itemService: ItemService,
-    private tabSelectedService: TabSelectedService,
+    private tabSelectedService: TabSelectedService
   ) {
     this.adminId = this.authService.idUsuario;
     this.getRole();

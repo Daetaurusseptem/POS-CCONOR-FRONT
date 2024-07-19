@@ -21,14 +21,13 @@ export class ItemStockListComponent {
 
   constructor(
     private itemService: ItemService,
-    private router:Router,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
     this.loadItems();
   }
 
-  
   loadItems(): void {
     console.log(this.searchTerm);
     this.itemService.getItems(this.currentPage, this.itemsPerPage, this.searchTerm).subscribe({
@@ -48,11 +47,9 @@ export class ItemStockListComponent {
     this.loadItems();
   }
 
-  
-
   onSearch(): void {
     console.log(this.searchTerm);
-    this.currentPage = 1; 
+    this.currentPage = 1;
     this.loadItems();
   }
 
@@ -60,34 +57,28 @@ export class ItemStockListComponent {
     this.router.navigate(['/dashboard/admin/items/new']);
   }
 
-  deleteItem(idItem:string){
-
+  deleteItem(idItem: string) {
     Swal.fire({
-      title:'estas seguro?',
-      text:'Esto eliminara definitivamente el stock seleccionado',
-      showCancelButton:true
+      title: 'estas seguro?',
+      text: 'Esto eliminara definitivamente el stock seleccionado',
+      showCancelButton: true
     })
-    .then(res=>{
-      if(res.isConfirmed ==true){
-        this.itemService.deleteItem(idItem)
-        .subscribe(r=>{
-          Swal.fire({
+      .then(res => {
+        if (res.isConfirmed == true) {
+          this.itemService.deleteItem(idItem)
+            .subscribe(r => {
+              Swal.fire({
 
-            title:'Eliminado',
-            text:'Registro eliminado'
-          })
-          .then(r=>{
-            if(r.isConfirmed){
-              this.router.navigateByUrl('/dashboard/admin')
-            }
-          })
-        })
-      }
-    })
-
+                title: 'Eliminado',
+                text: 'Registro eliminado'
+              })
+                .then(r => {
+                  if (r.isConfirmed) {
+                    this.router.navigateByUrl('/dashboard/admin')
+                  }
+                })
+            })
+        }
+      })
   }
-
-
-
 }
-

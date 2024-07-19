@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SalesService } from 'src/app/services/sales.service';
-import { jsPDF } from 'jspdf';
-import 'jspdf-autotable';
 import { AuthService } from 'src/app/services/auth.service';
+import { ReceiptPrinterService } from 'src/app/services/receipt-printer.service';
+
 
 @Component({
   selector: 'app-confirm-sale',
@@ -22,7 +22,8 @@ export class ConfirmSaleComponent implements OnInit {
     private fb: FormBuilder,
     private saleService: SalesService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private receiptPrinterService: ReceiptPrinterService
   ) {
     const navigation = this.router.getCurrentNavigation();
     this.sale = navigation?.extras.state?.['sale'];
@@ -84,74 +85,49 @@ export class ConfirmSaleComponent implements OnInit {
 
     this.saleService.createSale(saleData).subscribe(response => {
       console.log('Sale created successfully', response);
-      this.generarPDF();
+      this.generarTicket(saleData);
       this.router.navigate(['dashboard/user/sales-success']);
     }, error => {
       console.error('Error creating sale', error);
     });
   }
 
-  generarPDF() {
-    const doc = new jsPDF({
-      format: [58.28, 350.89]
-    });
+  generarTicket(saleData: any) {
+    const content = `
+      123 STORE ST
+      store@store.com
+      www.store.com
 
-    const marginX = 2;
-    let currentY = 10;
+      Order Number: ${saleData._id}
+      Date: ${new Date(saleData.date).toLocaleDateString()}
 
-    doc.setFontSize(10);
-    doc.text('Ticket de Venta', marginX, currentY);
-    currentY += 4;
+      --------------------------------
+      Qty   Product                Total
+      --------------------------------
+      ${saleData.productsSold.map((product: any) => `
+      ${product.quantity}    ${product.productName}      ${product.unitPrice * product.quantity}
+      `).join('')}
+      --------------------------------
 
-    doc.setFontSize(8);
-    doc.text(`Usuario: ${this.usuario}`, marginX, currentY);
-    currentY += 4;
-    doc.text(`Fecha: ${new Date().toLocaleDateString()}`, marginX, currentY);
-    currentY += 4;
-    doc.text(`Total: $${this.totalAmount.toFixed(2)}`, marginX, currentY);
-    currentY += 4;
-    doc.text(`Pago con: $${this.confirmSaleForm.get('receivedAmount')!.value.toFixed(2)}`, marginX, currentY);
-    currentY += 6;
-    doc.text(`Cambio: $${this.change.toFixed(2)}`, marginX, currentY);
-    currentY += 6;
+      Total: $${saleData.total.toFixed(2)}
+      Discount: $${saleData.discount.toFixed(2)}
+      ${saleData.paymentMethod === 'cash' ? `Received Amount: $${saleData.receivedAmount.toFixed(2)}
+      Change: $${saleData.change.toFixed(2)}` : `Payment Reference: ${saleData.paymentReference}`}
+      
+      Thank you for shopping!
+      
+    `;
 
-    (doc as any).autoTable({
-      head: [['Producto', 'Cantidad', 'Precio']],
-      body: this.sale.productsSold.map((product: any) => [
-        product.productName,
-        product.quantity,
-        product.subtotal
-      ]),
-      startY: currentY,
-      margin: { left: marginX, right: marginX },
-      styles: { fontSize: 7, cellPadding: 1, overflow: 'linebreak' },
-      columnStyles: { 0: { cellWidth: 28 }, 1: { cellWidth: 15 }, 2: { cellWidth: 15 } },
-      theme: 'plain'
-    });
-
-    const pdfBlob = doc.output('blob');
-    const url = URL.createObjectURL(pdfBlob);
-
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.src = url;
-
-    document.body.appendChild(iframe);
-
-    iframe.onload = () => {
-      console.log('Iframe loaded, attempting to print');
-      try {
-        iframe.contentWindow!.focus();
-        iframe.contentWindow!.print();
-        console.log('Print command sent');
-      } catch (e) {
-        console.error('Print error: ', e);
-      }
-    };
-
-    iframe.onerror = (error) => {
-      console.error('Error loading iframe: ', error);
-    };
+    const printer = this.receiptPrinterService.getDefaultPrinter();
+    if (printer) {
+      this.receiptPrinterService.printTicket(printer.name, content, printer.paperSize).subscribe(response => {
+        console.log('Ticket sent to printer successfully', response);
+      }, error => {
+        console.error('Error sending ticket to printer', error);
+      });
+    } else {
+      console.error('No default printer set');
+    }
   }
 
   get paymentMethod() {

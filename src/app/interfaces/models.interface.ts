@@ -110,6 +110,8 @@ export interface Item {
   receivedDate: string;
   supplier: string;
   product?: Product;
+
+  
 }
 
 export interface ProductSold {

@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { ItemService } from 'src/app/services/item.service';
 import { ProductService } from 'src/app/services/product.service';
+
 import { SalesService } from 'src/app/services/sales.service';
 import Swal from 'sweetalert2';
 
@@ -17,6 +18,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./newsale.component.css']
 })
 export class NewsaleComponent {
+ 
   searchForm !: FormGroup;
   items: any[] = [];
   categories: any[] = [];
@@ -36,6 +38,8 @@ export class NewsaleComponent {
     private saleService: SalesService,
     private authService: AuthService,
     private router: Router,
+  
+
 
 
   ) {
@@ -49,6 +53,10 @@ export class NewsaleComponent {
     }
 
     console.log(this.companyId);
+  }
+
+  printTicket() {
+   return 'not implemented';
   }
 
   ngOnInit(): void {
@@ -77,7 +85,7 @@ export class NewsaleComponent {
   loadItems(): void {
 
     this.itemsService.getItemsByCategory(this.selectedCategory, this.search, this.currentPage)
-      .pipe(map(r=>{console.log('ItemResp: ',r); return r}))
+      .pipe(map(r => { console.log('ItemResp: ', r); return r }))
       .subscribe(data => {
         console.log(data);
         this.items = [];
@@ -122,12 +130,13 @@ export class NewsaleComponent {
         quantity: item.quantity,
         unitPrice: item.item.price,
         subtotal: item.total,
-        _id:item.item._id
+        _id: item.item._id
       }))
     };
 
 
-    this.router.navigate(['dashboard/user/new-sale/confirm-sale'], { state: { sale: saleData } });
+    this.router.navigate(['dashboard/user/new-sale/confirm-sale'],
+      { state: { sale: saleData } });
   }
 
   selectCategory(category: string): void {

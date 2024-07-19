@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { map } from 'rxjs';
 import { Ingredient } from 'src/app/interfaces/models.interface';
 import { IngredientService } from 'src/app/services/ingredient.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-ingredient',
@@ -39,14 +40,17 @@ export class EditIngredientComponent {
     this.ingredientService.getIngredientById(this.ingredientId)
       .pipe(map(r => r.ingredient))
       .subscribe(ingredient => {
-
         ingredient!.expirationDate = this.formatDate(ingredient!.expirationDate as string);
         ingredient!.receivedDate = this.formatDate(ingredient!.receivedDate as string);
-
         this.editIngredientForm.patchValue(ingredient!);
       },
         error => {
           console.error('Error fetching ingredient', error);
+          Swal.fire({
+            title: 'Error',
+            text: 'Error al obtener el ingrediente',
+            icon: 'error'
+          });
         }
       );
   }
@@ -56,11 +60,29 @@ export class EditIngredientComponent {
   }
 
   regresarOrCancelar() {
-
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Deseas cancelar la edición?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, cancelar',
+      cancelButtonText: 'No, continuar editando'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/dashboard/admin/ingredients']);
+      }
+    });
   }
 
   onSubmit(): void {
     if (this.editIngredientForm.invalid) {
+      Swal.fire({
+        title: 'Formulario no válido',
+        text: 'Por favor, completa todos los campos requeridos.',
+        icon: 'warning'
+      });
       return;
     }
 
@@ -71,14 +93,37 @@ export class EditIngredientComponent {
       ...this.editIngredientForm.value
     };
 
-    this.ingredientService.updateIngredient(this.ingredientId, updatedIngredient).subscribe(
-      response => {
-        console.log('Ingrediente actualizado con éxito', response);
-        this.router.navigate(['/dashboard/admin/ingredients']);
-      },
-      error => {
-        console.error('Error actualizando ingrediente', error);
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Deseas actualizar este ingrediente?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, actualizar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ingredientService.updateIngredient(this.ingredientId, updatedIngredient).subscribe(
+          response => {
+            console.log('Ingrediente actualizado con éxito', response);
+            Swal.fire({
+              text: 'Ingrediente actualizado correctamente',
+              icon: 'success'
+            }).then(() => {
+              this.router.navigate(['/dashboard/admin/ingredients']);
+            });
+          },
+          error => {
+            console.error('Error actualizando ingrediente', error);
+            Swal.fire({
+              title: 'Error',
+              text: 'No se pudo actualizar el ingrediente',
+              icon: 'error'
+            });
+          }
+        );
       }
-    );
+    });
   }
 }

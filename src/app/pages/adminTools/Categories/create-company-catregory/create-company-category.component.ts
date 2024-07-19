@@ -14,72 +14,73 @@ import Swal from 'sweetalert2';
 })
 export class CreateCompanyCategoryComponent {
 
-  userRole!:'admin'|'sysadmin'|'user';
-  companies!:Category[];
-  companyId!:string;
-  
+  userRole!: 'admin' | 'sysadmin' | 'user';
+  companies!: Category[];
+  companyId!: string;
 
   category: Category = {
     name: '',
     description: '',
-    companyId:''
+    companyId: ''
   }
 
   constructor(
-              private categoryService: CategoryService,
-              private companiesService: CompanyService,
-              private authService: AuthService,
-              private router: Router,
+    private categoryService: CategoryService,
+    private companiesService: CompanyService,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.getRole();
+    this.getCompanyId();
+  }
 
-              
-              ) {
-               this.getRole()
-               this.getCompanyId()
+  getRole() {
+    this.userRole = this.authService.role;
+  }
 
-              }
-
-              getRole() {
-                this.userRole = this.authService.role;
-                
-              }
- 
   createCategory(form: NgForm) {
-    if(this.userRole=='user'){
-      return 
+    if (this.userRole === 'user') {
+      return;
     }
-    
+
     if (form.valid) {
       console.log(form.value);
-      this.categoryService.createCategory(this.category,this.authService.companyId!).subscribe({
+      this.categoryService.createCategory(this.category, this.authService.companyId!).subscribe({
         next: (createdCompany) => {
           Swal.fire({
-            text:'Categoria creado correctamente',
-            icon:'success'
-          })
-          .then(()=>{
-            if(this.userRole=='admin'){
-              this.router.navigateByUrl('/dashboard/admin/categories')
-            }else if(this.userRole=='sysadmin'){
-              this.router.navigateByUrl('/dashboard/sysadmin/categories')
+            text: 'Categoría creada correctamente',
+            icon: 'success'
+          }).then(() => {
+            if (this.userRole === 'admin') {
+              this.router.navigateByUrl('/dashboard/admin/categories');
+            } else if (this.userRole === 'sysadmin') {
+              this.router.navigateByUrl('/dashboard/sysadmin/categories');
             }
-          })
+          });
         },
         error: (error) => {
           Swal.fire({
-            text:'Categoria no pudo ser creada',
-            icon:'error'
-          })
-          
+            title: 'Error',
+            text: 'La categoría no pudo ser creada',
+            icon: 'error'
+          });
         }
+      });
+    } else {
+      Swal.fire({
+        title: 'Formulario no válido',
+        text: 'Por favor, completa todos los campos requeridos.',
+        icon: 'warning'
       });
     }
   }
-  getCompanyId(){
+
+  getCompanyId() {
     if (this.authService.company && this.authService.companyId) {
-      this.companyId=  this.authService.companyId!;
-      this.category.companyId=this.companyId
+      this.companyId = this.authService.companyId!;
+      this.category.companyId = this.companyId;
     } else {
-      console.log('no company id');
+      console.log('No se encontró el ID de la compañía');
     }
   }
 
