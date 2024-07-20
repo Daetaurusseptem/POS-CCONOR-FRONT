@@ -1,51 +1,91 @@
-<div class="card">
-      <div class="container mt-4">
-          <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Productos Más Vendidos por Semana</h2>
-            <div>
-              <button class="btn btn-primary me-2" (click)="prevWeek()">Semana Anterior</button>
-              <button class="btn btn-primary" (click)="nextWeek()">Semana Siguiente</button>
-              <button class="btn btn-primary" (click)="downloadCsvWhitPage()">Generar Informe</button>
-            </div>
+<div class="card shadow-sm">
+  <div class="card-body">
+    <div class="container-fluid py-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <h2 class="card-title text-primary mb-3 mb-md-0">{{ isProductView ? 'Productos Más Vendidos por Semana' : 'Estadísticas de Ingredientes' }}</h2>
+        <div class="btn-group" role="group" aria-label="Navegación y acciones">
+          <button class="btn btn-outline-primary" (click)="prevWeek()" *ngIf="isProductView">
+            <i class="bi bi-chevron-left"></i> Semana Anterior
+          </button>
+          <button class="btn btn-outline-primary" (click)="nextWeek()" *ngIf="isProductView">
+            Semana Siguiente <i class="bi bi-chevron-right"></i>
+          </button>
+          <button class="btn btn-success" (click)="downloadExcel()">
+            <i class="bi bi-file-earmark-excel"></i> Generar Informe
+          </button>
+          <button class="btn btn-outline-secondary" (click)="toggleView()">
+            {{ isProductView ? 'Ver Ingredientes' : 'Ver Productos' }}
+          </button>
+        </div>
+      </div>
+
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="mb-4" *ngIf="isProductView">
+        <div class="row g-3">
+          <div class="col-md-5">
+            <label for="year" class="form-label">Año:</label>
+            <input type="number" formControlName="year" class="form-control" id="year" placeholder="Ingrese el año">
           </div>
-          <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="mb-4">
-            <div class="row">
-              <div class="col-md-6">
-                <label for="year" class="form-label">Año:</label>
-                <input type="number" formControlName="year" class="form-control" id="year">
-              </div>
-              <div class="col-md-6">
-                <label for="week" class="form-label">Semana:</label>
-                <input type="number" formControlName="week" class="form-control" id="week">
-              </div>
-            </div>
-            <button type="submit" class="btn btn-primary mt-3">Buscar</button>
-          </form>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Ranking</th>
-                <th>Producto</th>
-                <th>Cantidad Vendida</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let product of topSellingProducts; let i = index">
-                <td>{{ i + 1 }}</td>
-                <td>{{ product.product.name }}</td>
-                <td>{{ product.totalQuantity }}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div style="display: block;">
-            <canvas baseChart
-                    [data]="barChartData"
-                    [labels]="barChartLabels"
-                    [options]="barChartOptions"
-                    [legend]="barChartLegend"
-                    >
-            </canvas>
+          <div class="col-md-5">
+            <label for="week" class="form-label">Semana:</label>
+            <input type="number" formControlName="week" class="form-control" id="week" placeholder="Ingrese la semana">
+          </div>
+          <div class="col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">
+              <i class="bi bi-search"></i> Buscar
+            </button>
           </div>
         </div>
+      </form>
 
+      <div class="table-responsive" *ngIf="isProductView">
+        <table class="table table-hover">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Producto</th>
+              <th scope="col">Cantidad Vendida</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of topSellingProducts; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ product.product.name }}</td>
+              <td>{{ product.totalQuantity | number }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="table-responsive" *ngIf="!isProductView">
+        <table class="table table-hover">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Ingrediente</th>
+              <th scope="col">Stock Total</th>
+              <th scope="col">Valor Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ingredient of ingredientsStatistics; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ ingredient._id }}</td>
+              <td>{{ ingredient.totalStock | number }}</td>
+              <td>{{ ingredient.totalValue | currency }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="mt-4">
+        <canvas baseChart 
+                [data]="barChartData" 
+                [labels]="barChartLabels" 
+                [options]="barChartOptions"
+                [legend]="barChartLegend"
+                class="w-100">
+        </canvas>
+      </div>
+    </div>
   </div>
+</div>
