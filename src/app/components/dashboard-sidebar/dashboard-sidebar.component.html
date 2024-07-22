@@ -1,28 +1,28 @@
 <div class="sidebar-container" [class.collapsed]="isCollapsed">
   <!-- Botón para colapsar/expandir -->
-  <button class="toggle-btn" (click)="toggleSidebar()">
+  <button class="toggle-btn" (click)="toggleSidebar()" title="Expand/Collapse Sidebar">
     <i class="bi" [ngClass]="isCollapsed ? 'bi-chevron-right' : 'bi-chevron-left'"></i>
   </button>
 
   <!-- Logo y Título -->
   <div class="sidebar-header">
-    <a class="logo">
+    <a class="logo" title="Cconor POS">
       <span *ngIf="!isCollapsed">Cconor POS</span>
-      <img src="../../../assets/img/backgroundlogin.jpeg" alt="" class="logo-img">
+      <img src="../../../assets/img/backgroundlogin.jpeg" alt="Cconor POS Logo" class="logo-img">
     </a>
   </div>
 
   <!-- Navegación Sidebar -->
   <nav class="sidebar-nav">
     <div class="sidebar-menu" *ngFor="let menuItem of menuItems">
-      <a class="sidebar-toggle" (click)="toggleSubmenu(menuItem)">
+      <a class="sidebar-toggle" (click)="toggleSubmenu(menuItem)" [title]="menuItem.title">
         <i [class]="menuItem.icon"></i>
         <span *ngIf="!isCollapsed">{{menuItem.title}}</span>
       </a>
       <div class="submenu" [class.show]="menuItem.isOpen">
         <ul style="list-style-type:none">
           <li *ngFor="let item of menuItem.submenu">
-            <a [routerLink]="item.url" routerLinkActive="active" class="sidebar-link">
+            <a [routerLink]="item.url" routerLinkActive="active" class="sidebar-link" [title]="item.title">
               <i [class]="item.icon"></i>
               <span *ngIf="!isCollapsed">{{item.title}}</span>
             </a>
@@ -30,7 +30,7 @@
         </ul>
       </div>
     </div>
-    <a class="sidebar-toggle" role="button" (click)="logOut()">
+    <a class="sidebar-toggle" role="button" (click)="logOut()" title="Logout">
       <i class="bi bi-power"></i>
       <span *ngIf="!isCollapsed">LOGOUT</span>
     </a>
