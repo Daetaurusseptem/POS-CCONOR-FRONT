@@ -52,7 +52,6 @@ export class StatisticsComponent implements OnInit {
     this.loadData();
   }
 
-  // Initialize the form
   private initForm(): void {
     this.searchForm = this.fb.group({
       year: [this.year],
@@ -60,12 +59,10 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
-  // Load data based on current view
   private loadData(): void {
     this.isProductView ? this.loadTopSellingProducts() : this.loadIngredientsStatistics();
   }
 
-  // Load top selling products
   private loadTopSellingProducts(): void {
     const { year, week } = this.searchForm.value;
     this.statisticsService.getTopSellingProductsByWeek(year, week, this.companyId).subscribe({
@@ -77,7 +74,6 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
-  // Load ingredients statistics
   private loadIngredientsStatistics(): void {
     const { year, week } = this.searchForm.value;
     this.statisticsService.getIngredientsStatisticsByWeek(year, week, this.companyId).subscribe({
@@ -89,7 +85,6 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
-  // Update chart data based on current view
   private updateChartData(): void {
     const data = this.isProductView ? this.topSellingProducts : this.ingredientsStatistics;
     this.barChartLabels = data.map(item => this.isProductView ? item.product.name : item._id);
@@ -98,25 +93,21 @@ export class StatisticsComponent implements OnInit {
     this.barChartData.datasets[0].label = this.isProductView ? 'Cantidad Vendida' : 'Stock Total';
   }
 
-  // Toggle between product and ingredient view
   toggleView(): void {
     this.isProductView = !this.isProductView;
     this.loadData();
   }
 
-  // Get week number for a given date
   private getWeekNumber(date: Date): number {
     const startDate = new Date(date.getFullYear(), 0, 1);
     const days = Math.floor((date.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000));
     return Math.ceil((date.getDay() + 1 + days) / 7);
   }
 
-  // Search based on form values
   onSearch(): void {
     this.loadData();
   }
 
-  // Navigate to previous week
   prevWeek(): void {
     if (this.week > 1) {
       this.week--;
@@ -127,7 +118,6 @@ export class StatisticsComponent implements OnInit {
     this.updateFormAndSearch();
   }
 
-  // Navigate to next week
   nextWeek(): void {
     if (this.week < 52) {
       this.week++;
@@ -138,21 +128,21 @@ export class StatisticsComponent implements OnInit {
     this.updateFormAndSearch();
   }
 
-  // Update form values and trigger search
   private updateFormAndSearch(): void {
     this.searchForm.patchValue({ year: this.year, week: this.week });
     this.onSearch();
   }
 
-  // Generate and download Excel report
   downloadExcel() {
     const data = this.isProductView ? this.topSellingProducts : this.ingredientsStatistics;
     const sheetName = this.isProductView ? 'Top Productos' : 'Estadísticas de Ingredientes';
     
+    // Datos del ranking
     const rankingHeader = ['Ranking', 'Producto', 'Cantidad Vendida'];
     const rankingData = this.topSellingProducts.map((item, index) => [index + 1, item.product.name, item.totalQuantity]);
     rankingData.unshift(rankingHeader);
 
+    // Datos principales
     const mainHeader = this.isProductView ? 
       ['#', 'Producto', 'Cantidad Vendida/Semana'] : 
       ['#', 'Ingrediente', 'Stock Actual', 'Valor Total'];
@@ -172,7 +162,6 @@ export class StatisticsComponent implements OnInit {
       ...mainData
     ]);
 
-    // Set column widths and merge cells for better formatting
     ws['!cols'] = this.isProductView ? 
       [{ wch: 10 }, { wch: 40 }, { wch: 20 }] : 
       [{ wch: 10 }, { wch: 40 }, { wch: 20 }, { wch: 20 }];
@@ -185,7 +174,6 @@ export class StatisticsComponent implements OnInit {
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, sheetName);
 
-    // Set workbook properties
     wb.Props = {
       Title: this.isProductView ? `Productos más vendidos - Semana ${this.week}, ${this.year}` : 'Estadísticas de Ingredientes',
       Subject: "Reporte de Ventas",
@@ -193,7 +181,6 @@ export class StatisticsComponent implements OnInit {
       CreatedDate: new Date()
     };
 
-    // Generate and download the Excel file
     XLSX.writeFile(wb, `${sheetName}_${this.week}_${this.year}.xlsx`);
   }
 }
