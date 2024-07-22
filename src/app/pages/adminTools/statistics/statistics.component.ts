@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StatisticsService } from 'src/app/services/statistics.service';
 import { Chart, ChartData, ChartOptions, ChartType, LabelItem, registerables } from 'chart.js';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { ChartDataset } from 'chart.js';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -11,7 +10,7 @@ import * as XLSX from 'xlsx';
   templateUrl: './statistics.component.html',
   styleUrls: ['./statistics.component.css']
 })
-export class StatisticsComponent {
+export class StatisticsComponent implements OnInit {
   topSellingProducts: any[] = [];
   ingredientsStatistics: any[] = [];
   year: number = new Date().getFullYear();
@@ -20,9 +19,14 @@ export class StatisticsComponent {
   companyId: string;
   isProductView: boolean = true;
 
-  // Chart.js variables
+  // Chart configuration
   barChartOptions: ChartOptions = {
     responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
   };
   barChartLabels: LabelItem[] = [];
   barChartType: ChartType = 'bar';
@@ -30,7 +34,7 @@ export class StatisticsComponent {
   barChartData: ChartData<'bar'> = {
     labels: [],
     datasets: [
-      { data: [], label: 'Cantidad Vendida' }
+      { data: [], label: 'Cantidad Vendida', backgroundColor: 'rgba(75, 192, 192, 0.6)' }
     ]
   };
 
@@ -44,60 +48,75 @@ export class StatisticsComponent {
   }
 
   ngOnInit(): void {
+    this.initForm();
+    this.loadData();
+  }
+
+  // Initialize the form
+  private initForm(): void {
     this.searchForm = this.fb.group({
       year: [this.year],
       week: [this.week]
     });
-    this.loadTopSellingProducts();
   }
 
-  loadTopSellingProducts(): void {
+  // Load data based on current view
+  private loadData(): void {
+    this.isProductView ? this.loadTopSellingProducts() : this.loadIngredientsStatistics();
+  }
+
+  // Load top selling products
+  private loadTopSellingProducts(): void {
     const { year, week } = this.searchForm.value;
-    this.statisticsService.getTopSellingProductsByWeek(year, week, this.companyId).subscribe(data => {
-      this.topSellingProducts = data.sales;
-      this.updateChartData();
+    this.statisticsService.getTopSellingProductsByWeek(year, week, this.companyId).subscribe({
+      next: (data) => {
+        this.topSellingProducts = data.sales;
+        this.updateChartData();
+      },
+      error: (error) => console.error('Error loading top selling products:', error)
     });
   }
 
-  loadIngredientsStatistics(): void {
-    this.statisticsService.getIngredientsStatistics().subscribe(data => {
-      this.ingredientsStatistics = data.ingredients;
-      this.updateChartData();
+  // Load ingredients statistics
+  private loadIngredientsStatistics(): void {
+    const { year, week } = this.searchForm.value;
+    this.statisticsService.getIngredientsStatisticsByWeek(year, week, this.companyId).subscribe({
+      next: (data) => {
+        this.ingredientsStatistics = data.ingredients;
+        this.updateChartData();
+      },
+      error: (error) => console.error('Error loading ingredients statistics:', error)
     });
   }
 
-  updateChartData(): void {
-    if (this.isProductView) {
-      this.barChartLabels = this.topSellingProducts.map(product => product.product.name);
-      this.barChartData.labels = this.barChartLabels;
-      this.barChartData.datasets[0].data = this.topSellingProducts.map(product => product.totalQuantity);
-    } else {
-      this.barChartLabels = this.ingredientsStatistics.map(ingredient => ingredient._id);
-      this.barChartData.labels = this.barChartLabels;
-      this.barChartData.datasets[0].data = this.ingredientsStatistics.map(ingredient => ingredient.totalStock);
-      this.barChartData.datasets[0].label = 'Stock Total';
-    }
+  // Update chart data based on current view
+  private updateChartData(): void {
+    const data = this.isProductView ? this.topSellingProducts : this.ingredientsStatistics;
+    this.barChartLabels = data.map(item => this.isProductView ? item.product.name : item._id);
+    this.barChartData.labels = this.barChartLabels;
+    this.barChartData.datasets[0].data = data.map(item => this.isProductView ? item.totalQuantity : item.totalStock);
+    this.barChartData.datasets[0].label = this.isProductView ? 'Cantidad Vendida' : 'Stock Total';
   }
 
+  // Toggle between product and ingredient view
   toggleView(): void {
     this.isProductView = !this.isProductView;
-    if (this.isProductView) {
-      this.loadTopSellingProducts();
-    } else {
-      this.loadIngredientsStatistics();
-    }
+    this.loadData();
   }
 
-  getWeekNumber(date: Date): number {
+  // Get week number for a given date
+  private getWeekNumber(date: Date): number {
     const startDate = new Date(date.getFullYear(), 0, 1);
     const days = Math.floor((date.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000));
     return Math.ceil((date.getDay() + 1 + days) / 7);
   }
 
+  // Search based on form values
   onSearch(): void {
-    this.loadTopSellingProducts();
+    this.loadData();
   }
 
+  // Navigate to previous week
   prevWeek(): void {
     if (this.week > 1) {
       this.week--;
@@ -105,10 +124,10 @@ export class StatisticsComponent {
       this.week = 52;
       this.year--;
     }
-    this.searchForm.patchValue({ year: this.year, week: this.week });
-    this.loadTopSellingProducts();
+    this.updateFormAndSearch();
   }
 
+  // Navigate to next week
   nextWeek(): void {
     if (this.week < 52) {
       this.week++;
@@ -116,36 +135,65 @@ export class StatisticsComponent {
       this.week = 1;
       this.year++;
     }
-    this.searchForm.patchValue({ year: this.year, week: this.week });
-    this.loadTopSellingProducts();
+    this.updateFormAndSearch();
   }
 
+  // Update form values and trigger search
+  private updateFormAndSearch(): void {
+    this.searchForm.patchValue({ year: this.year, week: this.week });
+    this.onSearch();
+  }
+
+  // Generate and download Excel report
   downloadExcel() {
     const data = this.isProductView ? this.topSellingProducts : this.ingredientsStatistics;
     const sheetName = this.isProductView ? 'Top Productos' : 'Estadísticas de Ingredientes';
+    
+    const rankingHeader = ['Ranking', 'Producto', 'Cantidad Vendida'];
+    const rankingData = this.topSellingProducts.map((item, index) => [index + 1, item.product.name, item.totalQuantity]);
+    rankingData.unshift(rankingHeader);
+
+    const mainHeader = this.isProductView ? 
+      ['#', 'Producto', 'Cantidad Vendida/Semana'] : 
+      ['#', 'Ingrediente', 'Stock Actual', 'Valor Total'];
+    const mainData = data.map((item, index) => this.isProductView ?
+      [index + 1, item.product.name, item.totalQuantity] :
+      [index + 1, item._id, item.totalStock, item.totalValue]
+    );
+    mainData.unshift(mainHeader);
+
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([
-      [this.isProductView ? `Productos mas vendidos - Semana ${this.week}, ${this.year}` : 'Estadísticas de Ingredientes'],
+      [this.isProductView ? `Productos más vendidos - Semana ${this.week}, ${this.year}` : 'Estadísticas de Ingredientes'],
       [],
-      this.isProductView ? ['Ranking', 'Producto', 'Cantidad Vendida'] : ['Ranking', 'Ingrediente', 'Stock Total', 'Valor Total'],
-      ...data.map((item, index) => this.isProductView ?
-        [index + 1, item.product.name, item.totalQuantity] :
-        [index + 1, item._id, item.totalStock, item.totalValue]
-      )
+      ['Tabla de Ranking:'],
+      ...rankingData,
+      [],
+      ['Tabla de Datos según la gráfica:'],
+      ...mainData
     ]);
 
-    ws['!cols'] = this.isProductView ? [{ wch: 10 }, { wch: 40 }, { wch: 20 }] : [{ wch: 10 }, { wch: 40 }, { wch: 20 }, { wch: 20 }];
-    ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: this.isProductView ? 2 : 3 } }];
+    // Set column widths and merge cells for better formatting
+    ws['!cols'] = this.isProductView ? 
+      [{ wch: 10 }, { wch: 40 }, { wch: 20 }] : 
+      [{ wch: 10 }, { wch: 40 }, { wch: 20 }, { wch: 20 }];
+    ws['!merges'] = [
+      { s: { r: 0, c: 0 }, e: { r: 0, c: this.isProductView ? 2 : 3 } },
+      { s: { r: 2, c: 0 }, e: { r: 2, c: 2 } },
+      { s: { r: 4 + rankingData.length, c: 0 }, e: { r: 4 + rankingData.length, c: this.isProductView ? 2 : 3 } }
+    ];
 
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, sheetName);
 
+    // Set workbook properties
     wb.Props = {
-      Title: this.isProductView ? `Productos mas vendidos - Semana ${this.week}, ${this.year}` : 'Estadísticas de Ingredientes',
+      Title: this.isProductView ? `Productos más vendidos - Semana ${this.week}, ${this.year}` : 'Estadísticas de Ingredientes',
       Subject: "Reporte de Ventas",
-      Author: "Leonix64 & Edy",
+      Author: "Leonix & Edy",
       CreatedDate: new Date()
     };
 
+    // Generate and download the Excel file
     XLSX.writeFile(wb, `${sheetName}_${this.week}_${this.year}.xlsx`);
   }
 }
