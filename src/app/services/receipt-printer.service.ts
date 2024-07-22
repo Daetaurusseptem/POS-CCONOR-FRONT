@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ReceiptPrinterService {
-  private apiUrl = 'http://localhost:5000';
+  private apiUrl = 'http://localhost:5000'; // Ajusta esta URL según tu configuración
   private printersKey = 'printers';
 
   constructor(private http: HttpClient) { }
@@ -30,8 +30,20 @@ export class ReceiptPrinterService {
     return printers ? JSON.parse(printers) : [];
   }
 
-  getDefaultPrinter(): any | null {
+  getDefaultPrinter(type: 'ticket' | 'comanda'): any | null {
     const printers = this.getPrinters();
-    return printers.find(printer => printer.default) || null;
+    return printers.find(printer => printer.default && printer.type === type) || null;
+  }
+
+  setDefaultPrinter(name: string, type: 'ticket' | 'comanda') {
+    const printers = this.getPrinters();
+    printers.forEach(printer => {
+      if (printer.name === name && printer.type === type) {
+        printer.default = true;
+      } else if (printer.type === type) {
+        printer.default = false;
+      }
+    });
+    this.setPrinters(printers);
   }
 }

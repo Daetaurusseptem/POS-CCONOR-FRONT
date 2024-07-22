@@ -8,6 +8,7 @@ import { CategoryService } from 'src/app/services/category.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { ProductService } from 'src/app/services/product.service';
 import { SupplierService } from 'src/app/services/provider.service';
+
 import { RecipesService } from 'src/app/services/recipes.service';
 import Swal from 'sweetalert2';
 
@@ -60,6 +61,14 @@ export class CreateProductComponent implements OnInit {
     this.loadCategories();
     this.loadSuppliers();
     this.loadRecipes();
+
+    // Suscribirse a los cambios en el campo isComposite
+    this.productForm.get('isComposite')!.valueChanges.subscribe(value => {
+      this.isComposite = value;
+      if (!value) {
+        this.productForm.get('recipe')!.setValue('');
+      }
+    });
   }
 
   loadCategories() {
@@ -87,7 +96,7 @@ export class CreateProductComponent implements OnInit {
   }
 
   onIsCompositeChange(event: Event): void {
-    const value = (event.target as HTMLInputElement).checked;
+    const value = (event.target as HTMLSelectElement).value === 'true';
     this.isComposite = value;
     if (!value) {
       this.productForm.get('recipe')!.setValue('');

@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SalesService } from 'src/app/services/sales.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ReceiptPrinterService } from 'src/app/services/receipt-printer.service';
-
 
 @Component({
   selector: 'app-confirm-sale',
@@ -12,11 +11,16 @@ import { ReceiptPrinterService } from 'src/app/services/receipt-printer.service'
   styleUrls: ['./confirm-sale.component.css']
 })
 export class ConfirmSaleComponent implements OnInit {
+  @ViewChild('keyboardDialog') keyboardDialog!: ElementRef<HTMLDialogElement>;
+
   confirmSaleForm!: FormGroup;
   sale: any;
   totalAmount: number;
   change: number = 0;
   usuario = this.authService.usuario.name;
+  currentInputField: string = '';
+  currentInputValue: string = '';
+  isNumeric: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -94,6 +98,7 @@ export class ConfirmSaleComponent implements OnInit {
 
   generarTicket(saleData: any) {
     const content = `
+      MY AWESOME STORE
       123 STORE ST
       store@store.com
       www.store.com
@@ -111,14 +116,13 @@ export class ConfirmSaleComponent implements OnInit {
 
       Total: $${saleData.total.toFixed(2)}
       Discount: $${saleData.discount.toFixed(2)}
-      ${saleData.paymentMethod === 'cash' ? `Received Amount: $${saleData.receivedAmount.toFixed(2)}
+      ${saleData.paymentMethod === 'cash' ? `Received Amount: $${saleData.receivedAmount}
       Change: $${saleData.change.toFixed(2)}` : `Payment Reference: ${saleData.paymentReference}`}
       
       Thank you for shopping!
-      
     `;
 
-    const printer = this.receiptPrinterService.getDefaultPrinter();
+    const printer = this.receiptPrinterService.getDefaultPrinter('ticket');
     if (printer) {
       this.receiptPrinterService.printTicket(printer.name, content, printer.paperSize).subscribe(response => {
         console.log('Ticket sent to printer successfully', response);
@@ -127,6 +131,37 @@ export class ConfirmSaleComponent implements OnInit {
       });
     } else {
       console.error('No default printer set');
+    }
+  }
+
+  generarComanda() {
+    const content = `
+      MY AWESOME STORE
+      123 STORE ST
+      store@store.com
+      www.store.com
+
+      Order Number: ${this.sale._id}
+      Date: ${new Date(this.sale.date).toLocaleDateString()}
+
+      --------------------------------
+      Qty   Product
+      --------------------------------
+      ${this.sale.productsSold.map((product: any) => `
+      ${product.quantity}    ${product.productName}
+      `).join('')}
+      --------------------------------
+    `;
+
+    const printer = this.receiptPrinterService.getDefaultPrinter('comanda');
+    if (printer) {
+      this.receiptPrinterService.printTicket(printer.name, content, printer.paperSize).subscribe(response => {
+        console.log('Comanda sent to printer successfully', response);
+      }, error => {
+        console.error('Error sending comanda to printer', error);
+      });
+    } else {
+      console.error('No default comanda printer set');
     }
   }
 
@@ -144,5 +179,28 @@ export class ConfirmSaleComponent implements OnInit {
 
   get changeControl() {
     return this.confirmSaleForm.get('change');
+  }
+
+  openKeyboard(fieldName: string, numericOnly: boolean): void {
+    this.currentInputField = fieldName;
+    this.currentInputValue = this.confirmSaleForm.get(fieldName)?.value || '';
+    this.isNumeric = numericOnly;
+    this.keyboardDialog.nativeElement.showModal();
+  }
+
+  onKeyboardInput(value: string): void {
+    this.currentInputValue = value;
+  }
+
+  closeKeyboard(): void {
+    this.confirmSaleForm.patchValue({ [this.currentInputField]: this.currentInputValue });
+    this.keyboardDialog.nativeElement.close();
+  }
+
+  onBackdropClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (target.tagName === 'DIALOG') {
+      this.closeKeyboard();
+    }
   }
 }

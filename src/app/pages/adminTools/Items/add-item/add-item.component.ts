@@ -36,6 +36,7 @@ export class AddItemComponent {
   ngOnInit(): void {
     this.itemForm = this.fb.group({
       name: ['', Validators.required],
+      bar_code: [''],
       product: ['', Validators.required],
       stock: [0, [Validators.required, Validators.min(0)]],
       price: [0, [Validators.required, Validators.min(0)]],
@@ -51,6 +52,7 @@ export class AddItemComponent {
     if (this.itemForm.valid) {
       const newItem = {
         name: this.itemForm.get('name')?.value,
+        bar_code: this.itemForm.get('bar_code')?.value,
         product: this.itemForm.get('product')?.value,
         stock: this.itemForm.get('stock')?.value,
         price: this.itemForm.get('price')?.value,

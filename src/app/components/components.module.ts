@@ -20,6 +20,7 @@ import { LoadingDataSpinnerComponent } from './shared/loading-data-spinner/loadi
 import { ItemsListComponent } from './shared/items-list/items-list.component';
 import { TabsMenuComponent } from './shared/tabs-menu/tabs-menu.component';
 import { BackButtonComponent } from './shared/back-button/back-button.component';
+import { AlphanumericKeyboardComponent } from './shared/alphanumeric-keyboard/alphanumeric-keyboard.component';
 
 
 
@@ -36,7 +37,8 @@ import { BackButtonComponent } from './shared/back-button/back-button.component'
     LoadingDataSpinnerComponent,
     ItemsListComponent,
     TabsMenuComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    AlphanumericKeyboardComponent
   ],
   exports:[
     NavbarComponent,
@@ -49,7 +51,8 @@ import { BackButtonComponent } from './shared/back-button/back-button.component'
     CreateUserReComponent,
     ItemsListComponent,
     TabsMenuComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    AlphanumericKeyboardComponent
   ],
   imports: [
     CommonModule,

@@ -10,6 +10,10 @@
           <input type="text" class="form-control" formControlName="name" id="name" placeholder="Ingrese el nombre del item">
         </div>
         <div class="mb-3">
+          <label for="name" class="form-label">Código de barras <small>(Opcional)</small>:</label>
+          <input type="text" class="form-control" formControlName="bar_code" id="bar_code" placeholder="Ingrese el código">
+        </div>
+        <div class="mb-3">
           <label for="product" class="form-label">Producto:</label>
           <input type="text" class="form-control" id="product" (input)="onSearchProduct($event)" [value]="selectedProduct?.name || ''" placeholder="Buscar producto">
           <ul class="list-group mt-2" *ngIf="filteredProducts.length > 0">
@@ -32,7 +36,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6 mb-3"> 
             <label for="expirationDate" class="form-label">Fecha de Expiración:</label>
             <input type="date" class="form-control" formControlName="expirationDate" id="expirationDate">
           </div>

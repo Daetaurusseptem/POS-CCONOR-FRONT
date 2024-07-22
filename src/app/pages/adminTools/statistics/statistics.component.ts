@@ -12,7 +12,7 @@ import * as XLSX from 'xlsx';
   styleUrls: ['./statistics.component.css']
 })
 export class StatisticsComponent {
-  topSellingProducts: any[] = [];
+  topSellingProducts: any[] = []; 
   ingredientsStatistics: any[] = [];
   year: number = new Date().getFullYear();
   week: number = this.getWeekNumber(new Date());

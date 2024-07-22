@@ -20,7 +20,7 @@
             <div class="col-md-5">
               <label [for]="'ingredient'+i" class="form-label">Ingrediente</label>
               <select [id]="'ingredient'+i" class="form-select" formControlName="ingredient">
-                <option *ngFor="let ingredient of ingredients" [value]="ingredient._id">{{ ingredient.name }}</option>
+                <option *ngFor="let ingredient of ingredients" [value]="ingredient._id">{{ ingredient.name}} ({{ingredient.measurement}})</option>
               </select>
             </div>
             <div class="col-md-4">
