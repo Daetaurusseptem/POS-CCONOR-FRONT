@@ -1,5 +1,10 @@
 <app-navbar></app-navbar>
 
+<div *ngIf="!isFullScreen" class="fullscreen-prompt">
+    <p>Para una mejor experiencia, por favor haga clic en el botón para entrar en modo de pantalla completa.</p>
+    <button (click)="requestFullScreen()">Entrar en pantalla completa</button>
+  </div>
+
 <div class="main" style="margin-top:4rem; ">
     <app-spinner></app-spinner>
 
