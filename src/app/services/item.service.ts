@@ -21,11 +21,12 @@ export class ItemService {
     if (search) {
       params.name = search;
     }
+    console.log(params);
   
     if (this.authService.role === 'admin') {
-      return this.http.get<itemResponse>(`${urlBase}/${this.authService.companyId}`, { params, headers: { 'x-token': this.authService.token } });
+      return this.http.get<itemResponse>(`${urlBase}/company/${this.authService.companyId}`, { params, headers: { 'x-token': this.authService.token } });
     } else if(this.authService.role === 'user') {
-      return this.http.get<itemResponse>(`${urlBase}/${this.authService.companyId}`, { params, headers: { 'x-token': this.authService.token } });
+      return this.http.get<itemResponse>(`${urlBase}/company/${this.authService.companyId}`, { params, headers: { 'x-token': this.authService.token } });
     } else {
       throw new Error('Invalid role');
     }
@@ -33,13 +34,14 @@ export class ItemService {
   
 
   
-  getNumberOfCompanyItems() {
+  getNumberOfCompanyItems() { 
     return this.http.get<itemResponse>(`${urlBase}/number`,
       this.authService.headers
     );
   };
 
   getCompanyItems(id: string) {
+    
     return this.http.get<itemResponse>(`${urlBase}/company/${id}`, this.authService.headers);
   };
 

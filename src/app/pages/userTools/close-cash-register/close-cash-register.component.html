@@ -1,44 +1,78 @@
-<div class="container mt-4">
-    <h2>Cerrar Caja</h2>
-    <div *ngIf="cashRegister">
-      <h4>Resumen de Ventas</h4>
-      <ul class="list-group mb-3">
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-md-6">Ventas Totales:</div>
-            <div class="col-md-6">{{ totalSales | currency }}</div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-md-6">Ventas en Efectivo:</div>
-            <div class="col-md-6">{{ cashSales | currency }}</div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-md-6">Ventas con Tarjeta de Crédito:</div>
-            <div class="col-md-6">{{ creditSales | currency }}</div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-md-6">Ventas con Tarjeta de Débito:</div>
-            <div class="col-md-6">{{ debitSales | currency }}</div>
-          </div>
-        </li>
-      </ul>
-      <form [formGroup]="closeCashRegisterForm" (ngSubmit)="closeCashRegister()">
-        <div class="mb-3">
-          <label for="finalAmount" class="form-label">Dinero en Caja al Cerrar</label>
-          <input type="number" id="finalAmount" formControlName="finalAmount" class="form-control" min="0">
-        </div>
-        <div class="mb-3">
-          <label for="notes" class="form-label">Notas</label>
-          <textarea id="notes" formControlName="notes" class="form-control" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-danger">Cerrar Caja</button>
-      </form>
-    </div>
+<div class="container mt-5 p-4 bg-light rounded shadow-lg">
+  <app-back-button></app-back-button>
+
+  <!-- Título de la Página -->
+  <div class="text-center mb-4">
+    <h2 class="text-dark">
+      <i class="bi bi-cash-coin"></i> Cerrar Caja
+    </h2>
   </div>
-  
+
+  <!-- Resumen de Ventas -->
+  <div *ngIf="cashRegister">
+    <div class="card mb-4">
+      <div class="card-header bg-dark text-white text-center">
+        <h4 class="mb-0">
+          <i class="bi bi-file-earmark-bar-graph-fill"></i> Resumen de Ventas
+        </h4>
+      </div>
+      <div class="card-body p-4">
+        <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span class="fw-bold"><i class="bi bi-cart-check"></i> Ventas Totales:</span>
+            <span class="text-primary">{{ totalSales | currency }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span class="fw-bold"><i class="bi bi-cash-stack"></i> Ventas en Efectivo:</span>
+            <span class="text-primary">{{ cashSales | currency }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span class="fw-bold"><i class="bi bi-credit-card"></i> Ventas con Tarjeta de Crédito:</span>
+            <span class="text-primary">{{ creditSales | currency }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span class="fw-bold"><i class="bi bi-credit-card-2-front"></i> Ventas con Tarjeta de Débito:</span>
+            <span class="text-primary">{{ debitSales | currency }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Formulario para Cerrar Caja -->
+    <form [formGroup]="closeCashRegisterForm" (ngSubmit)="closeCashRegister()" class="bg-white p-4 rounded shadow-sm">
+      <div class="text-center mb-4">
+        <h4 class="text-dark">
+          <i class="bi bi-pencil-square"></i> Datos de Cierre
+        </h4>
+      </div>
+
+      <div class="mb-4">
+        <label for="finalAmount" class="form-label fw-bold text-dark"><i class="bi bi-currency-dollar"></i> Dinero en Caja al Cerrar</label>
+        <input 
+          type="number" 
+          id="finalAmount" 
+          formControlName="finalAmount" 
+          class="form-control form-control-lg"
+          min="0"
+          placeholder="Ingrese el monto final en caja">
+      </div>
+
+      <div class="mb-4">
+        <label for="notes" class="form-label fw-bold text-dark"><i class="bi bi-card-text"></i> Notas</label>
+        <textarea 
+          id="notes" 
+          formControlName="notes" 
+          class="form-control form-control-lg" 
+          rows="3" 
+          placeholder="Ingrese cualquier observación relevante"></textarea>
+      </div>
+
+      <!-- Botón Cerrar Caja -->
+      <div class="text-center">
+        <button type="submit" class="btn btn-dark btn-lg px-5">
+          <i class="bi bi-box-arrow-down"></i> Cerrar Caja
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

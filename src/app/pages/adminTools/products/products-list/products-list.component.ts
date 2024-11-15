@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Product } from 'src/app/interfaces/models.interface';
 import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'products-list',
@@ -12,9 +13,14 @@ import Swal from 'sweetalert2';
   styleUrls: ['./products-list.component.css']
 })
 export class ProductsListComponent implements OnInit {
+
   companyId: any;
   products!: Product[];
   companyName!: string;
+  searchTerm$ = new Subject<string>();
+  currentPage: number = 1;
+  limit: number = 5;
+  totalPages!: number;
 
   constructor(
     private productService: ProductService,
@@ -33,14 +39,42 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProducts(this.companyId);
+    this.initializeSearch();
   }
 
-  getProducts(idEmpresa: string): void {
-    this.productService.getCompanyProducts(idEmpresa)
-      .pipe(map(item => item.products))
-      .subscribe(products => {
-        this.products = products!;
-        this.companyName = this.authService.company.name;
+  getProducts(idEmpresa: string, page: number = 1): void {
+    this.productService.searchProductCompany('', page, this.limit, idEmpresa)
+      .subscribe(response => {
+        this.products = response.products!;
+        this.totalPages = response.totalPages!;
+        
+        this.currentPage = page;
+      });
+  }
+
+  buscarProducto(term: string): void {
+    if (term.trim() === '') {
+      // Si el campo de búsqueda está vacío, obtenemos todos los productos de nuevo
+      this.getProducts(this.companyId);
+    } else {
+      // Llamamos al servicio de búsqueda
+      this.productService.searchProductCompany(term, 1, this.limit, this.companyId)
+        .subscribe(response => {
+          this.products = response.products!;
+          this.totalPages = response.totalPages!;
+          this.currentPage = 1;
+        });
+    }
+  }
+
+  initializeSearch(): void {
+    this.searchTerm$
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe(term => {
+        this.buscarProducto(term);
       });
   }
 
@@ -81,6 +115,12 @@ export class ProductsListComponent implements OnInit {
       this.router.navigateByUrl(`/dashboard/sysadmin/product/edit/${id}/${this.companyId}`);
     } else if (this.authService.usuario.role == 'admin') {
       this.router.navigateByUrl(`/dashboard/admin/product/edit/${id}`);
+    }
+  }
+
+  cambiarPagina(pagina: number): void {
+    if (pagina > 0 && pagina <= this.totalPages) {
+      this.getProducts(this.companyId, pagina);
     }
   }
 }

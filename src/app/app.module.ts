@@ -14,6 +14,7 @@ import { PagesModule } from './pages/pages.module';
 import { RouterLink } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { NgChartsModule } from 'ng2-charts';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -34,7 +35,8 @@ import { NgChartsModule } from 'ng2-charts';
     AppRoutingModule,
     RouterLink,
     HttpClientModule,
-    NgChartsModule
+    NgChartsModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

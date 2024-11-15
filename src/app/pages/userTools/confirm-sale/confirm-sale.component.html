@@ -12,14 +12,27 @@
           <tr>
             <th>Producto</th>
             <th>Cantidad</th>
-            <th>Precio</th>
+            <th>Variaciones</th>
+            <th>Precio Total</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let product of sale.productsSold">
             <td>{{ product.productName }}</td>
             <td>{{ product.quantity }}</td>
-            <td>{{ product.unitPrice * product.quantity | currency }}</td>
+            <td>
+              <ul *ngIf="product.modifications && product.modifications.length > 0">
+                <li *ngFor="let mod of product.modifications">
+                  {{ mod.name }} ({{ mod.extraPrice | currency }})
+                </li>
+              </ul>
+            </td>
+            <td>
+              {{
+                (product.unitPrice + getModificationsTotalPrice(product.modifications)) * product.quantity
+                | currency
+              }}
+            </td>
           </tr>
         </tbody>
       </table>

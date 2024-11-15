@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { itemResponse } from '../interfaces/itemResponse.interface';
 import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
 
 
 
@@ -37,9 +38,9 @@ export class UsersService {
     return this.http.get<itemResponse>(`${urlApiUsers}/company/admin/${id}`, this.authService.headers);
   }
 
-  getAllNonAdminUsersOfCompany(userId:string) {
-    
-    return this.http.get<itemResponse>(`${urlApiUsers}/company/${userId}`, this.authService.headers);
+  getAllNonAdminUsersOfCompany(adminId: string, page: number = 1, limit: number = 10, search: string = ''): Observable<any> {
+    const url = `${urlApiUsers}/company/${adminId}?page=${page}&limit=${limit}&search=${search}`;
+    return this.http.get<any>(url, this.authService.headers);
   }
   getAllUsersOfCompany(userId:string) {
     

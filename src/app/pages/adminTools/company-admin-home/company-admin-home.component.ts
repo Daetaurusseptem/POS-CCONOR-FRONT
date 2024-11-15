@@ -126,7 +126,7 @@ export class CompanyAdminHomeComponent {
         this.tabSelectedService.updateTabSelected(tab);
         this.getProducts(this.authService.companyId);
         break;
-      case 'items':
+      case 'inventario':
         this.tabSelectedService.updateTabSelected(tab);
         this.getProducts(this.authService.companyId);
         break;

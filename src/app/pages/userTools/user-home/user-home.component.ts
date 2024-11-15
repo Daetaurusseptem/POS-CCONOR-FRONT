@@ -35,10 +35,15 @@ export class UserHomeComponent {
   }
 
   performSale() {
-    this.router.navigate(['dashboard/user/new-sale']);
+    if (this.isOpenCashRegister) {
+      this.router.navigate(['dashboard/user/new-sale']);
+    }
   }
+
   closeCashRegister() {
-    this.router.navigate(['dashboard/user/sales-success/close-cash-register']);
+    if (this.isOpenCashRegister) {
+      this.router.navigate(['dashboard/user/sales-success/close-cash-register']);
+    }
   }
 
   viewDailySales() {
@@ -58,14 +63,14 @@ export class UserHomeComponent {
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.key === 'a') {
       this.openCashRegister();
-    } else if (event.key === 's') {
+    } else if (event.key === 's' && this.isOpenCashRegister) {
       this.performSale();
+    } else if (event.key === 'g' && this.isOpenCashRegister) {
+      this.closeCashRegister();
     } else if (event.key === 'd') {
       this.viewDailySales();
     } else if (event.key === 'i') {
       this.viewItems();
-    } else if (event.key === 'g') {
-      this.closeCashRegister();
     }
   }
 }

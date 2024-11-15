@@ -38,7 +38,7 @@ export class ProductService {
   }
 
   getCompanyProducts(id: string) {
-    console.log('skfnsfnsofnsoenfi',id);
+    
     return this.http.get<itemResponse>(`${urlProducts}/company/${id}`, this.authService.headers);
   };
   getCompanyProductsSysadmin(id: string) {

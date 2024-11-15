@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { UsersService } from 'src/app/services/users.service';
 import Swal from 'sweetalert2';
-import { UtilitiesService } from 'src/app/services/utilities.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'user-list',
@@ -19,20 +19,22 @@ export class UserListComponent {
   users!: User[];
   company!: Company;
   userRole!: 'admin' | 'sysadmin' | 'user';
+  searchTerm: string = '';
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalPages: number = 0;
 
   constructor(
     private userService: UsersService,
     private authService: AuthService,
     private modalService: ModalService,
-    private utilitiesService: UtilitiesService
+    private router: Router
   ) { 
     this.adminId = this.authService.idUsuario;
     this.getRole();
-    if(this.userRole == 'admin'){
-      console.log('company');
+    if (this.userRole == 'admin') {
       this.getCompanyUsers();
-    } else if(this.userRole == 'sysadmin'){
-      console.log('sys');
+    } else if (this.userRole == 'sysadmin') {
       this.getAllAdminUsers();
     }
   }
@@ -43,79 +45,92 @@ export class UserListComponent {
     this.userRole = this.authService.role;
   }
 
-  getCompanyUsers() {
-    console.log(this.authService.getCompany);
+  getCompanyUsers(page: number = 1): void {
     this.company = this.authService.getCompany;
     this.companyId = this.authService.companyId;
-    console.log(this.companyId);
-    this.userService.getAllNonAdminUsersOfCompany(this.adminId)
-      .pipe(
-        map(item => {
-          console.log(item);
-          return item.users;
-        })
-      )
+
+    this.userService.getAllNonAdminUsersOfCompany(this.adminId, page, this.itemsPerPage, this.searchTerm)
+      .pipe(map(response => {
+        console.log(response);
+        this.totalPages = response.totalPages!;
+        return response.users
+      }))
       .subscribe(users => {
         this.users = users!;
+        this.currentPage = page;
       });
   }
 
-  getAllAdminUsers() {
-    console.log(this.authService.getCompany);
+  getAllAdminUsers(page: number = 1): void {
     this.userService.getAllAdmins()
-      .pipe(
-        map(item => {
-          return item.users;
-        })
-      )
+      .pipe(map(response => {
+        console.log(response);
+        this.totalPages = response.totalPages!;
+        return response.users
+      }))
       .subscribe(users => {
         this.users = users!;
+        
+        this.currentPage = page;
       });
   }
 
-  eliminarUsuario(id:string){
-    Swal.fire({
-      title:'Esta Seguro?',
-      text:'Este proceso no se podrá deshacer',
-      icon:'warning',
-      showCancelButton:true,
-      cancelButtonColor:'#F56A52',
-      iconColor:'#F56A52',
-      allowEnterKey:false
+  onSearch(): void {
+    this.currentPage = 1; // Resetear la página cuando se hace una nueva búsqueda
+    if (this.userRole == 'admin') {
+      this.getCompanyUsers(this.currentPage);
+    } else if (this.userRole == 'sysadmin') {
+      this.getAllAdminUsers(this.currentPage);
+    }
+  }
 
-    })
-    .then(resp=>{
-      if(resp.isConfirmed){
-        this.userService.deleteuserByCompanyAdmin(id, this.companyId)
-        .subscribe(resp=>{
-          if(resp.ok==true){
-            Swal.fire({
-              title:'Registro eliminado',
-              icon:'success'
-            })
-          }else if(resp.ok==false){
-            Swal.fire({
-              title:'El registro no pudo ser eliminado',
-              icon:'error'
-            })
-
-          }
-
-          this.utilitiesService.redirectTo(`/dashboard/sysadmin/users`)
-        }, err=>{
-          Swal.fire({
-            title:'Registro no eliminado',
-            icon:'error',
-            text:err.error.msg
-          })
-        })
+  cambiarPagina(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      if (this.userRole == 'admin') {
+        this.getCompanyUsers(page);
+      } else if (this.userRole == 'sysadmin') {
+        this.getAllAdminUsers(page);
       }
+    }
+  }
+
+  eliminarUsuario(id: string) {
+    Swal.fire({
+      title: '¿Está Seguro?',
+      text: 'Este proceso no se podrá deshacer',
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonColor: '#F56A52',
+      iconColor: '#F56A52',
+      allowEnterKey: false
     })
+    .then(resp => {
+      if (resp.isConfirmed) {
+        this.userService.deleteuserByCompanyAdmin(id, this.companyId)
+          .subscribe(resp => {
+            if (resp.ok) {
+              Swal.fire({ title: 'Registro eliminado', icon: 'success' });
+              this.getCompanyUsers(this.currentPage); // Recargar lista de usuarios
+            } else {
+              Swal.fire({ title: 'El registro no pudo ser eliminado', icon: 'error' });
+            }
+          }, err => {
+            Swal.fire({
+              title: 'Registro no eliminado',
+              icon: 'error',
+              text: err.error.msg
+            });
+          });
+      }
+    });
   }
 
   abrirModal(element: Company | User, tipo: "empresas" | "usuarios" | "productos") {
-    console.log(element);
     const { _id } = element;
     this.modalService.abrirModal(element.img, tipo, _id!);
+  }
+
+  navigateToCajasUsuario(userId: string): void {
+    this.router.navigate([`/dashboard/admin/users/${userId}/cajas`]);
   }
 }

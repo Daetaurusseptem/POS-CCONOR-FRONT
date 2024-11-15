@@ -1,14 +1,14 @@
 <div class="sidebar-container" [class.collapsed]="isCollapsed">
   <!-- Botón para colapsar/expandir -->
-  <button class="toggle-btn" (click)="toggleSidebar()" title="Expand/Collapse Sidebar">
+  <a class="sidebar-toggle toggle-btn" (click)="toggleSidebar()" title="Expand/Collapse Sidebar">
     <i class="bi" [ngClass]="isCollapsed ? 'bi-chevron-right' : 'bi-chevron-left'"></i>
-  </button>
+  </a>
 
   <!-- Logo y Título -->
   <div class="sidebar-header">
     <a class="logo" title="Cconor POS">
-      <span *ngIf="!isCollapsed">Cconor POS</span>
-      <img src="../../../assets/img/backgroundlogin.jpeg" alt="Cconor POS Logo" class="logo-img">
+      <span class="me-2" *ngIf="!isCollapsed">Cconor POS </span>
+      <i class="bi bi-cc-square-fill"></i>
     </a>
   </div>
 
@@ -24,15 +24,17 @@
           <li *ngFor="let item of menuItem.submenu">
             <a [routerLink]="item.url" routerLinkActive="active" class="sidebar-link" [title]="item.title">
               <i [class]="item.icon"></i>
-              <span *ngIf="!isCollapsed">{{item.title}}</span>
+              <span class="ms-2" *ngIf="!isCollapsed">{{item.title}}</span>
             </a>
           </li>
         </ul>
       </div>
     </div>
-    <a class="sidebar-toggle" role="button" (click)="logOut()" title="Logout">
-      <i class="bi bi-power"></i>
-      <span *ngIf="!isCollapsed">LOGOUT</span>
-    </a>
+    
   </nav>
+  <a class="sidebar-toggle toggle-btn" role="button" (click)="logOut()" title="Logout">
+    <i class="bi bi-power"></i>
+    <span *ngIf="!isCollapsed">LOGOUT</span>
+  </a>
+  
 </div>

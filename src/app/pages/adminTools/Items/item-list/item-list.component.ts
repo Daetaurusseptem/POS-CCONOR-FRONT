@@ -1,10 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
-import { Item, Company } from 'src/app/interfaces/models.interface';
-import { AuthService } from 'src/app/services/auth.service';
+import { Item } from 'src/app/interfaces/models.interface';
 import { ItemService } from 'src/app/services/item.service';
-import { ModalService } from 'src/app/services/modal.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,7 +14,8 @@ export class ItemStockListComponent {
   items: Item[] = [];
   totalItems: number = 0;
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 5; // Cambiar el límite para hacer más pruebas
+  totalPages: number = 0;
   searchTerm: string = '';
 
   constructor(
@@ -29,28 +28,24 @@ export class ItemStockListComponent {
   }
 
   loadItems(): void {
-    console.log(this.searchTerm);
     this.itemService.getItems(this.currentPage, this.itemsPerPage, this.searchTerm).subscribe({
       next: (data) => {
-        console.log(data);
-        this.items = data.items!; // Ajusta según la estructura de la respuesta
-        this.totalItems = data.total as number; // Ajusta según la estructura de la respuesta
+        this.items = data.items || [];
+        this.totalItems = data.totalItems as number || 0; 
+        this.totalPages = data.totalPages || Math.ceil(this.totalItems / this.itemsPerPage);
+        console.log('Página actual:', this.currentPage, 'Total de páginas:', this.totalPages);
       },
       error: (error) => {
-        console.error('Error fetching items', error);
+        console.error('Error al obtener items:', error);
       }
     });
   }
 
-  pageChanged(event: any): void {
-    this.currentPage = event;
-    this.loadItems();
-  }
-
-  onSearch(): void {
-    console.log(this.searchTerm);
-    this.currentPage = 1;
-    this.loadItems();
+  cambiarPagina(pagina: number): void {
+    if (pagina > 0 && pagina <= this.totalPages) {
+      this.currentPage = pagina;
+      this.loadItems();
+    }
   }
 
   crearItem() {
@@ -59,26 +54,26 @@ export class ItemStockListComponent {
 
   deleteItem(idItem: string) {
     Swal.fire({
-      title: 'estas seguro?',
-      text: 'Esto eliminara definitivamente el stock seleccionado',
-      showCancelButton: true
-    })
-      .then(res => {
-        if (res.isConfirmed == true) {
-          this.itemService.deleteItem(idItem)
-            .subscribe(r => {
-              Swal.fire({
-
-                title: 'Eliminado',
-                text: 'Registro eliminado'
-              })
-                .then(r => {
-                  if (r.isConfirmed) {
-                    this.router.navigateByUrl('/dashboard/admin')
-                  }
-                })
-            })
-        }
-      })
+      title: '¿Estás seguro?',
+      text: 'Esto eliminará definitivamente el stock seleccionado',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((res) => {
+      if (res.isConfirmed) {
+        this.itemService.deleteItem(idItem).subscribe({
+          next: (response) => {
+            if (response.ok === true) {
+              this.items = this.items.filter(item => item._id !== idItem);
+              Swal.fire('Eliminado', 'Registro eliminado', 'success');
+              this.loadItems(); // Recarga los items para actualizar la paginación.
+            }
+          },
+          error: (error) => {
+            console.error('Error eliminando item:', error);
+          }
+        });
+      }
+    });
   }
 }

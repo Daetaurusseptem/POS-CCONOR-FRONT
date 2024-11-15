@@ -1,27 +1,42 @@
-<div class="main-container">
-  <div class="search-container">
-      <div class="search-header">
-          <div class="search-title">
-              <h5>Búsqueda de Productos</h5>
-          </div>
-          <a class="create-product-link" (click)="crearProducto()">
-              <i class="bi bi-plus-lg"></i> Crear Producto
-          </a>
+
+<div class="container mt-4">
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="card-title">Búsqueda de Productos</h5>
+        <button class="btn btn-primary" (click)="crearProducto()">
+          <i class="bi bi-plus-lg"></i> Crear Producto
+        </button>
       </div>
-      <form>
-          <div class="search-input">
-              <input type="text" id="busquedaEmpresa" #terminoEmpresa placeholder="Buscar...">
-          </div>
+      <form class="mb-3">
+        <div class="input-group">
+          <input type="text" class="form-control" id="busqueda" #terminoProducto placeholder="Buscar..." (keyup)="searchTerm$.next(terminoProducto.value)">
+        </div>
       </form>
+    </div>
   </div>
-  <div class="products-container">
-      <div class="products-header">
-          <div class="products-title">
-              <h2>Productos - {{ companyName | uppercase }}</h2>
-          </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h5">Productos</h2>
       </div>
       <div class="items-list-container">
-          <items-list [items]="products" [routerLink]=""></items-list>
+        <items-list [items]="products" [routerLink]=""></items-list>
       </div>
+      <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" (click)="cambiarPagina(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+          </li>
+          <li class="page-item disabled">
+            <span class="page-link">Página {{ currentPage }} de {{ totalPages }}</span>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button class="page-link" (click)="cambiarPagina(currentPage + 1)" [disabled]="currentPage === totalPages">Siguiente</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </div>

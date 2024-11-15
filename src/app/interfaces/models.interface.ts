@@ -96,7 +96,6 @@ export interface Product {
   isComposite: boolean;
   recipe?: string; // ID de la receta si es un producto compuesto
 }
-
 export interface Item {
   _id: string;
   productId: string;
@@ -110,10 +109,11 @@ export interface Item {
   receivedDate: string;
   supplier: string;
   product?: Product;
-
-  
+  modifications?: {
+    name: string;
+    extraPrice: number;
+  }[];
 }
-
 export interface ProductSold {
   product: string|Item;
   quantity: number;

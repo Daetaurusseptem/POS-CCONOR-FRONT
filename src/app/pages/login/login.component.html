@@ -1,35 +1,40 @@
 <div class="all">
   <div class="login-container">
     <div class="login-section">
-      <img src="../../../assets/img/backgroundlogin.jpeg" class="logo" alt="Logo">
+      <!-- Ícono Moderno -->
+      <div class="icon-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="pos-icon">
+          <circle cx="12" cy="12" r="10" fill="#555" />
+          <rect x="8" y="8" width="8" height="8" rx="2" fill="#fff"/>
+        </svg>
+      </div>
+
       <h2 class="login-title">Iniciar Sesión</h2>
-  
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <mat-form-field class="material-full-width">
+      <p class="login-description">Ingresa tus credenciales para acceder al sistema de ventas.</p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-container">
+        <mat-form-field class="material-full-width" appearance="outline">
           <mat-label>Nombre de Usuario</mat-label>
           <input type="text" matInput formControlName="username" placeholder="Ingresa tu usuario">
-          <span *ngIf="(loginForm.hasError('username') && !loginForm.hasError('required') && loginForm.touched)">
-        
-            <mat-error>Please enter a valid email address</mat-error>
-          </span>
-          <span *ngIf="(loginForm.hasError('required')&&loginForm.touched)">
-            <mat-error>Email is <strong>required</strong></mat-error>
-          </span>
+          <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+            El nombre de usuario es <strong>requerido</strong>
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('username')?.hasError('minlength')">
+            Debe tener al menos 3 caracteres
+          </mat-error>
         </mat-form-field>
-  
-        <mat-form-field class="material-full-width">
+
+        <mat-form-field class="material-full-width" appearance="outline">
           <mat-label>Contraseña</mat-label>
           <input type="password" matInput formControlName="password" placeholder="Ingresa tu contraseña">
-          <mat-hint>Ingresa tu nombre de usuario</mat-hint>
-            <span *ngIf="(loginForm.hasError('password') && !loginForm.hasError('required') && loginForm.touched)">
-      
-              <mat-error>Please enter a valid email address</mat-error>
-              </span>
-                <span *ngIf="(loginForm.hasError('required')&&loginForm.touched)">
-                  <mat-error>Password is <strong>required</strong></mat-error>
-                </span>
-          </mat-form-field>
-  
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+            La contraseña es <strong>requerida</strong>
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+            Debe tener al menos 6 caracteres
+          </mat-error>
+        </mat-form-field>
+
         <button type="submit" class="login-button" [disabled]="!loginForm.valid">Acceder</button>
       </form>
           
@@ -38,4 +43,4 @@
       </div>
     </div>
   </div>
-  </div>
+</div>

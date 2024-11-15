@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { CashRegisterService } from 'src/app/services/cash-register.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-open-cash-register',
@@ -26,6 +27,17 @@ export class OpenCashRegisterComponent {
   }
 
   openCashRegister() {
+    if (this.initialAmount < 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Monto no válido',
+        text: 'El monto inicial no puede ser negativo.',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#dc3545'
+      });
+      return;
+    }
+
     const cashRegisterData = {
       user: this.userId,
       initialAmount: this.initialAmount
@@ -34,16 +46,42 @@ export class OpenCashRegisterComponent {
     this.cashRegisterService.openCashRegister(cashRegisterData).subscribe({
       next: (data) => {
         console.log('Cash register opened successfully', data);
-        //guardar
+        Swal.fire({
+          icon: 'success',
+          title: 'Caja Abierta',
+          text: 'La caja ha sido abierta exitosamente con el monto inicial registrado.',
+          confirmButtonText: 'Continuar',
+          confirmButtonColor: '#28a745'
+        }).then(() => {
+          this.router.navigate(['dashboard/user']);
+        });
       },
       error: (error) => {
         console.error('Error opening cash register', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un problema al abrir la caja. Por favor, inténtalo de nuevo más tarde.',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#dc3545'
+        });
       }
     });
   }
 
   logout() {
-    
-    this.router.navigate(['/login']);
+    Swal.fire({
+      title: '¿Seguro que quieres salir?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, salir',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/login']);
+      }
+    });
   }
 }

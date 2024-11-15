@@ -55,6 +55,9 @@ import { EditIngredientComponent } from './adminTools/ingredients/edit-ingredien
 import { StatisticsComponent } from './adminTools/statistics/statistics.component';
 import { SaleDetailComponent } from './userTools/sale-detail/sale-detail.component';
 import { ManagePrintersComponent } from './adminTools/manage-printers/manage-printers.component';
+import { UserCajasComponent } from '../components/user-cajas/user-cajas.component';
+import { FechaCajasComponent } from '../components/fecha-cajas/fecha-cajas.component';
+import { CajaDetailComponent } from '../components/caja-detail/caja-detail.component';
 
 const routes: Routes = [
   {
@@ -99,6 +102,22 @@ const routes: Routes = [
       { path: 'admin/users', canActivate: [AdminGuard], component: UserListComponent },
       { path: 'admin/users/new', canActivate: [AdminGuard], component: CreateUserReComponent },
       { path: 'admin/users/edit/:id', canActivate: [AdminGuard], component: UserEditComponent },
+
+      {
+        path: 'admin/users/:userId/cajas',
+        component: UserCajasComponent,
+        canActivate: [AdminGuard]
+      },
+      {
+        path: 'admin/users/:userId/cajas/:fecha',
+        component: FechaCajasComponent,
+        canActivate: [AdminGuard]
+      },
+      {
+        path: 'admin/cajas/:cajaId',
+        component: CajaDetailComponent,
+        canActivate: [AdminGuard]
+      },
       //productos
       { path: 'admin/products', canActivate: [AdminGuard], component: ProductsListComponent },
       { path: 'admin/product/new', canActivate: [AdminGuard], component: CreateProductComponent },
@@ -130,6 +149,8 @@ const routes: Routes = [
       //estadisticas
       { path: 'admin/statistics', component: StatisticsComponent },
       { path: 'admin/manage-printers', component:ManagePrintersComponent },
+      //USERS
+      
 
       //USER
       { path: 'user', canActivate:[userGuard], component:  UserHomeComponent},
@@ -138,7 +159,7 @@ const routes: Routes = [
       { path: 'user/new-sale/confirm-sale', component: ConfirmSaleComponent },
       { path: 'user/sales-success', component: SuccessSaleComponent},
       { path: 'user/sales-success/close-cash-register', component: CloseCashRegisterComponent},
-
+      
 
 
       

@@ -117,10 +117,12 @@ export class UpdateProductComponent implements OnInit {
       .getCompanySuppliers(this.authService.companyId)
       .pipe(
         map((item) => {
+          console.log(item);
           return item.suppliers;
         })
-      )
+      ) 
       .subscribe((suppliers) => {
+        
         this.suppliers = suppliers!;
       });
   }
@@ -149,14 +151,15 @@ export class UpdateProductComponent implements OnInit {
       .subscribe((product) => {
         this.product = product!;
         this.isComposite = this.product.isComposite;
+        console.log(product);
         this.productForm.setValue({
           categories: this.product.categories!,
           name: this.product.name,
           description: this.product.description,
           marca: this.product.marca,
-          supplier: this.product.supplier,
+          supplier: this.product.supplier._id,
           isComposite: this.product.isComposite,
-          recipe: this.product.recipe || '',
+          recipe: this.product.recipe || null,
         });
       });
   }

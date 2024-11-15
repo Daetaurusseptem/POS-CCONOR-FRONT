@@ -52,6 +52,37 @@
           <label for="receivedDate" class="form-label">Fecha de Recepción:</label>
           <input type="date" class="form-control" formControlName="receivedDate" id="receivedDate">
         </div>
+        <div class="mb-3">
+          <label class="form-label">Modificaciones:</label>
+          <div formArrayName="modifications" *ngFor="let modification of modifications.controls; let i = index">
+            <div [formGroupName]="i" class="border p-2 mb-2">
+              <div class="row">
+                <div class="col-md-4">
+                  <label for="modificationName" class="form-label">Nombre de la modificación:</label>
+                  <input type="text" class="form-control" formControlName="name" placeholder="Ingrese el nombre">
+                </div>
+                <div class="col-md-3">
+                  <label for="extraPrice" class="form-label">Precio extra:</label>
+                  <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input type="number" class="form-control" formControlName="extraPrice" placeholder="0.00">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="isExclusive" class="form-label">¿Es excluyente?</label>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" formControlName="isExclusive" id="isExclusive-{{i}}">
+                    <label class="form-check-label" for="isExclusive-{{i}}">Sí</label>
+                  </div>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                  <button type="button" class="btn btn-danger" (click)="removeModification(i)">Eliminar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-secondary mt-2" (click)="addModification()">Agregar modificación</button>
+        </div>
         <div class="d-flex justify-content-between">
           <app-back-button></app-back-button>
           <button type="submit" class="btn btn-primary" [disabled]="!itemForm.valid">Crear Item</button>

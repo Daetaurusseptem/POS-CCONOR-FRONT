@@ -2,18 +2,20 @@
   <div class="content">
     <div class="card-container">
       <div class="card-header">
-        <h5 class="card-title mb-0">Busqueda de usuarios</h5>
+        <h5 class="card-title mb-0">Búsqueda de Usuarios</h5>
         <a *ngIf="userRole === 'admin'" class="btn btn-create-user" routerLink="/dashboard/admin/users/new">
           <i class="bi bi-plus-lg"></i> Crear Usuario
         </a>
-        <a *ngIf="userRole === 'sysadmin'" class="btn-create-user" routerLink="/dashboard/sysadmin/users/new">
+        <a *ngIf="userRole === 'sysadmin'" class="btn btn-create-user" routerLink="/dashboard/sysadmin/users/new">
           <i class="bi bi-plus-lg"></i> Crear Usuario
         </a>
       </div>
+
       <!-- Search Form -->
-      <form class="search-form">
-        <div class="search-input">
-          <input type="text" class="form-control" id="busquedaEmpresa" aria-describedby="busquedaHelp" #terminoEmpresa placeholder="Buscar...">
+      <form class="search-form" (keyup)="onSearch()">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Buscar usuarios..." [(ngModel)]="searchTerm" name="searchTerm">
+          
         </div>
       </form>
     </div>
@@ -23,64 +25,93 @@
     <div class="card-list">
       <div class="card-title-list">
         <h2>Lista de 
-          <span *ngIf="userRole=='admin'">Usuarios</span> 
-          <span *ngIf="userRole=='sysadmin'">Administradores</span>
-          Registrados
-          <p class="company" *ngIf="company">{{company.name}}</p>
+          <span *ngIf="userRole == 'admin'">Usuarios</span> 
+          <span *ngIf="userRole == 'sysadmin'">Administradores</span> Registrados
+          <p class="company" *ngIf="company">{{ company.name }}</p>
         </h2>
-        <!-- Show company image if present -->
         <div *ngIf="company" class="company-image">
-          <img *ngIf="company.img=='no-image'" src="../../../../../assets/img/no-img.webp" alt="User Avatar" class="avatar-pointer" (click)="abrirModal(company, 'empresas')">
-          <img *ngIf="company.img!='no-image'" [src]="company.img" alt="User Avatar" class="avatar-pointer" (click)="abrirModal(company, 'empresas')">
+          <img *ngIf="company.img == 'no-image'" src="../../../../../assets/img/no-img.webp" alt="Company Avatar" class="avatar-pointer" (click)="abrirModal(company, 'empresas')">
+          <img *ngIf="company.img != 'no-image'" [src]="company.img" alt="Company Avatar" class="avatar-pointer" (click)="abrirModal(company, 'empresas')">
         </div>
       </div>
-
-      <div class="card-body">
-        <div class="table-responsive">
-          <!-- User Table -->
-          <table class="table table-striped">
-            <thead class="table-options">
-              <tr>
-                <th>Imagen</th>
-                <th>Nombre</th>
-                <th>Nombre de usuario</th>
-                <th>Rol</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let user of users">
-                <td class="text-center">
-                  <img *ngIf="user.img=='no-image'" src="../../../../../assets/img/no-img.webp" alt="User Avatar" class="avatar-pointer" (click)="abrirModal(user, 'usuarios')">
-                  <img *ngIf="user.img!='no-image'" [src]="user.img" alt="User Avatar" class="avatar-pointer" (click)="abrirModal(user, 'usuarios')">
-                </td>
-                <td>{{ user.name || 'Not Specified' }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.role }}</td>
-                <td>
-                  <button *ngIf="userRole === 'sysadmin'" class="btn-edit" [routerLink]="['/dashboard','sysadmin','users','edit', user._id]">
-                    <i class="bi bi-pencil-fill"></i> Editar
-                  </button>
-                  <button *ngIf="userRole !== 'sysadmin'" class="btn-edit" [routerLink]="['/dashboard','admin','users','edit', user._id]">
-                    <i class="bi bi-pencil-fill"></i> Editar
-                  </button>
-
-                  <button *ngIf="userRole === 'sysadmin'" class="btn-delete" (click)="eliminarUsuario(user._id!)">
-                    <i class="bi bi-trash3-fill"></i> Eliminar
-                  </button>
-                  <button *ngIf="userRole === 'admin'" class="btn-delete" (click)="eliminarUsuario(user._id!)">
-                    <i class="bi bi-trash3-fill"></i> Eliminar
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="loading-spinner" *ngIf="!users">
-            <app-loading-data-spinner></app-loading-data-spinner>
-            <p>Loading Records</p>
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="card-title-list d-flex justify-content-between align-items-center mb-4">
+            <h2 class="h5">Lista de 
+              <span *ngIf="userRole == 'admin'">Usuarios</span> 
+              <span *ngIf="userRole == 'sysadmin'">Administradores</span>
+              Registrados
+            </h2>
+            <div *ngIf="company" class="d-flex align-items-center">
+              <img *ngIf="company.img === 'no-image'" src="../../../../../assets/img/no-img.webp" alt="Company Avatar" class="avatar-pointer" (click)="abrirModal(company, 'empresas')" width="50" height="50">
+              <img *ngIf="company.img !== 'no-image'" [src]="company.img" alt="Company Avatar" class="avatar-pointer rounded-circle me-3" (click)="abrirModal(company, 'empresas')" width="50" height="50">
+              <span>{{ company.name }}</span>
+            </div>
           </div>
-        </div>
-      </div>
+  
+          <div class="table-responsive">
+            <!-- User Table -->
+            <table class="table table-striped">
+              <thead class="table-light">
+                <tr>
+                  <th>Imagen</th>
+                  <th>Nombre</th>
+                  <th>Nombre de Usuario</th>
+                  <th>Rol</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td class="text-center align-middle">
+                    <img *ngIf="user.img === 'no-image'" src="../../../../../assets/img/no-img.webp" alt="User Avatar" class="avatar-pointer rounded-circle" (click)="abrirModal(user, 'usuarios')" width="50" height="50">
+                    <img *ngIf="user.img !== 'no-image'" [src]="user.img" alt="User Avatar" class="avatar-pointer rounded-circle" (click)="abrirModal(user, 'usuarios')" width="50" height="50">
+                  </td>
+                  <td class="align-middle">{{ user.name || 'No Especificado' }}</td>
+                  <td class="align-middle">{{ user.username }}</td>
+                  <td class="align-middle">{{ user.role }}</td>
+                  <td class="align-middle">
+                    <div class="d-flex flex-wrap gap-2 justify-content-start">
+                      <button class="btn btn-outline-primary btn-sm" (click)="navigateToCajasUsuario(user._id!)">
+                        <i class="bi bi-box-seam"></i> Cajas
+                      </button>
+                      <button class="btn btn-outline-secondary btn-sm" [routerLink]="['/dashboard', userRole, 'users', 'edit', user._id]">
+                        <i class="bi bi-pencil-fill"></i> Editar
+                      </button>
+                      <button class="btn btn-outline-danger btn-sm" (click)="eliminarUsuario(user._id!)">
+                        <i class="bi bi-trash3-fill"></i> Eliminar
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="loading-spinner" *ngIf="!users">
+              <app-loading-data-spinner></app-loading-data-spinner>
+              <p>Cargando registros...</p>
+            </div>
+          </div>
+
+      <!-- Pagination Controls -->
+      <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" (click)="cambiarPagina(currentPage - 1)" [disabled]="currentPage === 1">
+              Anterior
+            </button>
+          </li>
+          <li class="page-item disabled">
+            <span class="page-link">Página {{ currentPage }} de {{ totalPages }}</span>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button class="page-link" (click)="cambiarPagina(currentPage + 1)" [disabled]="currentPage === totalPages">
+              Siguiente
+            </button>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </div>
+
+

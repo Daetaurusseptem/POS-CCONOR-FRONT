@@ -81,7 +81,8 @@ getReceipt(id:string){
           sale.total.toFixed(2),
           sale.paymentMethod,
         ]),
-        [{ content: 'Subtotal', colSpan: 1, styles: { halign: 'right', fontStyle: 'bold' } }, { content: subtotal.toFixed(2), colSpan: 1, styles: { halign: 'right', fontStyle: 'bold' } }, '']
+        [{ content: 'Subtotal', colSpan: 1, styles: { halign: 'right', fontStyle: 'bold' } }, { content: subtotal.toFixed(2), colSpan: 1, styles: { halign: 'right', fontStyle: 'bold' } }, ''],
+        [{ content: 'En Caja', colSpan: 1, styles: { halign: 'right', fontStyle: 'bold' } }, { content: (subtotal+this.openCashRegisterWithSales.initialAmount).toFixed(2), colSpan: 1, styles: { halign: 'right', fontStyle: 'bold' } }, '']
       ],
       startY: currentY,
       margin: { left: marginX, right: marginX },

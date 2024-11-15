@@ -15,12 +15,14 @@ export class ConfirmSaleComponent implements OnInit {
 
   confirmSaleForm!: FormGroup;
   sale: any;
-  totalAmount: number;
+  totalAmount: number = 0;
   change: number = 0;
-  usuario = this.authService.usuario.name;
+  usuario = this.authService.usuario?.name || 'Usuario Desconocido';
   currentInputField: string = '';
   currentInputValue: string = '';
   isNumeric: boolean = false;
+
+  empresa: string = 'CAFETERÍA CAFÉLOT'; // Nombre de la empresa
 
   constructor(
     private fb: FormBuilder,
@@ -29,17 +31,27 @@ export class ConfirmSaleComponent implements OnInit {
     private authService: AuthService,
     private receiptPrinterService: ReceiptPrinterService
   ) {
+    // Intentar obtener la venta desde la navegación o desde el localStorage
     const navigation = this.router.getCurrentNavigation();
-    this.sale = navigation?.extras.state?.['sale'];
-    this.totalAmount = this.sale.total - this.sale.discount;
-    this.sale.productsSold = this.sale.productsSold.map((product: any) => ({
-      ...product,
-      productName: product.name || 'Nombre del producto'
-    }));
-    console.log(this.sale);
+    this.sale = navigation?.extras.state?.['sale'] || this.getSaleFromLocalStorage();
+
+    if (this.sale) {
+      this.totalAmount = this.sale.total - this.sale.discount;
+      this.sale.productsSold = this.sale.productsSold.map((product: any) => ({
+        ...product,
+        productName: product.name || 'Producto Desconocido'
+      }));
+    } else {
+      console.error('No se recibieron los datos de la venta');
+    }
   }
 
   ngOnInit(): void {
+    // Almacenar la venta en localStorage si existe
+    if (this.sale) {
+      this.saveSaleToLocalStorage(this.sale);
+    }
+
     this.confirmSaleForm = this.fb.group({
       paymentMethod: ['', Validators.required],
       paymentReference: [''],
@@ -84,85 +96,117 @@ export class ConfirmSaleComponent implements OnInit {
       paymentMethod: this.confirmSaleForm.value.paymentMethod,
       paymentReference: this.confirmSaleForm.value.paymentReference,
       receivedAmount: this.confirmSaleForm.value.receivedAmount,
-      change: this.change
+      change: this.change,
+      productsSold: this.sale.productsSold.map((product: any) => ({
+        ...product,
+        product: product.product // Incluir el ID del producto antes de enviar al backend
+      }))
     };
 
     this.saleService.createSale(saleData).subscribe(response => {
-      console.log('Sale created successfully', response);
+      console.log('Venta creada con éxito', response);
       this.generarTicket(saleData);
+      this.generarComanda(); // Generar comanda para cocina
+
+      // Limpiar localStorage después de confirmar la venta
+      this.clearSaleFromLocalStorage();
+
       this.router.navigate(['dashboard/user/sales-success']);
     }, error => {
-      console.error('Error creating sale', error);
+      console.error('Error al crear la venta', error);
     });
   }
 
   generarTicket(saleData: any) {
     const content = `
-      MY AWESOME STORE
-      123 STORE ST
-      store@store.com
-      www.store.com
-
-      Order Number: ${saleData._id}
-      Date: ${new Date(saleData.date).toLocaleDateString()}
-
-      --------------------------------
-      Qty   Product                Total
-      --------------------------------
-      ${saleData.productsSold.map((product: any) => `
-      ${product.quantity}    ${product.productName}      ${product.unitPrice * product.quantity}
-      `).join('')}
-      --------------------------------
-
-      Total: $${saleData.total.toFixed(2)}
-      Discount: $${saleData.discount.toFixed(2)}
-      ${saleData.paymentMethod === 'cash' ? `Received Amount: $${saleData.receivedAmount}
-      Change: $${saleData.change.toFixed(2)}` : `Payment Reference: ${saleData.paymentReference}`}
-      
-      Thank you for shopping!
+========================================
+          ${this.empresa.toUpperCase()}
+========================================
+Dirección: 123 Store St, Ciudad, País
+Teléfono: (123) 456-7890
+Correo: contacto@cafeteria.com
+----------------------------------------
+Número de Orden: ${saleData._id || 'N/A'}
+Fecha: ${new Date(saleData.date || new Date()).toLocaleDateString()} 
+Hora: ${new Date(saleData.date || new Date()).toLocaleTimeString()}
+----------------------------------------
+CANT   PRODUCTO               PRECIO
+----------------------------------------
+${saleData.productsSold.map((product: any) => `
+${String(product.quantity).padEnd(5)} ${this.shortenText(product.productName, 15).padEnd(15)} $${((product.unitPrice + this.getModificationsTotalPrice(product.modifications)) * product.quantity).toFixed(2).padStart(8)}
+${product.modifications && product.modifications.length > 0 ? `     * ${this.shortenText(product.modifications.map((mod: any) => `${mod.name}`).join(', '), 30)}` : ''}
+`).join('')}
+----------------------------------------
+TOTAL:                      $${saleData.total.toFixed(2).padStart(8)}
+DESCUENTO:                  $${saleData.discount.toFixed(2).padStart(8)}
+----------------------------------------
+${saleData.paymentMethod === 'cash' ? `MONTO RECIBIDO:         $${Number(saleData.receivedAmount).toFixed(2).padStart(8)}
+CAMBIO:                   $${saleData.change.toFixed(2).padStart(8)}` : `REFERENCIA PAGO:       ${saleData.paymentReference || 'N/A'}`}
+========================================
+       ¡Gracias por su preferencia!
+========================================
     `;
 
     const printer = this.receiptPrinterService.getDefaultPrinter('ticket');
     if (printer) {
       this.receiptPrinterService.printTicket(printer.name, content, printer.paperSize).subscribe(response => {
-        console.log('Ticket sent to printer successfully', response);
+        console.log('Ticket enviado a la impresora con éxito', response);
       }, error => {
-        console.error('Error sending ticket to printer', error);
+        console.error('Error al enviar el ticket a la impresora', error);
       });
     } else {
-      console.error('No default printer set');
+      console.error('No hay impresora de tickets predeterminada configurada');
     }
   }
 
   generarComanda() {
     const content = `
-      MY AWESOME STORE
-      123 STORE ST
-      store@store.com
-      www.store.com
-
-      Order Number: ${this.sale._id}
-      Date: ${new Date(this.sale.date).toLocaleDateString()}
-
-      --------------------------------
-      Qty   Product
-      --------------------------------
-      ${this.sale.productsSold.map((product: any) => `
-      ${product.quantity}    ${product.productName}
-      `).join('')}
-      --------------------------------
+========================================
+          ${this.empresa.toUpperCase()}
+========================================
+Número de Orden: ${this.sale._id || 'N/A'}
+Fecha: ${new Date(this.sale.date || new Date()).toLocaleDateString()} 
+Hora: ${new Date(this.sale.date || new Date()).toLocaleTimeString()}
+----------------------------------------
+CANT   PRODUCTO
+----------------------------------------
+${this.sale.productsSold.map((product: any) => `
+${String(product.quantity).padEnd(5)} ${this.shortenText(product.productName, 25)}
+${product.modifications && product.modifications.length > 0 ? `     * Mod: ${product.modifications.map((mod: any) => `${this.shortenText(mod.name, 15)}`).join(', ')}` : ''}
+`).join('')}
+----------------------------------------
+========================================
     `;
 
     const printer = this.receiptPrinterService.getDefaultPrinter('comanda');
     if (printer) {
       this.receiptPrinterService.printTicket(printer.name, content, printer.paperSize).subscribe(response => {
-        console.log('Comanda sent to printer successfully', response);
+        console.log('Comanda enviada a la impresora con éxito', response);
       }, error => {
-        console.error('Error sending comanda to printer', error);
+        console.error('Error al enviar la comanda a la impresora', error);
       });
     } else {
-      console.error('No default comanda printer set');
+      console.error('No hay impresora de comandas predeterminada configurada');
     }
+  }
+
+  // Métodos para manejar localStorage
+  saveSaleToLocalStorage(sale: any) {
+    localStorage.setItem('pendingSale', JSON.stringify(sale));
+  }
+
+  getSaleFromLocalStorage() {
+    const saleData = localStorage.getItem('pendingSale');
+    return saleData ? JSON.parse(saleData) : null;
+  }
+
+  clearSaleFromLocalStorage() {
+    localStorage.removeItem('pendingSale');
+  }
+
+  // Método para recortar texto si es muy largo
+  shortenText(text: string, maxLength: number): string {
+    return text.length > maxLength ? text.substring(0, maxLength - 3) + '...' : text;
   }
 
   get paymentMethod() {
@@ -202,5 +246,12 @@ export class ConfirmSaleComponent implements OnInit {
     if (target.tagName === 'DIALOG') {
       this.closeKeyboard();
     }
+  }
+
+  getModificationsTotalPrice(modifications: any[]): number {
+    if (!modifications || modifications.length === 0) {
+      return 0;
+    }
+    return modifications.reduce((sum, mod) => sum + (mod.extraPrice || 0), 0);
   }
 }

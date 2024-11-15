@@ -27,11 +27,13 @@ export interface itemResponse {
   numberOfCompanies:number,
   numberOfProducts:number
   total:number|string;
+  totalItems:number|string;
   registroCaja:CashRegister
   registrosCaja:CashRegister[],
   recipes?:Recipe[],
   recipe:Recipe,
   ingredients?:Ingredient[],
   ingredient?:Ingredient,
+  currentPage:number
   
 }

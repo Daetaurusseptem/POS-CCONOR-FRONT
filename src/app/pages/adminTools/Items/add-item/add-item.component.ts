@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Product } from 'src/app/interfaces/models.interface';
@@ -43,9 +43,27 @@ export class AddItemComponent {
       expirationDate: [''],
       discount: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
       receivedDate: [new Date(), Validators.required],
+      modifications: this.fb.array([])
     });
 
     this.loadInitialProducts();
+  }
+
+  get modifications(): FormArray {
+    return this.itemForm.get('modifications') as FormArray;
+  }
+
+  addModification(): void {
+    const modificationGroup = this.fb.group({
+      name: ['', Validators.required],
+      extraPrice: [0, [Validators.required, Validators.min(0)]],
+      isExclusive: [false, Validators.required]
+    });
+    this.modifications.push(modificationGroup);
+  }
+
+  removeModification(index: number): void {
+    this.modifications.removeAt(index);
   }
 
   onSubmit(): void {
@@ -59,6 +77,7 @@ export class AddItemComponent {
         expirationDate: this.itemForm.get('expirationDate')?.value,
         discount: this.itemForm.get('discount')?.value,
         receivedDate: this.itemForm.get('receivedDate')?.value,
+        modifications: this.itemForm.get('modifications')?.value,
         company: this.companyId,
       };
 

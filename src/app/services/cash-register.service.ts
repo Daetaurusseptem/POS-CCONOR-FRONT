@@ -41,8 +41,26 @@ export class CashRegisterService {
     return this.http.get<any>(`${baseUrl}/daily-sales`, this.authService.headers);
   }
   
-  // Añadir función para obtener caja abierta con ventas
+  // Obtener caja abierta con ventas
   getOpenCashRegisterWithSales(userId: string) {
     return this.http.get<any>(`${this.url}/open-with-sales/${userId}`, this.authService.headers);
+  }
+
+  // Obtener todas las fechas con cajas abiertas del usuario
+  getUserCajasByDate(userId: string) {
+    return this.http.get<any>(`${this.url}/user/${userId}/cajas`, this.authService.headers);
+  }
+
+  // Obtener cajas abiertas de un usuario en una fecha específica
+  getUserCashRegistersByDate(userId: string, startDate: string) {
+    console.log(`${this.url}/user/${userId}/cajas/${startDate}`);
+    return this.http.get<any>(`${this.url}/user/${userId}/cajas/${startDate}`, this.authService.headers);
+  }
+
+  
+
+  // Obtener detalles de una caja específica
+  getCajaDetailsById(cajaId: string) {
+    return this.http.get<any>(`${this.url}/cajas/${cajaId}`, this.authService.headers);
   }
 }

@@ -1,3 +1,4 @@
+<!-- update-item.component.html -->
 <div class="container mt-4">
   <div class="card shadow">
     <div class="card-header bg-primary text-white">
@@ -39,6 +40,39 @@
           <label for="receivedDate" class="form-label">Fecha de Recepción</label>
           <input type="date" class="form-control" id="receivedDate" formControlName="receivedDate" placeholder="Selecciona la fecha de recepción">
         </div>
+
+        <div class="mb-3">
+          <h5>Modificaciones</h5>
+          <button type="button" class="btn btn-secondary mb-3" (click)="addModification()">Agregar Modificación</button>
+          <div formArrayName="modifications">
+            <div *ngFor="let modification of modifications.controls; let i = index" [formGroupName]="i" class="border p-3 mb-3">
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label for="modName{{i}}" class="form-label">Nombre de la Modificación</label>
+                  <input type="text" class="form-control" id="modName{{i}}" formControlName="name" placeholder="Nombre de la modificación">
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="modPrice{{i}}" class="form-label">Precio Extra</label>
+                  <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input type="number" class="form-control" id="modPrice{{i}}" formControlName="extraPrice" placeholder="Precio extra">
+                  </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="modExclusive{{i}}" class="form-label">¿Es Exclusivo?</label>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="modExclusive{{i}}" formControlName="isExclusive">
+                    <label class="form-check-label" for="modExclusive{{i}}">Sí</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button type="button" class="btn btn-danger" (click)="removeModification(i)">Eliminar Modificación</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div *ngIf="ItemForm.invalid" class="alert alert-danger">
           <p *ngIf="campoNoValidoDatosItem('name')" class="mb-0">Nombre Inválido</p>
           <p *ngIf="campoNoValidoDatosItem('stock')" class="mb-0">Stock Inválido</p>

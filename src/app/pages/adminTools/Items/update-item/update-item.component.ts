@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -31,6 +31,7 @@ export class UpdateItemComponent implements OnInit {
       expirationDate: ['', Validators.required],
       discount: ['', Validators.required],
       receivedDate: ['', Validators.required],
+      modifications: this.fb.array([])
     });
   }
 
@@ -56,11 +57,39 @@ export class UpdateItemComponent implements OnInit {
           discount: item!.discount,
           receivedDate: rec,
         });
+        this.setModifications(item!.modifications || []);
       });
   }
 
   formatDate(isoString: string): string {
     return moment(isoString).format('YYYY-MM-DD');
+  }
+
+  get modifications(): FormArray {
+    return this.ItemForm.get('modifications') as FormArray;
+  }
+
+  setModifications(modifications: any[]) {
+    this.modifications.clear(); // Clear existing modifications to avoid duplicates
+    modifications.forEach(mod => {
+      this.modifications.push(this.fb.group({
+        name: [mod.name, Validators.required],
+        extraPrice: [mod.extraPrice, Validators.required],
+        isExclusive: [mod.isExclusive, Validators.required]
+      }));
+    });
+  }
+
+  addModification() {
+    this.modifications.push(this.fb.group({
+      name: ['', Validators.required],
+      extraPrice: [0, Validators.required],
+      isExclusive: [false, Validators.required]
+    }));
+  }
+
+  removeModification(index: number) {
+    this.modifications.removeAt(index);
   }
 
   updateItem() {
