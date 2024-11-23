@@ -26,10 +26,10 @@ export class UpdateItemComponent implements OnInit {
   ) {
     this.ItemForm = this.fb.group({
       name: ['', Validators.required],
-      stock: ['', Validators.required],
-      price: ['', Validators.required],
+      stock: [0, [Validators.required, Validators.min(0)]],
+      price: [0, [Validators.required, Validators.min(0)]],
       expirationDate: ['', Validators.required],
-      discount: ['', Validators.required],
+      discount: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
       receivedDate: ['', Validators.required],
       modifications: this.fb.array([])
     });
@@ -74,7 +74,7 @@ export class UpdateItemComponent implements OnInit {
     modifications.forEach(mod => {
       this.modifications.push(this.fb.group({
         name: [mod.name, Validators.required],
-        extraPrice: [mod.extraPrice, Validators.required],
+        extraPrice: [mod.extraPrice, [Validators.required, Validators.min(0)]],
         isExclusive: [mod.isExclusive, Validators.required]
       }));
     });
@@ -83,7 +83,7 @@ export class UpdateItemComponent implements OnInit {
   addModification() {
     this.modifications.push(this.fb.group({
       name: ['', Validators.required],
-      extraPrice: [0, Validators.required],
+      extraPrice: [0, [Validators.required, Validators.min(0)]],
       isExclusive: [false, Validators.required]
     }));
   }

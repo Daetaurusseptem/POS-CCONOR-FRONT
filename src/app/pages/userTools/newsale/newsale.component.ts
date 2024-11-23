@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import { Category, Item } from 'src/app/interfaces/models.interface';
@@ -32,8 +32,6 @@ export class NewsaleComponent {
   selectedQuantity: number = 1;
   selectedItem: any | null = null;
 
-  
-
   constructor(
     private fb: FormBuilder,
     private itemsService: ItemService,
@@ -48,7 +46,6 @@ export class NewsaleComponent {
       this.companyId = authService.company?._id!;
     }
   }
-
 
   ngOnInit(): void {
     this.searchForm = this.fb.group({
@@ -118,7 +115,15 @@ export class NewsaleComponent {
   }
 
   addToCart(item: any): void {
+    if (this.selectedQuantity <= 0) {
+      return;
+    }
+
     const quantity = item.quantity || 1;
+    if (quantity <= 0) {
+      return;
+    }
+
     const existingItem = this.cart.find(p =>
       p.item.product._id === item.product._id &&
       this.areVariationsEqual(p, this.selectedExclusiveModification, this.selectedNonExclusiveModifications)
@@ -170,7 +175,7 @@ export class NewsaleComponent {
     this.calculateTotal();
     this.selectedItem = null;
     this.clearModifications();
-    this.selectedQuantity =0;
+    this.selectedQuantity = 0;
   }
 
   calculateModificationsPrice(exclusive: any | null, nonExclusive: any[]): number {
@@ -219,7 +224,7 @@ export class NewsaleComponent {
     // Seleccionar la nueva exclusión
     this.selectedExclusiveModification = modification;
     this.availableExclusiveModifications = this.availableExclusiveModifications.filter((mod: any) => mod._id !== modification._id);
-}
+  }
 
   addNonExclusiveModification(modification: any): void {
     const index = this.availableNonExclusiveModifications.findIndex(mod => mod._id === modification._id);
@@ -276,26 +281,31 @@ export class NewsaleComponent {
     this.router.navigate(['dashboard/user/new-sale/confirm-sale'], { state: { sale: saleData } });
   }
 
-incrementQuantity(item: any): void {
-  item.quantity = item.quantity ? item.quantity + 1 : 1;
-}
-
-decrementQuantity(item: any): void {
-  item.quantity = (item.quantity && item.quantity > 1) ? item.quantity - 1 : 1;
-}
-
-
-incrementQuantityModSelected(): void {
-  this.selectedQuantity++;
-}
-
-decrementQuantityModSelected(): void {
-  if (this.selectedQuantity > 1) {
-    this.selectedQuantity--;
+  incrementQuantity(item: any): void {
+    if (!item.quantity) {
+      item.quantity = 1;
+    }
+    item.quantity++;
   }
-}
-// Método para volver al inicio
-navigateBackHome(): void {
-  this.router.navigate(['/dashboard/user']);
-}
+
+  decrementQuantity(item: any): void {
+    if (item.quantity && item.quantity > 1) {
+      item.quantity--;
+    }
+  }
+
+  incrementQuantityModSelected(): void {
+    this.selectedQuantity++;
+  }
+
+  decrementQuantityModSelected(): void {
+    if (this.selectedQuantity > 1) {
+      this.selectedQuantity--;
+    }
+  }
+
+  navigateBackHome(): void {
+    this.router.navigate(['/dashboard/user']);
+  }
+
 }
